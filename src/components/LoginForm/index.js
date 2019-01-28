@@ -4,6 +4,10 @@ import "./style.css";
 function LoginForm(props) {
   return (
     <form className="sign-in">
+      <div>
+        <h2>Sign-in/Login</h2>
+      </div>
+      <br />
       <input
         onChange={props.handleInputChange}
         className="form-control"
