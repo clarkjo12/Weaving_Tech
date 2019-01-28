@@ -21,7 +21,6 @@ class Signin extends Component {
   render() {
     return (
       <div>
-        Sign-Up/Login
         <LoginForm />
       </div>
     );
