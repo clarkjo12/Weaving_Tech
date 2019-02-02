@@ -6,6 +6,7 @@ class LoginForm extends Component {
     return (
       <form className="sign-in">
         <div>
+          <h1>WMFA!</h1>
           <h2>Sign-in/Login</h2>
         </div>
         <br />
