@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 
-class Truckhome extends Component {
+class TruckHome extends Component {
   render() {
-    return <div>wrong turn hoes</div>;
+    return (
+        <div>
+          <h2>Truck Home Landing</h2>
+        </div>
+
+    );
   }
 }
 
-export default Truckhome;
+export default TruckHome;

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import Landing from "./Pages/Landing/Landing";
-import CustomerHome from "./Pages/CustomerHome/CustomerHome";
-import CustomerMap from "./Pages/CustomerMap/CustomerMap";
-import TruckHome from "./Pages/TruckHome/TruckHome";
-import ErrorPage from "./Pages/ErrorPage/ErrorPage";
+import Landing from "./pages/Landing";
+import CustomerHome from "./pages/CustomerHome";
+import CustomerMap from "./pages/CustomerMap";
+import TruckHome from "./pages/TruckHome";
+import ErrorPage from "./pages/ErrorPage";
 
 import "./App.css";
 
