@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import LoginForm from "./Components/LoginForm/LoginForm";
-import CustomerHome from "./Components/CustomerHome/CustomerHome";
-import CustomerMap from "./Components/CustomerMap/CustomerMap";
-import TruckHome from "./Components/TruckHome/TruckHome";
-import ErrorPage from "./Components/ErrorPage/ErrorPage";
+import Landing from "./Pages/Landing/Landing";
+import CustomerHome from "./Pages/CustomerHome/CustomerHome";
+import CustomerMap from "./Pages/CustomerMap/CustomerMap";
+import TruckHome from "./Pages/TruckHome/TruckHome";
+import ErrorPage from "./Pages/ErrorPage/ErrorPage";
 
 import "./App.css";
 
@@ -14,7 +14,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/" component={LoginForm} exact />
+          <Route path="/" component={Landing} exact />
           <Route path="/truck" component={TruckHome} />
           <Route path="/customer" component={CustomerHome} />
           <Route path="/map" component={CustomerMap} />

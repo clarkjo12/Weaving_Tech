@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./TruckHome.css";
 
 class TruckHome extends Component {
   render() {
