@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Landing from "./pages/Landing";
-import CustomerHome from "./pages/CustomerHome";
 import CustomerMap from "./pages/CustomerMap";
 import TruckHome from "./pages/TruckHome";
 import ErrorPage from "./pages/ErrorPage";
@@ -16,10 +15,9 @@ class App extends Component {
         <Switch>
           <Route path="/" component={Landing} exact />
           <Route path="/truck" component={TruckHome} />
-          <Route path="/customer" component={CustomerHome} />
           <Route path="/map" component={CustomerMap} />
           <Route component={ErrorPage} />
-        </Switch> 
+        </Switch>
       </BrowserRouter>
     );
   }
