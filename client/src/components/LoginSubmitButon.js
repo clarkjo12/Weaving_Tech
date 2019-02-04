@@ -13,13 +13,19 @@ const Button = styled.button`
   border-radius: 3px;
 `;
 
+const ButtonDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  background: #ffbd59;
+`;
+
 class LoginSubmitButton extends Component {
   render() {
     return (
-      <div>
+      <ButtonDiv>
         <Button>Im a Truck</Button>
         <Button primary>Submit</Button>
-      </div>
+      </ButtonDiv>
     );
   }
 }
