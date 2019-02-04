@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const Button = styled.button`
@@ -13,6 +13,7 @@ const Button = styled.button`
   border-radius: 3px;
 `;
 
+
 const ButtonDiv = styled.div`
   display: flex;
   justify-content: center;
@@ -24,7 +25,7 @@ class LoginSubmitButton extends Component {
     return (
       <ButtonDiv>
         <Button>Im a Truck</Button>
-        <Button primary>Submit</Button>
+        <Button primary onClick={props.handleSubmit}>Submit</Button>
       </ButtonDiv>
     );
   }

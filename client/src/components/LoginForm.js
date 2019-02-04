@@ -1,3 +1,4 @@
+
 import React, { Component } from "react";
 import styled from "styled-components";
 import OrangeLogo from "./../images/OrangeLogo.png";
@@ -44,17 +45,18 @@ class LoginForm extends Component {
             </Htwo>
             <Input>
               <input
-                className="form-control"
-                placeholder="Username"
-                id="username"
+                 type="text"
+                  placeholder="Username"
+                  name="username"
+                  onChange={props.handleInput}
               />
             </Input>
             <Input>
               <input
                 type="text"
-                className="form-control"
                 placeholder="Password"
-                id="password"
+                name="password"
+                onChange={props.handleInput}
               />
             </Input>
           </form>
@@ -62,6 +64,7 @@ class LoginForm extends Component {
       </div>
     );
   }
+
 }
 
 export default LoginForm;
