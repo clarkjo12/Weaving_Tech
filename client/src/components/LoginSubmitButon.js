@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const Button = styled.button`
@@ -13,15 +13,13 @@ const Button = styled.button`
   border-radius: 3px;
 `;
 
-class LoginSubmitButton extends Component {
-  render() {
-    return (
-      <div>
-        <Button>Im a Truck</Button>
-        <Button primary>Submit</Button>
-      </div>
-    );
-  }
+function LoginSubmitButton(props) {
+  return (
+    <div>
+      <Button>Im a Truck</Button>
+      <Button primary onClick={props.handleSubmit}>Submit</Button>
+    </div>
+  );
 }
 
 export default LoginSubmitButton;
