@@ -7,7 +7,6 @@ import TruckHome from "./pages/TruckHome";
 import ErrorPage from "./pages/ErrorPage";
 
 import NavBar from "./components/NavBar";
-import Wrapper from "./components/Wrapper";
 
 import "./App.css";
 
