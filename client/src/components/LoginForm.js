@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+
 import OrangeLogo from "./../images/OrangeLogo.png";
 import LogoTextUser from "./../images/LogoTextUser.png";
+import LoginSubmitButton from "../components/LoginSubmitButon";
 
 const LoginChilds = styled.section`
   padding: 4em;
   display: flex;
-  justify-content: center !important;
+  justify-content: center;
   align-content: center;
   text-align: center;
   background: #ffbd59;
@@ -22,6 +24,7 @@ const LogoText = styled.img`
 
 const Input = styled.form`
   padding: 5px;
+  height: 15px;
 `;
 
 const Htwo = styled.text`
@@ -57,6 +60,7 @@ class LoginForm extends Component {
                 id="password"
               />
             </Input>
+            <LoginSubmitButton />
           </form>
         </LoginChilds>
       </div>

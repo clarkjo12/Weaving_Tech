@@ -22,7 +22,7 @@ function Navbar() {
           <Link
             to="/map"
             className={
-              window.location.pathname === "/discover"
+              window.location.pathname === "/map"
                 ? "nav-link active"
                 : "nav-link"
             }
@@ -34,7 +34,7 @@ function Navbar() {
           <Link
             to="/truck"
             className={
-              window.location.pathname === "/search"
+              window.location.pathname === "/truck"
                 ? "nav-link active"
                 : "nav-link"
             }

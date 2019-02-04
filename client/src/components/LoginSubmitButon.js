@@ -17,6 +17,7 @@ const ButtonDiv = styled.div`
   display: flex;
   justify-content: center;
   background: #ffbd59;
+  padding: 15px;
 `;
 
 class LoginSubmitButton extends Component {
