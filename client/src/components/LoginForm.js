@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import styled from "styled-components";
 import OrangeLogo from "./../images/OrangeLogo.png";
@@ -30,41 +29,38 @@ const Htwo = styled.text`
   padding: 5px;
 `;
 
-class LoginForm extends Component {
-  render() {
-    return (
-      <div>
-        <LoginChilds>
-          <form className="sign-in">
-            <Logo img src={OrangeLogo} alt="no dice" />
-            <br />
-            <LogoText img src={LogoTextUser} alt="nah bro" />
+function LoginForm(props) {
+  return (
+    <div>
+      <LoginChilds>
+        <form className="sign-in">
+          <Logo img src={OrangeLogo} alt="no dice" />
+          <br />
+          <LogoText img src={LogoTextUser} alt="nah bro" />
 
-            <Htwo>
-              <p>Login Below!</p>
-            </Htwo>
-            <Input>
-              <input
-                 type="text"
-                  placeholder="Username"
-                  name="username"
-                  onChange={props.handleInput}
-              />
-            </Input>
-            <Input>
-              <input
-                type="text"
-                placeholder="Password"
-                name="password"
-                onChange={props.handleInput}
-              />
-            </Input>
-          </form>
-        </LoginChilds>
-      </div>
-    );
-  }
-
+          <Htwo>
+            <p>Login Below!</p>
+          </Htwo>
+          <Input>
+            <input
+              type="text"
+              placeholder="Username"
+              name="username"
+              onChange={props.handleInput}
+            />
+          </Input>
+          <Input>
+            <input
+              type="text"
+              placeholder="Password"
+              name="password"
+              onChange={props.handleInput}
+            />
+          </Input>
+        </form>
+      </LoginChilds>
+    </div>
+  );
 }
 
 export default LoginForm;
