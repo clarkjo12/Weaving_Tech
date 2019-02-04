@@ -20,15 +20,13 @@ const ButtonDiv = styled.div`
   background: #ffbd59;
 `;
 
-class LoginSubmitButton extends Component {
-  render() {
-    return (
-      <ButtonDiv>
-        <Button>Im a Truck</Button>
-        <Button primary onClick={props.handleSubmit}>Submit</Button>
-      </ButtonDiv>
-    );
-  }
+function LoginSubmitButton(props) {
+  return (
+    <ButtonDiv>
+      <Button>Im a Truck</Button>
+      <Button primary onClick={props.handleSubmit}>Submit</Button>
+    </ButtonDiv>
+  );
 }
 
 export default LoginSubmitButton;
