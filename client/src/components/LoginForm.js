@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
 import OrangeLogo from "./../images/OrangeLogo.png";
 import LogoTextUser from "./../images/LogoTextUser.png";
@@ -31,6 +31,8 @@ const Htwo = styled.text`
 `;
 
 function LoginForm(props) {
+
+
   return (
     <div>
       <LoginChilds>
@@ -58,6 +60,18 @@ function LoginForm(props) {
               onChange={props.handleInput}
             />
           </Input>
+
+          {props.newUser ?
+            (<Input>
+              <input
+                type="text"
+                placeholder="Confirm Password"
+                name="confirmpassword"
+                onChange={props.handleInput}
+              />
+            </Input>) : null
+          }
+
         </form>
       </LoginChilds>
     </div>

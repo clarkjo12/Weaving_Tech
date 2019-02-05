@@ -14,8 +14,8 @@ export default {
     return axios.delete("/api/eaters/" + id);
   },
   // Updates the eater with the given id
-  updateEater: function(id, eaterData) {
-    return axios.put("/api/eaters/" + id, eaterData);
+  updateEater: function(eaterData) {
+    return axios.put("/api/eaters/", eaterData);
   },
   // Saves a eater to the database
   saveEater: function(eaterData) {
