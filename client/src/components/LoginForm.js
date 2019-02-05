@@ -18,6 +18,7 @@ const Logo = styled.img`
 
 const LogoText = styled.img`
   padding: 1px;
+  height: 80px;
 `;
 
 const Input = styled.form`
