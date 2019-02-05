@@ -1,32 +1,50 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import GoogleMapReact from "google-map-react";
+// import styled from "styled-components";
 import MapHeader from "./MapHeader";
 
-const MapDiv = styled.section`
-  padding: 4em;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  background: #38b6ff;
-`;
+// const MapDiv = styled.section`
+//   padding: 4em;
+//   display: flex;
+//   justify-content: center;
+//   flex-direction: column;
+//   background: #38b6ff;
+// `;
 
-const MapImg = styled.section`
-  border: 7px solid gray;
-  border-radius: 5px;
-`;
+// const MapImg = styled.section`
+//   border: 7px solid gray;
+//   border-radius: 5px;
+// `;
+
+const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 class Map extends Component {
+  static defaultProps = {
+    center: {
+      lat: 35.91,
+      lng: -79.05
+    },
+    zoom: 11
+  };
+
   render() {
     return (
-      <MapDiv>
+      <div>
         <MapHeader />
-        <MapImg>
-          <img
-            src="https://media.wired.com/photos/59269cd37034dc5f91bec0f1/master/w_550,c_limit/GoogleMapTA.jpg"
-            alt="no dice"
-          />
-        </MapImg>
-      </MapDiv>
+        <div style={{ height: '100vh', width: '100%' }}>
+          <GoogleMapReact 
+            bootstrapURLKeys={{ key: "AIzaSyD_X7udChvMby96HAj5TKcoaJzU-e53RlE"}}
+            defaultCenter={this.props.center}
+            defaultZoom={this.props.zoom}
+          >
+            <AnyReactComponent
+              lat={35.913200}
+              lng={-79.055847}
+              text={'Chapel Hill'}
+            />
+          </GoogleMapReact>
+        </div>
+      </div>
     );
   }
 }
