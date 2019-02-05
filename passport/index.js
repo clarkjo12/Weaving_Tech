@@ -1,16 +1,31 @@
-const mongoose = require('mongoose');
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
+const passport = require('passport')
+const LocalStrategy = require('./localStrategy')
+const Eater = require('../models/eater')
 
-const Eaters = mongoose.model('Eater');
+passport.serializeUser((eater, done) => {
+	console.log('=== serialize ... called ===')
+	console.log(eater) // the whole raw eater object!
+	console.log('---------')
+	done(null, { _id: eater._id })
+})
 
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-      Eaters.findOne({ username: username }, function (err, eater) {
-        if (err) { return done(err); }
-        if (!eater) { return done(null, false); }
-        if (!eater.verifyPassword(password)) { return done(null, false); }
-        return done(null, eater);
-      });
-    }
-  ));
+passport.deserializeUser((id, done) => {
+	console.log('DEserialize ... called')
+	Eater.findOne(
+		{ _id: id },
+		'firstName lastName photos local.username',
+		(err, eater) => {
+			console.log('======= DESERILAIZE USER CALLED ======')
+			console.log(eater)
+			console.log('--------------')
+			done(null, eater)
+		}
+	)
+})
+
+// ==== Register Strategies ====
+passport.use(LocalStrategy)
+//passport.use(GoogleStratgey)
+//passport.use(FacebookStrategy)
+
+module.exports = passport
