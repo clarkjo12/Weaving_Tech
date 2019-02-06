@@ -2,6 +2,21 @@ import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
 import API from "../utils/API";
+import FancyLogins from "../components/FancyLogins";
+import styled from "styled-components";
+
+const FirstTimeDiv = styled.div`
+  background-color: #ffbd59;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 5px;
+  padding-top: 3px;
+`;
+
+const Mommadiv = styled.div`
+  background-color: #ffbd59;
+  height: 100vh;
+`;
 
 class Landing extends Component {
   state = {
@@ -28,9 +43,22 @@ class Landing extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     if (this.state.newUser) {
-      if (this.state.username && this.state.password && (this.state.password === this.state.confirmpassword)) {
+      if (
+        this.state.username &&
+        this.state.password &&
+        this.state.password === this.state.confirmpassword
+      ) {
         //check to make sure the username isn't in the database already
+<<<<<<< HEAD
+        API.saveEater({
+          username: this.state.username,
+          password: this.state.password,
+          location: { coordinates: [-73.556077, 40.848447] },
+          isActive: true
+        })
+=======
         API.saveEater({ username: this.state.username, password: this.state.password, location: { coordinates: [this.props.latitude, this.props.longitude] }, isActive: true })
+>>>>>>> master
           .then(res => {
             console.log("login response: ");
             console.log(res);
@@ -39,20 +67,25 @@ class Landing extends Component {
               this.props.updateUser({
                 loggedIn: true,
                 username: res.data.username
-              })
+              });
               this.setState({ redirect: true });
             }
-          }).catch(err => {
+          })
+          .catch(err => {
             console.log("login error: ");
             console.log(err);
           });
       }
       //error modal
-    }
-    else {
+    } else {
       //user already exists in the database, so update
       if (this.state.username && this.state.password) {
-        API.updateEater({ username: this.state.username, password: this.state.password, location: { coordinates: [-73.556077, 40.848447] }, isActive: true })
+        API.updateEater({
+          username: this.state.username,
+          password: this.state.password,
+          location: { coordinates: [-73.556077, 40.848447] },
+          isActive: true
+        })
           .then(res => {
             console.log("login response: ");
             console.log(res);
@@ -61,10 +94,11 @@ class Landing extends Component {
               this.props.updateUser({
                 loggedIn: true,
                 username: res.data.username
-              })
+              });
               this.setState({ redirect: true });
             }
-          }).catch(err => {
+          })
+          .catch(err => {
             console.log("login error: ");
             console.log(err);
           });
@@ -75,18 +109,36 @@ class Landing extends Component {
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to="/map" />
+      return <Redirect to="/map" />;
     }
   };
 
   render() {
     return (
-      <div>
+      <Mommadiv>
         {this.renderRedirect()}
+<<<<<<< HEAD
+        <LoginForm
+          handleInput={this.handleInputChange}
+          newUser={this.state.newUser}
+        />
+        <FirstTimeDiv>
+          <Link to="#" onClick={this.handleUserStatus}>
+            {" "}
+            {this.state.newUser
+              ? "Already Been Here?"
+              : "First Time Here?"}{" "}
+          </Link>
+        </FirstTimeDiv>{" "}
+        <LoginSubmitButton handleSubmit={this.handleFormSubmit} />
+        <FancyLogins />
+      </Mommadiv>
+=======
 
         <LoginForm handleInput={this.handleInputChange} newUser={this.state.newUser} handleSubmit={this.handleFormSubmit}/>
         <Link to="#" onClick={this.handleUserStatus}> {this.state.newUser ? "Already Been Here?" : "First Time Here?"} </Link>
       </div >
+>>>>>>> master
     );
   }
 }

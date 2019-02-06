@@ -1,20 +1,20 @@
 import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
-// import styled from "styled-components";
+import styled from "styled-components";
 import MapHeader from "./MapHeader";
 
-// const MapDiv = styled.section`
-//   padding: 4em;
-//   display: flex;
-//   justify-content: center;
-//   flex-direction: column;
-//   background: #38b6ff;
-// `;
+const MapDiv = styled.section`
+  padding: 4em;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background: #38b6ff;
+`;
 
-// const MapImg = styled.section`
-//   border: 7px solid gray;
-//   border-radius: 5px;
-// `;
+const MapImg = styled.section`
+  border: 7px solid gray;
+  border-radius: 5px;
+`;
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
@@ -29,22 +29,22 @@ class Map extends Component {
 
   render() {
     return (
-      <div>
+      <MapDiv>
         <MapHeader />
-        <div style={{ height: '100vh', width: '100%' }}>
-          <GoogleMapReact 
-            bootstrapURLKeys={{ key: "/*API KEY HERE*/"}}
+        <div style={{ height: "100vh", width: "100%" }}>
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: "/*API KEY HERE*/" }}
             defaultCenter={this.props.center}
             defaultZoom={this.props.zoom}
           >
             <AnyReactComponent
-              lat={35.913200}
+              lat={35.9132}
               lng={-79.055847}
-              text={'Chapel Hill'}
+              text={"Chapel Hill"}
             />
-          </GoogleMapReact>
+          </GoogleMapReact>{" "}
         </div>
-      </div>
+      </MapDiv>
     );
   }
 }
