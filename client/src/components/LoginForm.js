@@ -2,9 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import OrangeLogo from "./../images/OrangeLogo.png";
 import LogoTextUser from "./../images/LogoTextUser.png";
+import LoginSubmitButton from "../components/LoginSubmitButon";
 
 const LoginChilds = styled.section`
-  padding: 4em;
+  padding: 3em;
   display: flex;
   justify-content: center !important;
   align-content: center;
@@ -21,11 +22,11 @@ const LogoText = styled.img`
   height: 80px;
 `;
 
-const Input = styled.form`
+const Input = styled.div`
   padding: 5px;
 `;
 
-const Htwo = styled.text`
+const Htwo = styled.section`
   color: darkgray;
   padding: 5px;
 `;
@@ -34,7 +35,7 @@ function LoginForm(props) {
 
 
   return (
-    <div>
+
       <LoginChilds>
         <form className="sign-in">
           <Logo img src={OrangeLogo} alt="no dice" />
@@ -54,7 +55,7 @@ function LoginForm(props) {
           </Input>
           <Input>
             <input
-              type="text"
+              type="password"
               placeholder="Password"
               name="password"
               onChange={props.handleInput}
@@ -64,17 +65,16 @@ function LoginForm(props) {
           {props.newUser ?
             (<Input>
               <input
-                type="text"
+                type="password"
                 placeholder="Confirm Password"
                 name="confirmpassword"
                 onChange={props.handleInput}
               />
             </Input>) : null
           }
-
+           <LoginSubmitButton  handleSubmit={props.handleSubmit} />
         </form>
       </LoginChilds>
-    </div>
   );
 }
 

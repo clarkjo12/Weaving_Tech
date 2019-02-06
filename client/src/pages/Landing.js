@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
-import LoginSubmitButton from "../components/LoginSubmitButon";
 import API from "../utils/API";
 
 class Landing extends Component {
@@ -31,7 +30,7 @@ class Landing extends Component {
     if (this.state.newUser) {
       if (this.state.username && this.state.password && (this.state.password === this.state.confirmpassword)) {
         //check to make sure the username isn't in the database already
-        API.saveEater({ username: this.state.username, password: this.state.password, location: { coordinates: [-73.556077, 40.848447] }, isActive: true })
+        API.saveEater({ username: this.state.username, password: this.state.password, location: { coordinates: [this.props.latitude, this.props.longitude] }, isActive: true })
           .then(res => {
             console.log("login response: ");
             console.log(res);
@@ -84,13 +83,9 @@ class Landing extends Component {
     return (
       <div>
         {this.renderRedirect()}
-        <div>
-          <LoginForm handleInput={this.handleInputChange} newUser={this.state.newUser} />
-        </div>
-        <Link to="#" onClick={this.handleUserStatus}> {this.state.newUser ? "Already Been Here?" : "First Time Here?" } </Link>
-        <div>
-          <LoginSubmitButton handleSubmit={this.handleFormSubmit} />
-        </div>
+
+        <LoginForm handleInput={this.handleInputChange} newUser={this.state.newUser} handleSubmit={this.handleFormSubmit}/>
+        <Link to="#" onClick={this.handleUserStatus}> {this.state.newUser ? "Already Been Here?" : "First Time Here?"} </Link>
       </div >
     );
   }
