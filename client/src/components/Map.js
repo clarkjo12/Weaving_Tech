@@ -30,6 +30,7 @@ class Map extends Component {
   render() {
     return (
       <div>
+<<<<<<< HEAD
         <MapDiv>
           <MapHeader />
           <MapImg>
@@ -50,6 +51,22 @@ class Map extends Component {
             </div>
           </MapImg>
         </MapDiv>
+=======
+        <MapHeader />
+        <div style={{ height: '100vh', width: '100%' }}>
+          <GoogleMapReact 
+            bootstrapURLKeys={{ key: "/*API KEY HERE*/"}}
+            defaultCenter={this.props.center}
+            defaultZoom={this.props.zoom}
+          >
+            <AnyReactComponent
+              lat={35.913200}
+              lng={-79.055847}
+              text={'Chapel Hill'}
+            />
+          </GoogleMapReact>
+        </div>
+>>>>>>> master
       </div>
     );
   }

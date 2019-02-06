@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
-import LoginSubmitButton from "../components/LoginSubmitButon";
 import API from "../utils/API";
 import FancyLogins from "../components/FancyLogins";
 import styled from "styled-components";
@@ -50,12 +49,16 @@ class Landing extends Component {
         this.state.password === this.state.confirmpassword
       ) {
         //check to make sure the username isn't in the database already
+<<<<<<< HEAD
         API.saveEater({
           username: this.state.username,
           password: this.state.password,
           location: { coordinates: [-73.556077, 40.848447] },
           isActive: true
         })
+=======
+        API.saveEater({ username: this.state.username, password: this.state.password, location: { coordinates: [this.props.latitude, this.props.longitude] }, isActive: true })
+>>>>>>> master
           .then(res => {
             console.log("login response: ");
             console.log(res);
@@ -114,6 +117,7 @@ class Landing extends Component {
     return (
       <Mommadiv>
         {this.renderRedirect()}
+<<<<<<< HEAD
         <LoginForm
           handleInput={this.handleInputChange}
           newUser={this.state.newUser}
@@ -129,6 +133,12 @@ class Landing extends Component {
         <LoginSubmitButton handleSubmit={this.handleFormSubmit} />
         <FancyLogins />
       </Mommadiv>
+=======
+
+        <LoginForm handleInput={this.handleInputChange} newUser={this.state.newUser} handleSubmit={this.handleFormSubmit}/>
+        <Link to="#" onClick={this.handleUserStatus}> {this.state.newUser ? "Already Been Here?" : "First Time Here?"} </Link>
+      </div >
+>>>>>>> master
     );
   }
 }
