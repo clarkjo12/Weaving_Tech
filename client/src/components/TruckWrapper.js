@@ -5,6 +5,7 @@ import BlueHeart from "../images/heartblue.png";
 const TruckMiddle = styled.div`
   display: flex;
   justify-content: center;
+  padding-right: 10px;
 `;
 const TruckMain = styled.div`
   display: flex;
@@ -13,6 +14,11 @@ const TruckMain = styled.div`
   text-align: center;
 `;
 
+const Grey = styled.h2`
+  color: darkslategray;
+  text-decoration: underline;
+  margin: 0;
+`;
 const Heart = styled.img`
   height: 75px;
 `;
@@ -21,10 +27,12 @@ class TruckWrapper extends Component {
   render() {
     return (
       <TruckMain>
-        <h2>Favorited:</h2>
+        <Grey>
+          <h2>Favorited</h2>
+        </Grey>
         <TruckMiddle>
           <Heart img src={BlueHeart} alt="no dice" />
-          <h2>: 342</h2>
+          <h1>: 342</h1>
         </TruckMiddle>
       </TruckMain>
     );

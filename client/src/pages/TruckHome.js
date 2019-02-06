@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import MapHeader from "../components/MapHeader";
-import Toggle from "../components/Switch";
+import Toggle from "../components/TruckActiveSwitch";
 import styled from "styled-components";
 import TruckWrapper from "../components/TruckWrapper";
 

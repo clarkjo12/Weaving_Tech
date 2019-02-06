@@ -4,7 +4,8 @@ import OrangeLogo from "./../images/OrangeLogo.png";
 import LogoTextUser from "./../images/LogoTextUser.png";
 
 const LoginChilds = styled.section`
-  padding: 4em;
+  padding-bottom: 5px;
+  padding-top: 3em;
   display: flex;
   justify-content: center !important;
   align-content: center;
@@ -31,8 +32,6 @@ const Htwo = styled.text`
 `;
 
 function LoginForm(props) {
-
-
   return (
     <div>
       <LoginChilds>
@@ -61,17 +60,16 @@ function LoginForm(props) {
             />
           </Input>
 
-          {props.newUser ?
-            (<Input>
+          {props.newUser ? (
+            <Input>
               <input
                 type="text"
                 placeholder="Confirm Password"
                 name="confirmpassword"
                 onChange={props.handleInput}
               />
-            </Input>) : null
-          }
-
+            </Input>
+          ) : null}
         </form>
       </LoginChilds>
     </div>

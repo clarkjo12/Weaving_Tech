@@ -13,7 +13,6 @@ const Button = styled.button`
   border-radius: 3px;
 `;
 
-
 const ButtonDiv = styled.div`
   display: flex;
   justify-content: center;
@@ -21,13 +20,13 @@ const ButtonDiv = styled.div`
 `;
 
 function LoginSubmitButton(props) {
-    return (
-      <ButtonDiv>
-        <Button>Im a Truck</Button>
-        <Button primary onClick={props.handleSubmit}>Submit</Button>
-      </ButtonDiv>
-    );
-  
+  return (
+    <ButtonDiv>
+      <Button primary onClick={props.handleSubmit}>
+        Submit
+      </Button>
+    </ButtonDiv>
+  );
 }
 
 export default LoginSubmitButton;
