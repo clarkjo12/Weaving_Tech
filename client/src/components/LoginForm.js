@@ -5,12 +5,9 @@ import LogoTextUser from "./../images/LogoTextUser.png";
 import LoginSubmitButton from "../components/LoginSubmitButon";
 
 const LoginChilds = styled.section`
-<<<<<<< HEAD
   padding-bottom: 5px;
   padding-top: 3em;
-=======
-  padding: 3em;
->>>>>>> master
+
   display: flex;
   justify-content: center !important;
   align-content: center;
@@ -38,51 +35,45 @@ const Htwo = styled.section`
 
 function LoginForm(props) {
   return (
+    <LoginChilds>
+      <form className="sign-in">
+        <Logo img src={OrangeLogo} alt="no dice" />
+        <br />
+        <LogoText img src={LogoTextUser} alt="nah bro" />
 
-      <LoginChilds>
-        <form className="sign-in">
-          <Logo img src={OrangeLogo} alt="no dice" />
-          <br />
-          <LogoText img src={LogoTextUser} alt="nah bro" />
+        <Htwo>
+          <p>Login Below!</p>
+        </Htwo>
+        <Input>
+          <input
+            type="text"
+            placeholder="Username"
+            name="username"
+            onChange={props.handleInput}
+          />
+        </Input>
+        <Input>
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            onChange={props.handleInput}
+          />
+        </Input>
 
-          <Htwo>
-            <p>Login Below!</p>
-          </Htwo>
-          <Input>
-            <input
-              type="text"
-              placeholder="Username"
-              name="username"
-              onChange={props.handleInput}
-            />
-          </Input>
+        {props.newUser ? (
           <Input>
             <input
               type="password"
-              placeholder="Password"
-              name="password"
+              placeholder="Confirm Password"
+              name="confirmpassword"
               onChange={props.handleInput}
             />
           </Input>
-
-          {props.newUser ? (
-            <Input>
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                name="confirmpassword"
-                onChange={props.handleInput}
-              />
-<<<<<<< HEAD
-            </Input>
-          ) : null}
-=======
-            </Input>) : null
-          }
-           <LoginSubmitButton  handleSubmit={props.handleSubmit} />
->>>>>>> master
-        </form>
-      </LoginChilds>
+        ) : null}
+        <LoginSubmitButton handleSubmit={props.handleSubmit} />
+      </form>
+    </LoginChilds>
   );
 }
 
