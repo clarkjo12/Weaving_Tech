@@ -9,7 +9,7 @@ const MapHead = styled.div`
 
 const MapLogoBlue = styled.img`
   height: 60px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 `;
 
 class MapHeader extends Component {

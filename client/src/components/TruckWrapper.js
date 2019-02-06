@@ -2,9 +2,15 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import BlueHeart from "../images/heartblue.png";
 
-const TruckMain = styled.div`
+const TruckMiddle = styled.div`
   display: flex;
   justify-content: center;
+`;
+const TruckMain = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
 `;
 
 const Heart = styled.img`
@@ -15,8 +21,11 @@ class TruckWrapper extends Component {
   render() {
     return (
       <TruckMain>
-        <Heart img src={BlueHeart} alt="no dice" />
-        <h2>: 342</h2>
+        <h2>Favorited:</h2>
+        <TruckMiddle>
+          <Heart img src={BlueHeart} alt="no dice" />
+          <h2>: 342</h2>
+        </TruckMiddle>
       </TruckMain>
     );
   }

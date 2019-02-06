@@ -17,6 +17,7 @@ class Switch extends React.Component {
   render() {
     return (
       <div className="switch-container">
+        <h3>Activate Truck:</h3>
         <label>
           <input
             ref="switch"
