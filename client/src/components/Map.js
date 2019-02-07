@@ -31,19 +31,21 @@ class Map extends Component {
     return (
       <MapDiv>
         <MapHeader />
-        <div style={{ height: "100vh", width: "100%" }}>
-          <GoogleMapReact
-            bootstrapURLKeys={{ key: "/*API KEY HERE*/" }}
-            defaultCenter={this.props.center}
-            defaultZoom={this.props.zoom}
-          >
-            <AnyReactComponent
-              lat={35.9132}
-              lng={-79.055847}
-              text={"Chapel Hill"}
-            />
-          </GoogleMapReact>{" "}
-        </div>
+        <MapImg>
+          <div style={{ height: "100vh", width: "100%" }}>
+            <GoogleMapReact
+              bootstrapURLKeys={{ key: "/*API KEY HERE*/" }}
+              defaultCenter={this.props.center}
+              defaultZoom={this.props.zoom}
+            >
+              <AnyReactComponent
+                lat={35.9132}
+                lng={-79.055847}
+                text={"Chapel Hill"}
+              />
+            </GoogleMapReact>{" "}
+          </div>
+        </MapImg>
       </MapDiv>
     );
   }
