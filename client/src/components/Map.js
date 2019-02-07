@@ -37,7 +37,6 @@ class Map extends Component {
     return (
       <MainDiv>
         <MapHeader />
-
         <MapDiv>
           <div style={{ height: "80vh", width: "100%" }}>
             <GoogleMapReact
