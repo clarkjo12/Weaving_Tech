@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
 import styled from "styled-components";
 import MapHeader from "./MapHeader";
+import MapButtons from "./MapButtons";
 
 const MapDiv = styled.section`
   padding: 4em;
@@ -32,7 +33,7 @@ class Map extends Component {
       <MapDiv>
         <MapHeader />
         <MapImg>
-          <div style={{ height: "100vh", width: "100%" }}>
+          <div style={{ height: "80vh", width: "100%" }}>
             <GoogleMapReact
               bootstrapURLKeys={{ key: "/*API KEY HERE*/" }}
               defaultCenter={this.props.center}
