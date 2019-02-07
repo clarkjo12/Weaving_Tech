@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import OrangeLogo from "./../images/OrangeLogo.png";
 import LogoTextUser from "./../images/LogoTextUser.png";
+import MapButtons from "./MapButtons";
 
 const LoginChilds = styled.section`
   padding-bottom: 5px;
@@ -32,11 +33,18 @@ const Htwo = styled.section`
   padding: 5px;
 `;
 
+const TrapDoor = styled.div`
+  background-color: #ffbd59;
+  border: solid 0;
+`;
+
 function LoginForm(props) {
   return (
     <LoginChilds>
       <form className="sign-in">
-        <Logo img src={OrangeLogo} alt="no dice" />
+        <TrapDoor as="button" onClick={() => alert("It works!")}>
+          <Logo img src={OrangeLogo} alt="no dice" />
+        </TrapDoor>
         <br />
         <LogoText img src={LogoTextUser} alt="nah bro" />
 
