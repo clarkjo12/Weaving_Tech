@@ -4,7 +4,7 @@ import styled from "styled-components";
 import MapHeader from "./MapHeader";
 import MapButtons from "./MapButtons";
 
-const MapDiv = styled.section`
+const MainDiv = styled.section`
   padding: 4em;
   display: flex;
   justify-content: center;
@@ -12,7 +12,12 @@ const MapDiv = styled.section`
   background: #38b6ff;
 `;
 
-const MapImg = styled.section`
+// const MapImg = styled.section`
+//   border: 1px solid gray;
+//   border-radius: 5px;
+// `;
+
+const MapDiv = styled.div`
   border: 7px solid gray;
   border-radius: 5px;
 `;
@@ -30,9 +35,10 @@ class Map extends Component {
 
   render() {
     return (
-      <MapDiv>
+      <MainDiv>
         <MapHeader />
-        <MapImg>
+
+        <MapDiv>
           <div style={{ height: "80vh", width: "100%" }}>
             <GoogleMapReact
               bootstrapURLKeys={{ key: "/*API KEY HERE*/" }}
@@ -46,8 +52,9 @@ class Map extends Component {
               />
             </GoogleMapReact>{" "}
           </div>
-        </MapImg>
-      </MapDiv>
+        </MapDiv>
+        <MapButtons />
+      </MainDiv>
     );
   }
 }
