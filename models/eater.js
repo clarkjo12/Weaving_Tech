@@ -16,7 +16,6 @@ const eaterSchema = new Schema({
     },
     timestamp: { type: Number, default: Date.now }
   },
-  isActive: { type: Boolean },
   favorites: { type: Array }
 });
 

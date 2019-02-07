@@ -2,32 +2,40 @@ const router = require("express").Router();
 const eatersController = require("../../controllers/eatersController");
 const passport = require('passport');
 
-router.put(
-  "/",
-  function (req, res, next)  {
-    console.log("routes/eater.js, login, req.body: ");
+let updatedLocation;
+
+router.post("/login",
+  function (req, res, next) {
+    console.log("routes/eater.js, login: ");
     console.log(req.body);
+    console.log(req.params.username + " " + req.params.password);
     next()
   },
   passport.authenticate("local"),
-  (req, res) => {
-    console.log("logged in", req.body.username);
+  (request, res) => {
+    console.log("logged in", request.body.username);
     var eaterInfo = {
-      username: req.body.username
+      _id: request.session.passport.user._id,
     };
+    console.log(eaterInfo);
+    console.log();
     res.send(eaterInfo);
   }
 )
+
 // Matches with "/api/eaters"
 router.route("/")
   .get(eatersController.findAll)
   .post(eatersController.create);
 
-// Matches with "/api/eaters/:id"
+// Matches with "/api/eaters/loc/:id"
 router
-  .route("/:id")
-  .get(eatersController.findById)
-  .put(eatersController.update)
-  .delete(eatersController.remove);
+  .route("/loc/:id")
+  .put(eatersController.updateLoc);
+
+// Matches with "/api/eaters/fav/:id"
+router
+  .route("/fav/:id")
+  .put(eatersController.updateFav);
 
 module.exports = router;
