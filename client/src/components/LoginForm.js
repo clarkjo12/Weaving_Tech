@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import OrangeLogo from "./../images/OrangeLogo.png";
 import LogoTextUser from "./../images/LogoTextUser.png";
-import MapButtons from "./MapButtons";
 
 const LoginChilds = styled.section`
   padding-bottom: 5px;
