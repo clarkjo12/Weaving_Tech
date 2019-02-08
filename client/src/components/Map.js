@@ -25,20 +25,12 @@ const MapDiv = styled.div`
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 class Map extends Component {
-
   static defaultProps = {
     center: {
       lat: 35.91,
       lng: -79.05
     },
     zoom: 11
-  };
-
-  state = {
-    center: {
-      lat: 35.25,
-      lng: -79.37
-    }
   };
 
   render() {
@@ -49,16 +41,14 @@ class Map extends Component {
           <div style={{ height: "80vh", width: "100%" }}>
             <GoogleMapReact
               bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
-              //pulling our default center from the state
-              //use this.props.center for the defaultProps setting
-              defaultCenter={this.state.center}
+              defaultCenter={this.props.center}
               defaultZoom={this.props.zoom}
             >
-              {/* <AnyReactComponent
-                // lat={this.state.currentLat}
-                // lng={this.state.currentLng}
-                // text={"Chapel Hill"}
-              /> */}
+              <AnyReactComponent
+                lat={35.9132}
+                lng={-79.055847}
+                text={"Chapel Hill"}
+              />
             </GoogleMapReact>{" "}
           </div>
         </MapDiv>

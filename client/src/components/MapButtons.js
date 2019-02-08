@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 
 //   const ButtonDiv = styled.div`
@@ -21,7 +21,7 @@ import styled from "styled-components";
 
 const Main = styled.div`
   display: flex;
-  padding-left: 38%;
+  justify-content: center;
   margin-top: -2em;
 `;
 
@@ -42,7 +42,8 @@ const FavButton = styled.button`
 `;
 
 const AllButton = styled.button`
-  background: lightseagreen;
+  height: 70px;
+  background: limegreen;
   color: gold;
   font-size: 1.2em;
   padding: 0.25em 1em;
@@ -53,19 +54,54 @@ const AllButton = styled.button`
   z-index: 3;
   position: relative;
   :hover {
-    background-color: darkgreen;
+    background-color: lightseagreen;
   }
 `;
+//css ^^^ ///////
 
-function MapButtons(props) {
-  return (
-    <Main>
-      <FavButton as="button" onClick={props => (props.color = "blue")}>
-        Favorites
-      </FavButton>
-      <AllButton>Everybody</AllButton>
-    </Main>
-  );
+var favs = 0;
+
+class MapButtons extends Component {
+  constructor() {
+    super();
+    this.state = { filter: 0 };
+  }
+
+  // initalFavClick = () => {
+  //   if (favs < 1) {
+  //     // alert("You havent Liked, Any Trucks yet.");
+  //     //console.log(favs);
+  //     favs++;
+  //     this.seeFavs();
+  //   } else {
+  //     // alert("Many Trucks.");
+  //     //console.log(favs);
+  //     this.seeFavs();
+  //   }
+  // };
+
+  seeAll = () => {
+    this.setState({ filter: 0 });
+    console.log("filter= " + this.state.filter);
+  };
+
+  seeFavs = () => {
+    this.setState({ filter: 1 });
+    console.log(this.state.filter);
+  };
+
+  render() {
+    return (
+      <Main>
+        <FavButton as="button" onClick={() => this.seeFavs()}>
+          Favorites
+        </FavButton>
+        <AllButton as="button" onClick={() => this.seeAll()}>
+          Everybody
+        </AllButton>
+      </Main>
+    );
+  }
 }
 
 export default MapButtons;
