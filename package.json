@@ -21,9 +21,10 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "dotenv": "^6.2.0",
     "express": "^4.16.3",
-    "google-map-react": "^1.1.2",
     "express-session": "^1.15.6",
+    "google-map-react": "^1.1.2",
     "if-env": "^1.0.4",
     "mongoose": "^5.4.9",
     "passport": "^0.4.0",

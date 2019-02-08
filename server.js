@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+require("dotenv").config();
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -7,7 +8,7 @@ const routes = require("./routes");
 const mongoose = require("mongoose");
 
 const session = require("express-session");
-const passport = require('./passport');
+const passport = require("./passport");
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -25,13 +26,13 @@ app.use(
   })
 );
 
-app.use( (req, res, next) => {
-  console.log('req.session', req.session);
+app.use((req, res, next) => {
+  console.log("req.session", req.session);
   return next();
 });
 
 app.use(passport.initialize());
-app.use(passport.session()) // will call the deserializeUser
+app.use(passport.session()); // will call the deserializeUser
 
 // Define API routes here
 app.use(routes);

@@ -21,35 +21,35 @@ import styled from "styled-components";
 
 const Main = styled.div`
   display: flex;
-  padding-left: 38%;
-  margin-top: -2em;
+  justify-content: center;
+  margin-top: -2.3em;
 `;
 
 const FavButton = styled.button`
   background: tomato;
-  color: white;
-  font-size: 1.25em;
+  color: gold;
+  font-size: 1.2em;
   padding: 0.25em 1em;
   border-radius: 3px;
-  border: solid 0;
+  border: solid gray 3px;
   z-index: 3;
   position: relative;
-  margin-right: 0.5px;
-  margin-left: 0.5px;
+  height: 75px;
+  border-right-width: 1.5px;
   :hover {
     background-color: darkred;
   }
 `;
 
 const AllButton = styled.button`
-  background: lightseagreen;
+  background: #7ed957;
+  height: 75px;
   color: gold;
   font-size: 1.2em;
   padding: 0.25em 1em;
   border-radius: 3px;
-  margin-right: 0.5px;
-  margin-left: 0.5px;
-  border: solid 0;
+  border: solid gray 3px;
+  border-left-width: 1.5px;
   z-index: 3;
   position: relative;
   :hover {
