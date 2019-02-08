@@ -4,7 +4,7 @@ var bcrypt = require('bcryptjs');
 
 const eaterSchema = new Schema({
   username: { type: String, required: true },
-  password: { type: String, required: true },
+  password: { type: String},
   location: {
     type: {
       type: String, // Don't do `{ location: { type: String } }`
@@ -16,8 +16,78 @@ const eaterSchema = new Schema({
     },
     timestamp: { type: Number, default: Date.now }
   },
-  favorites: { type: Array }
+  favorites: { type: Array },
+  facebookProvider: {
+    type: {
+      id: String,
+      token: String
+    },
+    select: false
+  },
+  googleProvider: {
+    type: {
+      id: String,
+      token: String
+    },
+    select: false
+  }
 });
+
+eaterSchema.set('toJSON', { getters: true, virtuals: true });
+
+eaterSchema.statics.upsertFbUser = function (accessToken, refreshToken, profile, cb) {
+  var that = this;
+  return this.findOne({
+    'facebookProvider.id': profile.id
+  }, function (err, user) {
+    // no user was found, lets create a new one
+    if (!user) {
+      var newUser = new that({
+        username: profile.displayName,
+        facebookProvider: {
+          id: profile.id,
+          token: accessToken
+        }
+      });
+
+      newUser.save(function (error, savedUser) {
+        if (error) {
+          console.log(error);
+        }
+        return cb(error, savedUser);
+      });
+    } else {
+      return cb(err, user);
+    }
+  });
+};
+
+eaterSchema.statics.upsertGoogleUser = function (accessToken, refreshToken, profile, cb) {
+  var that = this;
+  return this.findOne({
+    'googleProvider.id': profile.id
+  }, function (err, user) {
+    // no user was found, lets create a new one
+    if (!user) {
+      var newUser = new that({
+        username: profile.displayName,
+        googleProvider: {
+          id: profile.id,
+          token: accessToken
+        }
+      });
+
+      newUser.save(function (error, savedUser) {
+        if (error) {
+          console.log(error);
+        }
+        return cb(error, savedUser);
+      });
+    } else {
+      return cb(err, user);
+    }
+  });
+};
 
 eaterSchema.methods = {
   checkPassword: function (inputPassword) {

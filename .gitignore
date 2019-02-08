@@ -1,5 +1,8 @@
 node_modules
 client/node_modules
 .vscode
-client/.env
 .DS_Store
+client/.env
+.env
+passport/config.json
+client/src/config.json
