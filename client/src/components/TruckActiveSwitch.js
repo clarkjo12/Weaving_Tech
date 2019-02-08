@@ -52,7 +52,7 @@ class TruckActivateSwitch extends Component {
   }
 }
 
-// class TruckActivateSwitch extends React.Component {}
+// class TruckActivateSwitch extends React.Component {
 
 //   render() {
 //     return (
