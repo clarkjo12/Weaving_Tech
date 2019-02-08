@@ -5,3 +5,5 @@ client/.env
 .DS_Store
 passport/config.json
 client/src/config.json
+yarn-error.log
+client/yarn-error.log
