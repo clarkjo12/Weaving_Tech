@@ -15,6 +15,7 @@
     "react-nouislider": "^2.0.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.1",
+    "react-social-login": "^3.4.4",
     "react-switch": "^4.0.1",
     "styled-components": "^4.1.3"
   },
