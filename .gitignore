@@ -4,4 +4,3 @@ client/node_modules
 client/.env
 .env
 passport/config.js
-client/src/config.json
