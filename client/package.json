@@ -10,6 +10,7 @@
     "google-maps-react": "^2.0.2",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
+    "react-burger-menu": "^2.6.3",
     "react-dom": "^16.6.3",
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.0.0",
