@@ -23,9 +23,16 @@ const MapDiv = styled.div`
   border-radius: 5px;
 `;
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+const Marker = ({ text }) => <div>{text}</div>;
 
-class Map extends Component {
+class MapDisplay extends Component {
+  state = {
+    center: {
+      lat: 35.25,
+      lng: -79.37
+    }
+  };
+
   static defaultProps = {
     center: {
       lat: 35.91,
@@ -42,13 +49,19 @@ class Map extends Component {
           <div style={{ height: "80vh", width: "100%" }}>
             <GoogleMapReact
               bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
-              defaultCenter={this.props.center}
+              defaultCenter={this.state.center}
               defaultZoom={this.props.zoom}
+              yesIWantToUseGoogleMapApiInternals
             >
-              <AnyReactComponent
+              <Marker
                 lat={35.9132}
                 lng={-79.055847}
-                text={"Chapel Hill"}
+                text={"⭐"}
+              />
+              <Marker 
+                lat={this.state.center.lat} 
+                lng={this.state.center.lng}
+                text={"⭐"}
               />
             </GoogleMapReact>{" "}
           </div>
@@ -60,4 +73,4 @@ class Map extends Component {
   }
 }
 
-export default Map;
+export default MapDisplay;
