@@ -3,6 +3,7 @@ const LocalStrategy = require('./localStrategy')
 const GoogleStrategy = require('./googleStrategy')
 const FacebookStrategy = require('./facebookStrategy')
 const Eater = require('../models/eater')
+var config = require('./config');
 
 passport.serializeUser((eater, done) => {
 	console.log('=== serialize ... called ===')
@@ -12,7 +13,7 @@ passport.serializeUser((eater, done) => {
 })
 
 passport.deserializeUser((id, done) => {
-	console.log('DEserialize ... called')
+	console.log('Deserialize ... called')
 	Eater.findOne(
 		{ _id: id },
 		'firstName lastName photos local.username',

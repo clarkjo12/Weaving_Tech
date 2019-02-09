@@ -1,9 +1,8 @@
 import axios from "axios";
 
 export default {
-  // Gets all eaters
+  // Gets eater
   findEater: function (eaterData) {
-    console.log("HERE" + eaterData);
     return axios.post("/api/eaters/login", eaterData);
   },
   // Updates the eater with the given id

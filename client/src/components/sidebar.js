@@ -3,7 +3,7 @@ import { bubble as Menu } from "react-burger-menu";
 
 export default props => {
   return (
-    <Menu right >
+    <Menu right>
       <a className="menu-item" href="/">
         Landing
       </a>

@@ -11,6 +11,6 @@ const fstrategy = new FacebookStrategy({
             return done(err, user);
         });
     }
-)
+);
 
 module.exports = fstrategy

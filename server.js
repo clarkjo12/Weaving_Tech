@@ -1,14 +1,26 @@
 const express = require("express");
 const path = require("path");
 require('dotenv').config();
-const PORT = process.env.PORT || 3001;
-const app = express();
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const routes = require("./routes");
 const mongoose = require("mongoose");
 
 const session = require("express-session");
 const passport = require('./passport');
+
+const PORT = process.env.PORT || 3001;
+const app = express();
+
+var corsOption = {
+  origin: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  exposedHeaders: ['x-auth-token']
+};
+app.use(cors(corsOption));
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -26,13 +38,17 @@ app.use(
   })
 );
 
-app.use( (req, res, next) => {
+app.use((req, res, next) => {
   console.log('req.session', req.session);
   return next();
 });
 
 app.use(passport.initialize());
 app.use(passport.session()) // will call the deserializeUser
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 // Define API routes here
 app.use(routes);
