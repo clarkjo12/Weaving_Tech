@@ -35,7 +35,7 @@ class FancyLogins extends Component {
       mode: "cors",
       cache: "default"
     };
-    fetch('http://localhost:3000/auth/google', options).then(r => {
+    fetch('/auth/google', options).then(r => {
       const token = r.headers.get('x-auth-token');
       r.json().then(user => {
         if (token) {
@@ -67,7 +67,7 @@ class FancyLogins extends Component {
       cache: "default"
     };
 
-    fetch('http://localhost:3000/auth/facebook', options).then(r => {
+    fetch('/auth/facebook', options).then(r => {
       const token = r.headers.get('x-auth-token');
       r.json().then(user => {
         if (token) {
