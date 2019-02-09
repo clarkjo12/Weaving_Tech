@@ -1,6 +1,6 @@
 const User = require('../models/eater')
 var config = require('./config')
-const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+const GoogleStrategy = require("passport-google-token").Strategy;
 
 const gstrategy = new GoogleStrategy(
     {
