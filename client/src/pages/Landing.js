@@ -41,6 +41,13 @@ class Landing extends Component {
     }));
   };
 
+  handleUser = (username) => {
+    this.props.updateUser({
+      loggedIn: true,
+      username: username
+    });
+  }
+
   handleFormSubmit = event => {
     event.preventDefault();
     if (this.state.newUser) {
@@ -57,10 +64,7 @@ class Landing extends Component {
             console.log(res);
 
             if (res.status === 200) {
-              this.props.updateUser({
-                loggedIn: true,
-                username: res.data.username
-              });
+              this.handleUser(res.data.username);
               this.setState({ redirect: true });
             }
           })
@@ -127,7 +131,7 @@ class Landing extends Component {
           </Link>
         </FirstTimeDiv>{" "}
         <LoginSubmitButton handleSubmit={this.handleFormSubmit} />
-        <FancyLogins />
+        <FancyLogins updateUser={this.handleUser} latitude={this.props.latitude} longitude={this.props.longitude} />
       </Mommadiv>
 
     );

@@ -1,5 +1,4 @@
 const User = require('../models/eater')
-var config = require('./config')
 const LocalStrategy = require('passport-local').Strategy
 
 const strategy = new LocalStrategy(

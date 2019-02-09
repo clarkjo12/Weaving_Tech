@@ -1,3 +1,5 @@
+var jwt = require('jsonwebtoken');
+
 var createToken = function(auth) {
     return jwt.sign({
             id: auth.id

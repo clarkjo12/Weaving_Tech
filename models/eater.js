@@ -4,7 +4,8 @@ var bcrypt = require('bcryptjs');
 
 const eaterSchema = new Schema({
   username: { type: String, required: true },
-  password: { type: String},
+  password: { type: String },
+  picture: { type: String },
   location: {
     type: {
       type: String, // Don't do `{ location: { type: String } }`
@@ -44,6 +45,7 @@ eaterSchema.statics.upsertFbUser = function (accessToken, refreshToken, profile,
     if (!user) {
       var newUser = new that({
         username: profile.displayName,
+        picture: profile.photos[0].value,
         facebookProvider: {
           id: profile.id,
           token: accessToken
@@ -71,10 +73,11 @@ eaterSchema.statics.upsertGoogleUser = function (accessToken, refreshToken, prof
     if (!user) {
       var newUser = new that({
         username: profile.displayName,
+        picture: profile._json['picture'],
         googleProvider: {
           id: profile.id,
           token: accessToken
-        }
+        },
       });
 
       newUser.save(function (error, savedUser) {
