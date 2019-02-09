@@ -26,8 +26,8 @@ class FancyLogins extends Component {
   }
 
   googleResponse = response => {
-    console.log(response);
-    const tokenBlob = new Blob([JSON.stringify({ access_token: response.accessToken }, null, 2)], { type: 'application/json' });
+    console.log(response.token);
+    const tokenBlob = new Blob([JSON.stringify({ access_token: response.token.accessToken }, null, 2)], { type: 'application/json' });
 
     const options = {
       method: "POST",
@@ -59,7 +59,7 @@ class FancyLogins extends Component {
 
   facebookResponse = response => {
     console.log(response)
-    const tokenBlob = new Blob([JSON.stringify({ access_token: response.accessToken }, null, 2)], { type: 'application/json' });
+    const tokenBlob = new Blob([JSON.stringify({ access_token: response.token.accessToken }, null, 2)], { type: 'application/json' });
     const options = {
       method: "POST",
       body: tokenBlob,
