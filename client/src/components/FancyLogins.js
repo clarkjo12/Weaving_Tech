@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import styled from "styled-components";
-import { GoogleLogin } from "react-google-login";
-import FacebookLogin from "react-facebook-login";
+import FaceButton from "./FBButton";
+import GoogButton from "./GGButton";
 import API from "../utils/API";
 import config from './../config.json';
 
@@ -97,46 +97,27 @@ class FancyLogins extends Component {
     return (
       <div className="FancyLogins">
         <ButtonDiv>
-          <FBButton>
-            <FacebookLogin
+          <FaceButton
+              provider="facebook"
               appId={config.FACEBOOK_APP_ID}
               autoLoad={false}
               fields="name,email,picture"
-              callback={this.facebookResponse} />
-          </FBButton>
-          <GGButton>
-            <GoogleLogin
-              clientId={config.GOOGLE_CLIENT_ID}
+              callback={this.facebookResponse}
+              >
+              Login with Facebook
+          </FaceButton>
+          <GoogButton
+              provider="google"
+              appId={config.GOOGLE_CLIENT_ID}
               buttonText="Login"
-              onSuccess={this.googleResponse}
-              onFailure={this.onFailure}
-            />
-          </GGButton>
+              onLoginSuccess={this.googleResponse}
+              onLoginFailure={this.onFailure}
+            >
+            Login with Google
+          </GoogButton>
         </ButtonDiv> 
       </div>
-    ) : (
-      <ButtonDiv>
-        <FaceButton
-          provider="facebook"
-          appId={config.FACEBOOK_APP_ID}
-          autoLoad={false}
-          fields="name,email,picture"
-          callback={this.facebookResponse}
-        >
-          Login with Facebook
-        </FaceButton>
-        <GoogButton
-          provider="google"
-          appId={config.GOOGLE_CLIENT_ID}
-          onLoginSuccess={this.googleResponse}
-          onLoginFailure={this.onFailure}
-        >
-          Login with Google
-        </GoogButton>
-      </ButtonDiv>
-    );
-
-    return <div className="FancyLogins">{content}</div>;
+    )
   }
 }
 

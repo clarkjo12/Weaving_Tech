@@ -6,8 +6,8 @@ module.exports = {
         "profileURL": "https: //graph.facebook.com/v2.5/me?fields=first_name,last_name,email"
     },
     "googleAuth": {
-        "clientID": "1040827225083-t2vf7hk5htkqm25g09o35k95s4ilpr7d.apps.googleusercontent.com",
-        "clientSecret": "oDITic822KKOwxEq-kRMANNr",
+        "clientID": "645637599865-klo62iomgapcod16tke26mo0fub29n3k.apps.googleusercontent.com",
+        "clientSecret": "Vr7ogFpK1KvCIuJtFgBZgv-Y",
         "callbackURL": "http://localhost:3000/auth/google/callback"
     }
 }
