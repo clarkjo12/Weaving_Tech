@@ -6,14 +6,10 @@ import FacebookLogin from "react-facebook-login";
 import API from "../utils/API";
 import config from './../config.json';
 
-const FBButton = styled.div`
-  height: 20px;
-`;
 
-const GGButton = styled.div`
-  margin-left: 50px;
-  margin-right: 70px;
-`;
+// const FBButton = styled.div``;
+
+// const GGButton = styled.div``;
 
 const ButtonDiv = styled.div`
   display: flex;
@@ -24,6 +20,7 @@ const ButtonDiv = styled.div`
 `;
 
 class FancyLogins extends Component {
+
   state = {
     redirectToMap: false
   }
@@ -31,17 +28,19 @@ class FancyLogins extends Component {
   googleResponse = response => {
     console.log(response);
     const tokenBlob = new Blob([JSON.stringify({ access_token: response.accessToken }, null, 2)], { type: 'application/json' });
+
     const options = {
-      method: 'POST',
+      method: "POST",
       body: tokenBlob,
-      mode: 'cors',
-      cache: 'default'
+      mode: "cors",
+      cache: "default"
     };
     fetch('http://localhost:3000/auth/google', options).then(r => {
       const token = r.headers.get('x-auth-token');
       r.json().then(user => {
         if (token) {
           this.props.updateUser(user.username);
+
         }
         API.updateEaterLoc(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
           .then(res => {
@@ -55,18 +54,19 @@ class FancyLogins extends Component {
             console.log(err);
           });
       });
-    })
+    });
   };
 
   facebookResponse = response => {
     console.log(response)
     const tokenBlob = new Blob([JSON.stringify({ access_token: response.accessToken }, null, 2)], { type: 'application/json' });
     const options = {
-      method: 'POST',
+      method: "POST",
       body: tokenBlob,
-      mode: 'cors',
-      cache: 'default'
+      mode: "cors",
+      cache: "default"
     };
+
     fetch('http://localhost:3000/auth/facebook', options).then(r => {
       const token = r.headers.get('x-auth-token');
       r.json().then(user => {
@@ -85,8 +85,8 @@ class FancyLogins extends Component {
             console.log(err);
           });
       });
-    })
-  }
+    });
+  };
 
   render() {
 
@@ -114,7 +114,29 @@ class FancyLogins extends Component {
           </GGButton>
         </ButtonDiv> 
       </div>
+    ) : (
+      <ButtonDiv>
+        <FaceButton
+          provider="facebook"
+          appId={config.FACEBOOK_APP_ID}
+          autoLoad={false}
+          fields="name,email,picture"
+          callback={this.facebookResponse}
+        >
+          Login with Facebook
+        </FaceButton>
+        <GoogButton
+          provider="google"
+          appId={config.GOOGLE_CLIENT_ID}
+          onLoginSuccess={this.googleResponse}
+          onLoginFailure={this.onFailure}
+        >
+          Login with Google
+        </GoogButton>
+      </ButtonDiv>
     );
+
+    return <div className="FancyLogins">{content}</div>;
   }
 }
 

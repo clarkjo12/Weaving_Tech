@@ -4,14 +4,14 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start": "if-env NODE_ENV=production && yarn run start:prod || yarn run start:dev",
     "start:prod": "node server.js",
-    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"yarn run client\"",
     "seed": "node scripts/seedDB.js",
-    "client": "cd client && npm run start",
-    "install": "cd client && npm install",
-    "build": "cd client && npm run build",
-    "heroku-postbuild": "npm run build"
+    "client": "cd client && yarn run start",
+    "install": "cd client && yarn install",
+    "build": "cd client && yarn run build",
+    "heroku-postbuild": "yarn run build"
   },
   "author": "",
   "license": "ISC",
@@ -38,6 +38,9 @@
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-facebook-login": "^4.1.1"
+    "react-facebook-login": "^4.1.1",
+    "react-google-login": "^5.0.2",
+    "react-native-open-maps": "^0.3.3",
+    "react-switch": "^4.0.1"
   }
 }

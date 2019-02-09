@@ -1,24 +1,93 @@
 import React from "react";
+import ReactDOM from "react-dom";
+import Modal from "react-modal";
+import styled from "styled-components";
 
-function Modal(props) {
-  const showHideStyle = props.show ? "block" : "none";
-  return (
-    <div className="modal" role="dialog" style={{ display: showHideStyle }}>
-      <div className="modal-content">
-        <div className="modal-header">
-          <h5 className="modal-title">{props.title}</h5>
-          <button type="button" className="close white" onClick={props.handleClose} data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div className="modal-body"><h5>{props.textString}</h5>
-        </div>
-        <div className="modal-footer">
-          <button type="button" className="button grey" onClick={props.handleClose} data-dismiss="modal">Close</button>
-        </div>
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)"
+  }
+};
+
+const SummaryDiv = styled.div`
+  color: lightblack;
+`;
+const ButtDiv = styled.div`
+  float: right;
+`;
+
+// Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
+//Modal.setAppElement('#yourAppElement')
+
+class Modals extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      modalIsOpen: false
+    };
+
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  openModal() {
+    this.setState({ modalIsOpen: true });
+  }
+
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    this.subtitle.style.color = "#f00";
+  }
+
+  closeModal() {
+    this.setState({ modalIsOpen: false });
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.openModal}>Open Modal</button>{" "}
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          style={{
+            content: {
+              background: "#ffde59",
+              top: "50%",
+              left: "50%",
+              right: "auto",
+              bottom: "auto",
+              marginRight: "-50%",
+              transform: "translate(-50%, -50%)"
+            }
+          }}
+          contentLabel="Example Modal"
+        >
+          <h2 ref={subtitle => (this.subtitle = subtitle)}>
+            Fresh Tacos BOGO!
+          </h2>
+          <SummaryDiv>
+            <div>
+              Hot and Fresh, Chicken or Beef; supplies limited so come and git
+              it!
+            </div>
+          </SummaryDiv>
+          <ButtDiv>
+            <br />
+            <button onClick={this.closeModal}>close</button>
+          </ButtDiv>
+        </Modal>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
-export default Modal;
+export default Modals;

@@ -1,7 +1,6 @@
 node_modules
 client/node_modules
 .vscode
-.DS_Store
 client/.env
 .env
 passport/config.js

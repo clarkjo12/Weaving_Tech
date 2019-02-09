@@ -3,6 +3,7 @@ import GoogleMapReact from "google-map-react";
 import styled from "styled-components";
 import MapHeader from "./MapHeader";
 import MapButtons from "./MapButtons";
+import Modals from "./Modal";
 
 const MainDiv = styled.section`
   padding: 4em;
@@ -53,6 +54,7 @@ class Map extends Component {
           </div>
         </MapDiv>
         <MapButtons />
+        <Modals />
       </MainDiv>
     );
   }

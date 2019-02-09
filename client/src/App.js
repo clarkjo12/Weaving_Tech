@@ -6,7 +6,8 @@ import CustomerMap from "./pages/CustomerMap";
 import TruckHome from "./pages/TruckHome";
 import ErrorPage from "./pages/ErrorPage";
 
-import NavBar from "./components/NavBar";
+// import NavBar from "./components/NavBar";
+import SideBar from "./components/sidebar";
 
 import "./App.css";
 
@@ -64,7 +65,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <NavBar />
+          <SideBar />
           <Switch>
             <Route exact path="/" render={(props) => <Landing {...props} updateUser={this.updateUser} latitude={this.state.latitude} longitude={this.state.longitude} />} />
             <Route exact path="/truck" component={TruckHome} />
