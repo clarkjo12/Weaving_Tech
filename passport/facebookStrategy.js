@@ -1,6 +1,6 @@
 const User = require('../models/eater')
 var config = require('./config')
-const FacebookStrategy = require('passport-facebook').Strategy;
+const FacebookStrategy = require('passport-facebook-token');
 
 const fstrategy = new FacebookStrategy({
     clientID: config.facebookAuth.clientID,
@@ -11,6 +11,6 @@ const fstrategy = new FacebookStrategy({
             return done(err, user);
         });
     }
-)
+);
 
 module.exports = fstrategy

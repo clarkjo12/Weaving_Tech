@@ -4,5 +4,5 @@ client/node_modules
 .DS_Store
 client/.env
 .env
-passport/config.json
+passport/config.js
 client/src/config.json
