@@ -1,43 +1,93 @@
 import React from "react";
+import ReactDOM from "react-dom";
+import Modal from "react-modal";
+import styled from "styled-components";
 
-class ModalMain extends React.Component {
-  state = { show: false };
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)"
+  }
+};
 
-  showModal = () => {
-    this.setState({ show: true });
-  };
+const SummaryDiv = styled.div`
+  color: lightblack;
+`;
+const ButtDiv = styled.div`
+  float: right;
+`;
 
-  hideModal = () => {
-    this.setState({ show: false });
-  };
+// Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
+//Modal.setAppElement('#yourAppElement')
+
+class Modals extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      modalIsOpen: false
+    };
+
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  openModal() {
+    this.setState({ modalIsOpen: true });
+  }
+
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    this.subtitle.style.color = "#f00";
+  }
+
+  closeModal() {
+    this.setState({ modalIsOpen: false });
+  }
 
   render() {
     return (
-      <main>
-        <h1>React Modal</h1>
-        <ModalMain show={this.state.show} handleClose={this.hideModal}>
-          <p>Modal</p>
-          <p>Data</p>
-        </ModalMain>
-        <button type="button" onClick={this.showModal}>
-          Open
-        </button>
-      </main>
+      <div>
+        <button onClick={this.openModal}>Open Modal</button>{" "}
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          style={{
+            content: {
+              background: "#ffde59",
+              top: "50%",
+              left: "50%",
+              right: "auto",
+              bottom: "auto",
+              marginRight: "-50%",
+              transform: "translate(-50%, -50%)"
+            }
+          }}
+          contentLabel="Example Modal"
+        >
+          <h2 ref={subtitle => (this.subtitle = subtitle)}>
+            Fresh Tacos BOGO!
+          </h2>
+          <SummaryDiv>
+            <div>
+              Hot and Fresh, Chicken or Beef; supplies limited so come and git
+              it!
+            </div>
+          </SummaryDiv>
+          <ButtDiv>
+            <br />
+            <button onClick={this.closeModal}>close</button>
+          </ButtDiv>
+        </Modal>
+      </div>
     );
   }
 }
 
-const Modal = ({ handleClose, show, children }) => {
-  const showHideClassName = show ? "modal display-block" : "modal display-none";
-
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {children}
-        <button onClick={handleClose}>Close</button>
-      </section>
-    </div>
-  );
-};
-
-export default ModalMain;
+export default Modals;
