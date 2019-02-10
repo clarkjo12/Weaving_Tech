@@ -19,7 +19,7 @@ const MainDiv = styled.section`
 // `;
 
 const MapDiv = styled.div`
-  border: 7px solid gray;
+  border: 3px solid gray;
   border-radius: 5px;
 `;
 
@@ -53,13 +53,9 @@ class MapDisplay extends Component {
               defaultZoom={this.props.zoom}
               yesIWantToUseGoogleMapApiInternals
             >
+              <Marker lat={35.9132} lng={-79.055847} text={"⭐"} />
               <Marker
-                lat={35.9132}
-                lng={-79.055847}
-                text={"⭐"}
-              />
-              <Marker 
-                lat={this.state.center.lat} 
+                lat={this.state.center.lat}
                 lng={this.state.center.lng}
                 text={"⭐"}
               />
