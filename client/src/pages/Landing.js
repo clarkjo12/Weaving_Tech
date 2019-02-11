@@ -25,7 +25,9 @@ class Landing extends Component {
     password: "",
     confirmpassword: "",
     newUser: false,
-    redirect: false
+    redirect: false,
+    loginType: "eater",
+    count: 0
   };
 
   handleInputChange = event => {
@@ -48,6 +50,27 @@ class Landing extends Component {
     });
   }
 
+  handleLoginType = () => {
+    let type = this.state.loginType;
+    type = (type === "eater") ? "trucker" : "eater";
+    this.setState({
+      loginType: type
+    })
+  }
+
+  handleLoginLogo = event => {
+    event.preventDefault();
+    let clickCount = this.state.count;
+    clickCount = clickCount + 1;
+    if (clickCount === 5 ) {
+      this.handleLoginType();
+      clickCount = 0;
+    }
+    this.setState({
+      count: clickCount
+    })
+  }
+
   handleFormSubmit = event => {
     event.preventDefault();
     if (this.state.newUser) {
@@ -58,7 +81,7 @@ class Landing extends Component {
       ) {
         //check to make sure the username isn't in the database already
 
-        API.saveEater({ username: this.state.username, password: this.state.password, location: { coordinates: [this.props.latitude, this.props.longitude] }})
+        API.saveEater({ username: this.state.username, password: this.state.password, location: { coordinates: [this.props.latitude, this.props.longitude] } })
           .then(res => {
             console.log("login response: ");
             console.log(res);
@@ -78,7 +101,7 @@ class Landing extends Component {
       //user already exists in the database, so update
       if (this.state.username && this.state.password) {
 
-        API.findEater({username: this.state.username, password: this.state.password})
+        API.findEater({ username: this.state.username, password: this.state.password })
 
           .then(res => {
             console.log("login response: ");
@@ -121,16 +144,20 @@ class Landing extends Component {
         <LoginForm
           handleInput={this.handleInputChange}
           newUser={this.state.newUser}
+          loginType={this.state.loginType}
+          handleLoginLogo={this.handleLoginLogo}
         />
-        <FirstTimeDiv>
-          <Link to="#" onClick={this.handleUserStatus}>
-            {" "}
-            {this.state.newUser
-              ? "Already Been Here?"
-              : "First Time Here?"}{" "}
-          </Link>
-        </FirstTimeDiv>{" "}
-        <LoginSubmitButton handleSubmit={this.handleFormSubmit} />
+        {(this.state.loginType === "eater") ?
+          (<FirstTimeDiv>
+            <Link to="#" onClick={this.handleUserStatus}>
+              {" "}
+              {this.state.newUser
+                ? "Already Been Here?"
+                : "First Time Here?"}{" "}
+            </Link>
+          </FirstTimeDiv>) : ("")}
+        {(this.state.loginType === "eater") ?
+          <LoginSubmitButton handleSubmit={this.handleFormSubmit} /> : ("")}
         <FancyLogins updateUser={this.handleUser} latitude={this.props.latitude} longitude={this.props.longitude} />
       </Mommadiv>
 
