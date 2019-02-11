@@ -41,42 +41,49 @@ function LoginForm(props) {
   return (
     <LoginChilds>
       <form className="sign-in">
-        <TrapDoor as="button" onClick={() => alert("It works!")}>
+        <TrapDoor as="button" onClick={props.handleLoginLogo}>
           <Logo img src={OrangeLogo} alt="no dice" />
         </TrapDoor>
         <br />
         <LogoText img src={LogoTextUser} alt="nah bro" />
 
         <Htwo>
-          <p>Login Below!</p>
+          {(props.loginType === "eater") ?
+            (<p>Login Below!</p>) :
+            (<p>Trucker Edition!</p>)}
         </Htwo>
-        <Input>
-          <input
-            type="text"
-            placeholder="Username"
-            name="username"
-            onChange={props.handleInput}
-          />
-        </Input>
-        <Input>
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            onChange={props.handleInput}
-          />
-        </Input>
-
-        {props.newUser ? (
-          <Input>
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              name="confirmpassword"
-              onChange={props.handleInput}
-            />
-          </Input>
-        ) : null}
+        {(props.loginType === "eater") ?
+          (
+            <div>
+              <Input>
+                <input
+                  type="text"
+                  placeholder="Username"
+                  name="username"
+                  onChange={props.handleInput}
+                />
+              </Input>
+              <Input>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  onChange={props.handleInput}
+                />
+              </Input>
+              {props.newUser ? (
+                <Input>
+                  <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    name="confirmpassword"
+                    onChange={props.handleInput}
+                  />
+                </Input>
+              ) : null}
+            </div>
+          ) :
+          ("")}
       </form>
     </LoginChilds>
   );
