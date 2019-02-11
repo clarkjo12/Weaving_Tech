@@ -31,11 +31,10 @@ const FavButton = styled.button`
   font-size: 1.25em;
   padding: 0.25em 1em;
   border-radius: 3px;
-  border: solid 0;
-  z-index: 3;
+  border: solid 2px gray;
   position: relative;
-  margin-right: 0.5px;
-  margin-left: 0.5px;
+  margin-right: -1px;
+
   :hover {
     background-color: darkred;
   }
@@ -48,10 +47,7 @@ const AllButton = styled.button`
   font-size: 1.2em;
   padding: 0.25em 1em;
   border-radius: 3px;
-  margin-right: 0.5px;
-  margin-left: 0.5px;
-  border: solid 0;
-  z-index: 3;
+  border: solid 2px gray;
   position: relative;
   :hover {
     background-color: lightseagreen;
@@ -59,7 +55,7 @@ const AllButton = styled.button`
 `;
 //css ^^^ ///////
 
-var favs = 0;
+//var favs = 0;
 
 class MapButtons extends Component {
   constructor() {
