@@ -28,8 +28,8 @@ const Marker = ({ text }) => <div>{text}</div>;
 class MapDisplay extends Component {
   state = {
     center: {
-      lat: 35.25,
-      lng: -79.37
+      lat: this.props.latitude,
+      lng: this.props.longitude
     }
   };
 
