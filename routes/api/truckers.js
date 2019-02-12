@@ -8,9 +8,12 @@ router.route("/")
 
 // Matches with "/api/truckers/:id"
 router
-  .route("/:id")
-  .get(truckersController.findById)
-  .put(truckersController.update)
-  .delete(truckersController.remove);
+  .route("/loc/:id")
+  .put(truckersController.updateLoc)
+
+// Matches with "/api/truckers/fav/:id"
+router
+  .route("/fav/:id")
+  .put(truckersController.updateFav);
 
 module.exports = router;
