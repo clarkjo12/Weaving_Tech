@@ -3,12 +3,13 @@ const LocalStrategy = require('./localStrategy')
 const GoogleStrategy = require('./googleStrategy')
 const FacebookStrategy = require('./facebookStrategy')
 const Eater = require('../models/eater')
+const Trucker = require('../models/trucker')
 
-passport.serializeUser((eater, done) => {
+passport.serializeUser((user, done) => {
 	console.log('=== serialize ... called ===')
-	console.log(eater) // the whole raw eater object!
+	console.log(user) // the whole raw eater object!
 	console.log('---------')
-	done(null, { _id: eater._id })
+	done(null, { _id: user._id })
 })
 
 passport.deserializeUser((id, done) => {

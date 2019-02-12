@@ -23,8 +23,10 @@ router.post("/login",
 
 // Matches with "/api/eaters"
 router.route("/")
-  .get(eatersController.findAll)
   .post(eatersController.create);
+
+router.route("/count")
+  .post(eatersController.findEater);
 
 // Matches with "/api/eaters/loc/:id"
 router

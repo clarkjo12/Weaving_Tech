@@ -40,8 +40,7 @@ class FancyLogins extends Component {
         if (token) {
           this.props.updateUser(user.username);
         }
-        {
-          (this.props.loginType === "eater") ?
+        {(this.props.loginType === "eater") ?
             (API.updateEaterLoc(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
               .then(res => {
                 console.log("update response: ");

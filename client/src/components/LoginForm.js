@@ -37,6 +37,11 @@ const TrapDoor = styled.div`
   border: solid 0;
 `;
 
+const Error = styled.div`
+  color: red;
+  font-weight: bold;
+`;
+
 function LoginForm(props) {
   return (
     <LoginChilds>
@@ -61,7 +66,7 @@ function LoginForm(props) {
                   placeholder="Username"
                   name="username"
                   onChange={props.handleInput}
-                />
+                /> 
               </Input>
               <Input>
                 <input
@@ -69,7 +74,7 @@ function LoginForm(props) {
                   placeholder="Password"
                   name="password"
                   onChange={props.handleInput}
-                />
+                /> 
               </Input>
               {props.newUser ? (
                 <Input>
@@ -78,9 +83,10 @@ function LoginForm(props) {
                     placeholder="Confirm Password"
                     name="confirmpassword"
                     onChange={props.handleInput}
-                  />
+                  /> 
                 </Input>
               ) : null}
+              <Error>{props.errorMessage}</Error>
             </div>
           ) :
           ("")}

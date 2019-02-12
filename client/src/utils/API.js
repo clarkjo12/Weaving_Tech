@@ -1,6 +1,9 @@
 import axios from "axios";
 
 export default {
+  findEaters: function (eaterData) {
+    return axios.post("/api/eaters/count", eaterData);
+  },
   // Gets eater
   findEater: function (eaterData) {
     return axios.post("/api/eaters/login", eaterData);

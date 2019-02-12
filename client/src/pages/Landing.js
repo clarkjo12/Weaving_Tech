@@ -27,13 +27,15 @@ class Landing extends Component {
     newUser: false,
     redirect: false,
     loginType: "eater",
-    count: 0
+    count: 0,
+    errorMessage: ""
   };
 
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
+      errorMessage: ""
     });
   };
 
@@ -62,7 +64,7 @@ class Landing extends Component {
     event.preventDefault();
     let clickCount = this.state.count;
     clickCount = clickCount + 1;
-    if (clickCount === 5 ) {
+    if (clickCount === 5) {
       this.handleLoginType();
       clickCount = 0;
     }
@@ -77,32 +79,38 @@ class Landing extends Component {
       if (
         this.state.username &&
         this.state.password &&
-        this.state.password === this.state.confirmpassword
-      ) {
+        (this.state.password === this.state.confirmpassword)) {
         //check to make sure the username isn't in the database already
-
-        API.saveEater({ username: this.state.username, password: this.state.password, location: { coordinates: [this.props.latitude, this.props.longitude] } })
+        API.findEaters({ username: this.state.username })
           .then(res => {
-            console.log("login response: ");
-            console.log(res);
-
-            if (res.status === 200) {
-              this.handleUser(res.data.username);
-              this.setState({ redirect: true });
+            if (res.data === 0) {
+              API.saveEater({ username: this.state.username, password: this.state.password, location: { coordinates: [this.props.latitude, this.props.longitude] } })
+                .then(res => {
+                  console.log("login response: ");
+                  console.log(res);
+                  if (res.status === 200) {
+                    this.handleUser(res.data.username);
+                    this.setState({ redirect: true });
+                  }
+                })
+                .catch(err => {
+                  console.log("login error: ");
+                  console.log(err);
+                  this.setState({ errorMessage: "Username and/or Password incorrect" });
+                });
+            }
+            else {
+              this.setState({ errorMessage: "Username already exists in database" });
             }
           })
-          .catch(err => {
-            console.log("login error: ");
-            console.log(err);
-          });
       }
-      //error modal
+      else {
+        this.setState({ errorMessage: "Username and/or Password incorrect" });
+      }
     } else {
       //user already exists in the database, so update
       if (this.state.username && this.state.password) {
-
         API.findEater({ username: this.state.username, password: this.state.password })
-
           .then(res => {
             console.log("login response: ");
             console.log(res.data._id);
@@ -113,7 +121,6 @@ class Landing extends Component {
               });
               this.setState({ redirect: true });
             }
-
             API.updateEaterLoc(res.data._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
               .then(res => {
                 console.log("update response: ");
@@ -121,13 +128,17 @@ class Landing extends Component {
               }).catch(err => {
                 console.log("update error: ");
                 console.log(err);
+                this.setState({ errorMessage: "Username and/or Password incorrect" });
               });
           }).catch(err => {
             console.log("login error: ");
             console.log(err);
+            this.setState({ errorMessage: "Username and/or Password incorrect" });
           });
       }
-      //error modal
+      else {
+        this.setState({ errorMessage: "Username and/or Password incorrect" });
+      }
     }
   };
 
@@ -146,6 +157,7 @@ class Landing extends Component {
           newUser={this.state.newUser}
           loginType={this.state.loginType}
           handleLoginLogo={this.handleLoginLogo}
+          errorMessage={this.state.errorMessage}
         />
         {(this.state.loginType === "eater") ?
           (<FirstTimeDiv>
