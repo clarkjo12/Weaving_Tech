@@ -27,39 +27,51 @@ class FancyLogins extends Component {
 
   googleResponse = response => {
     console.log(response.token);
-    const tokenBlob = new Blob([JSON.stringify({ access_token: response.token.accessToken }, null, 2)], { type: 'application/json' });
-
+    const tokenBlob = new Blob([JSON.stringify({ access_token: response.token.accessToken, loginType: this.props.loginType }, null, 2)], { type: 'application/json' });
     const options = {
       method: "POST",
       body: tokenBlob,
       mode: "cors",
       cache: "default"
     };
-    fetch('/auth/google', options).then(r => {
+    fetch('/auth/google/', options).then(r => {
       const token = r.headers.get('x-auth-token');
       r.json().then(user => {
         if (token) {
           this.props.updateUser(user.username);
-
         }
-        API.updateEaterLoc(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
-          .then(res => {
-            console.log("update response: ");
-            console.log(res);
-            this.setState({
-              redirectToMap: true
-            })
-          }).catch(err => {
-            console.log("update error: ");
-            console.log(err);
-          });
+        {
+          (this.props.loginType === "eater") ?
+            (API.updateEaterLoc(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
+              .then(res => {
+                console.log("update response: ");
+                console.log(res);
+                this.setState({
+                  redirectToMap: true
+                })
+              }).catch(err => {
+                console.log("update error: ");
+                console.log(err);
+              })) :
+            (API.updateTruckerLoc(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
+              .then(res => {
+                console.log("update response: ");
+                console.log(res);
+                this.setState({
+                  redirectToMap: true
+                })
+              }).catch(err => {
+                console.log("update error: ");
+                console.log(err);
+              }))
+        }
       });
-    });
+    })
   };
 
   facebookResponse = response => {
     console.log(response);
-    const tokenBlob = new Blob([JSON.stringify({ access_token: response.token.accessToken }, null, 2)], { type: 'application/json' });
+    const tokenBlob = new Blob([JSON.stringify({ access_token: response.token.accessToken, loginType: this.props.loginType }, null, 2)], { type: 'application/json' });
     const options = {
       method: "POST",
       body: tokenBlob,
@@ -73,17 +85,31 @@ class FancyLogins extends Component {
         if (token) {
           this.props.updateUser(user.username);
         }
-        API.updateEaterLoc(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
-          .then(res => {
-            console.log("update response: ");
-            console.log(res);
-            this.setState({
-              redirectToMap: true
-            })
-          }).catch(err => {
-            console.log("update error: ");
-            console.log(err);
-          });
+        {
+          (this.props.loginType === "eater") ?
+            (API.updateEaterLoc(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
+              .then(res => {
+                console.log("update response: ");
+                console.log(res);
+                this.setState({
+                  redirectToMap: true
+                })
+              }).catch(err => {
+                console.log("update error: ");
+                console.log(err);
+              })) :
+            (API.updateTruckerLoc(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
+              .then(res => {
+                console.log("update response: ");
+                console.log(res);
+                this.setState({
+                  redirectToMap: true
+                })
+              }).catch(err => {
+                console.log("update error: ");
+                console.log(err);
+              }))
+        }
       });
     });
   };
@@ -98,22 +124,22 @@ class FancyLogins extends Component {
       <div className="FancyLogins">
         <ButtonDiv>
           <FaceButton
-              provider="facebook"
-              appId={config.FACEBOOK_APP_ID}
-              onLoginSuccess={this.facebookResponse}
-              onLoginFailure={this.onFailure}
-              >
-              Login with Facebook
+            provider="facebook"
+            appId={config.FACEBOOK_APP_ID}
+            onLoginSuccess={this.facebookResponse}
+            onLoginFailure={this.onFailure}
+          >
+            Login with Facebook
           </FaceButton>
           <GoogButton
-              provider="google"
-              appId={config.GOOGLE_CLIENT_ID}
-              onLoginSuccess={this.googleResponse}
-              onLoginFailure={this.onFailure}
-            >
+            provider="google"
+            appId={config.GOOGLE_CLIENT_ID}
+            onLoginSuccess={this.googleResponse}
+            onLoginFailure={this.onFailure}
+          >
             Login with Google
           </GoogButton>
-        </ButtonDiv> 
+        </ButtonDiv>
       </div>
     )
   }

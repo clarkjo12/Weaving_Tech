@@ -3,7 +3,6 @@ const LocalStrategy = require('./localStrategy')
 const GoogleStrategy = require('./googleStrategy')
 const FacebookStrategy = require('./facebookStrategy')
 const Eater = require('../models/eater')
-var config = require('./config');
 
 passport.serializeUser((eater, done) => {
 	console.log('=== serialize ... called ===')
@@ -28,7 +27,7 @@ passport.deserializeUser((id, done) => {
 
 // ==== Register Strategies ====
 passport.use(LocalStrategy);
-passport.use(GoogleStrategy);
 passport.use(FacebookStrategy);
+passport.use(GoogleStrategy);
 
 module.exports = passport

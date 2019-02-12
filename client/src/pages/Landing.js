@@ -158,7 +158,7 @@ class Landing extends Component {
           </FirstTimeDiv>) : ("")}
         {(this.state.loginType === "eater") ?
           <LoginSubmitButton handleSubmit={this.handleFormSubmit} /> : ("")}
-        <FancyLogins updateUser={this.handleUser} latitude={this.props.latitude} longitude={this.props.longitude} />
+        <FancyLogins updateUser={this.handleUser} latitude={this.props.latitude} longitude={this.props.longitude} loginType={this.state.loginType} />
       </Mommadiv>
 
     );

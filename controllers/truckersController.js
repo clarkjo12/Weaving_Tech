@@ -9,28 +9,21 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  findById: function(req, res) {
-    db.Trucker
-      .findById(req.params.id)
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
-  },
   create: function(req, res) {
     db.Trucker
       .create(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  update: function(req, res) {
+  updateLoc: function(req, res) {
     db.Trucker
-      .findOneAndUpdate({ _id: req.params.id }, req.body)
+      .updateOne({ _id: req.params.id }, { location: req.body.location })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  remove: function(req, res) {
+  updateFav: function(req, res) {
     db.Trucker
-      .findById({ _id: req.params.id })
-      .then(dbModel => dbModel.remove())
+      .findOneAndUpdate({ _id: req.params.id }, {$inc : {'favorites' : 1}})
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   }
