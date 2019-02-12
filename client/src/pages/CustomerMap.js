@@ -5,7 +5,7 @@ class CustomerMap extends Component {
   render() {
     return (
       <div>
-        <Map />
+        <Map latitude={this.props.latitude} longitude={this.props.longitude} />
       </div>
     );
   }
