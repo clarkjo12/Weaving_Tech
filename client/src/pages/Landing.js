@@ -31,6 +31,17 @@ class Landing extends Component {
     errorMessage: ""
   };
 
+  componentDidMount = () => {
+    if (sessionStorage.getItem("displayname")) {
+      if (sessionStorage.getItem("userType") === "eater") {
+        window.location.href = "/map";
+      }
+      else {
+        window.location.href = "/truck";
+      }
+    }
+  }
+
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -45,10 +56,12 @@ class Landing extends Component {
     }));
   };
 
-  handleUser = (username) => {
+  handleUser = (username, userId) => {
     this.props.updateUser({
       loggedIn: true,
-      username: username
+      username: username,
+      userId: userId,
+      userType: this.state.loginType
     });
   }
 
@@ -89,7 +102,7 @@ class Landing extends Component {
                   console.log("login response: ");
                   console.log(res);
                   if (res.status === 200) {
-                    this.handleUser(res.data.username);
+                    this.handleUser(res.data.username, res.data._id);
                     this.setState({ redirect: true });
                   }
                 })
@@ -117,7 +130,9 @@ class Landing extends Component {
             if (res.status === 200) {
               this.props.updateUser({
                 loggedIn: true,
-                username: res.data.username
+                username: res.data.username,
+                userId: res.data._id,
+                userType: this.state.loginType
               });
               this.setState({ redirect: true });
             }

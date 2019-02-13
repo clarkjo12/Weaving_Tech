@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export default {
+  // Counts the number of eaters with the username
   findEaters: function (eaterData) {
     return axios.post("/api/eaters/count", eaterData);
   },
@@ -16,7 +17,7 @@ export default {
   updateEaterFav: function (id, eaterData) {
     return axios.put("/api/eaters/fav/" + id, eaterData);
   },
-  // Saves a eater to the database
+  // Saves an eater to the database
   saveEater: function (eaterData) {
     return axios.post("/api/eaters", eaterData);
   },
@@ -24,13 +25,13 @@ export default {
   findTrucker: function (truckerData) {
     return axios.get("/api/truckers/login", truckerData);
   },
-  // Updates the eater with the given id
+  // Updates the trucker with the given id
   updateTruckerLoc: function (id, truckerData) {
     return axios.put("/api/truckers/loc/" + id, truckerData);
   },
-  // Updates the eater with the given id
-  updateTruckerFav: function (id, truckerData) {
-    return axios.put("/api/truckers/fav/" + id, truckerData);
+  // Updates the trucker with the given id
+  updateTruckerStatus: function (id, truckerData) {
+    return axios.put("/api/truckers/status/" + id, truckerData);
   },
   // Saves a eater to the database
   saveTrucker: function (truckerData) {

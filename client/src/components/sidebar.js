@@ -78,15 +78,23 @@ export default props => {
           Truck Home
         </a>
       </Links>
-      <div>
-        <Welcome> Hey,</Welcome>
-        <UserName>Brotato</UserName>
-      </div>
 
-      <FavCounter>
-        Active Favorites: <FavNum>10</FavNum>
-      </FavCounter>
-      <Signout>
+      {((props.username !== "") && (sessionStorage.getItem("userType") === "eater")) ?
+        (<div><Welcome> Hey,</Welcome>
+          <UserName>{props.username}</UserName>
+          <FavCounter>Active Favorites: <FavNum>10</FavNum></FavCounter>
+        </div>
+        ) :
+        (<div></div>)
+      }
+      {((props.username !== "") && (sessionStorage.getItem("userType") === "trucker")) ?
+        (<div><Welcome> Hey,</Welcome>
+          <UserName>{props.username}</UserName>
+        </div>
+        ) :
+        (<div></div>)
+      }
+      <Signout onClick={props.logout}>
         <a className="menu-item" href="/">
           Sign Out
         </a>
