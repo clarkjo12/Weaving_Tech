@@ -23,7 +23,14 @@ const MapDiv = styled.div`
   border-radius: 5px;
 `;
 
+const truckStyle = styled.i`
+  color: red;
+  background-color: red;
+`;
+
 const Marker = ({ text }) => <div>{text}</div>;
+
+var truckIcon = <i class="fa fa-truck fa-4x" style={{truckStyle}}></i>;
 
 class MapDisplay extends Component {
   state = {
@@ -57,7 +64,7 @@ class MapDisplay extends Component {
               <Marker
                 lat={this.state.center.lat}
                 lng={this.state.center.lng}
-                text={"⭐"}
+                text={truckIcon}
               />
             </GoogleMapReact>{" "}
           </div>
