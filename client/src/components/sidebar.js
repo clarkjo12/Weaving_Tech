@@ -2,10 +2,11 @@ import React from "react";
 import { push as Menu } from "react-burger-menu";
 import styled from "styled-components";
 
-const FavCounter = styled.h2``;
+const FavCounter = styled.div``;
 
 const Welcome = styled.div`
   /* margin-bottom: 0px; */
+  font-size:25px;
 `;
 
 const UserName = styled.div`
@@ -14,9 +15,10 @@ const UserName = styled.div`
   font-size: 35px;
 `;
 
-const FavNum = styled.h1`
+const FavNum = styled.div`
   margin-top: 5px;
   color: darkred;
+  font-size: 40px;
 `;
 
 const Links = styled.div`
