@@ -39,7 +39,7 @@ class FancyLogins extends Component {
       const token = r.headers.get('x-auth-token');
       r.json().then(user => {
         if (token) {
-          this.props.updateUser(user.username);
+          this.props.updateUser(user.username, user._id);
         }
         {(this.props.loginType === "eater") ?
             (API.updateEaterLoc(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
@@ -83,7 +83,7 @@ class FancyLogins extends Component {
       const token = r.headers.get('x-auth-token');
       r.json().then(user => {
         if (token) {
-          this.props.updateUser(user.username);
+          this.props.updateUser(user.username, user._id);
         }
         {
           (this.props.loginType === "eater") ?

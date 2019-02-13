@@ -14,7 +14,8 @@ import "./App.css";
 class App extends Component {
   state = {
     loggedIn: false,
-    username: "",
+    userId: sessionStorage.getItem("userId") || "",
+    displayName: sessionStorage.getItem("displayName") || "",
     longitude: -49.089977,
     latitude: -21.805149
   };
@@ -24,6 +25,15 @@ class App extends Component {
       navigator.geolocation.getCurrentPosition(this.showPosition, this.showError);
     } else {
       console.log("Geolocation is not supported by this browser.");
+    }
+    const loggedIn = (sessionStorage.getItem("userid")) ? true : false;
+    if (loggedIn) {
+      this.updateUser({
+        userId: sessionStorage.getItem("userid"),
+        username: sessionStorage.getItem("displayname"),
+        loggedIn: loggedIn,
+        userType: sessionStorage.getItem("userType")
+      })
     }
   }
 
@@ -55,9 +65,26 @@ class App extends Component {
   }
 
   updateUser = (data) => {
+    const user = data.username;
+    const upper = user.replace(/^\w/, c => c.toUpperCase());
     this.setState({
       loggedIn: data.loggedIn,
-      username: data.username
+      userId: data.userId,
+      displayName: upper
+    });
+    sessionStorage.setItem("userid", this.state.userId);
+    sessionStorage.setItem("displayname", this.state.displayName)
+    sessionStorage.setItem("userType", data.userType);
+  }
+
+  logout = () => {
+    sessionStorage.removeItem("userid");
+    sessionStorage.removeItem("displayname");
+    sessionStorage.removeItem("userType");
+    this.setState({
+      loggedIn: false,
+      userId: "",
+      displayName: ""
     });
   }
 
@@ -65,11 +92,11 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <SideBar />
+          <SideBar username={this.state.displayName} logout={this.logout} />
           <Switch>
             <Route exact path="/" render={(props) => <Landing {...props} updateUser={this.updateUser} latitude={this.state.latitude} longitude={this.state.longitude} />} />
-            <Route exact path="/truck" component={TruckHome} />
-            <Route exact path="/map"  render={(props) => <CustomerMap {...props} latitude={this.state.latitude} longitude={this.state.longitude} />} />
+            <Route exact path="/truck" render={(props) => <TruckHome {...props} updateUser={this.updateUser} />} />
+            <Route exact path="/map" render={(props) => <CustomerMap {...props} {...props} updateUser={this.updateUser} latitude={this.state.latitude} longitude={this.state.longitude} />} />
             <Route component={ErrorPage} />
           </Switch>
         </div>

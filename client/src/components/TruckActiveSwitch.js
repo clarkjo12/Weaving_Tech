@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import FlipSwitch from "react-switch";
+import API from "../utils/API";
 import styled from "styled-components";
 
 const ButtonDiv = styled.div`
@@ -16,22 +17,25 @@ const H3 = styled.h3`
 `;
 
 class TruckActivateSwitch extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { checked: false };
-    this.handleChange = this.handleChange.bind(this);
-
-    this.state = {
-      isChecked: null
-    };
-  }
-
+  state = { 
+    checked: false 
+  };
+  
   componentWillMount() {
-    this.setState({ isChecked: this.props.isChecked });
+    
   }
 
-  handleChange(checked) {
-    this.setState({ checked });
+  handleChange = () => {
+    this.setState({ checked: !this.state.checked });
+    let status =  this.state.checked ? "open" : "closed";
+    API.updateTruckerStatus(sessionStorage.getItem("userid"), { status: status })
+      .then(res => {
+        console.log("updated truck status");
+        console.log(res);
+      }).catch(err => {
+        console.log("update truck status error");
+        console.log(err);
+      })
   }
 
   render() {

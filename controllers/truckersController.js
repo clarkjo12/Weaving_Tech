@@ -21,6 +21,12 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
+  updateStatus: function(req, res) {
+    db.Trucker
+      .updateOne({ _id: req.params.id }, { status: req.body.status })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
   updateFav: function(req, res) {
     db.Trucker
       .findOneAndUpdate({ _id: req.params.id }, {$inc : {'favorites' : 1}})
