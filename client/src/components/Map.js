@@ -23,21 +23,36 @@ const MapDiv = styled.div`
   border-radius: 5px;
 `;
 
+const infoStyle = styled.div`
+  color: white;
+  border: 3px solid gray;
+  border-radius: 5px;
+  z-index: 0;
+`;
+
 const truckStyle = styled.i`
   color: red;
   background-color: red;
+  z-index: 1;
 `;
 
 const Marker = ({ text }) => <div>{text}</div>;
+const InfoWindow = ({ text }) => <div style={{infoStyle}}>{text}</div>;
 
-var truckIcon = <i class="fa fa-truck fa-4x" style={{truckStyle}}></i>;
+var truckIcon = <i className="fa fa-truck fa-4x" style={{truckStyle}}></i>;
 
 class MapDisplay extends Component {
-  state = {
-    center: {
-      lat: this.props.latitude,
-      lng: this.props.longitude
+  constructor(props) {
+    super(props);
+    this.state = {
+      center: {
+        lat: this.props.latitude,
+        lng: this.props.longitude
+      },
+      activeMarker: {},
+      showingInfoWindow: false
     }
+    this.onMarkerClick = this.onMarkerClick.bind(this);
   };
 
   static defaultProps = {
@@ -46,6 +61,13 @@ class MapDisplay extends Component {
       lng: -79.05
     },
     zoom: 11
+  };
+
+  onMarkerClick = (props, marker, e) => {
+    this.setState({
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
   };
 
   render() {
@@ -60,11 +82,17 @@ class MapDisplay extends Component {
               defaultZoom={this.props.zoom}
               yesIWantToUseGoogleMapApiInternals
             >
-              <Marker lat={35.9132} lng={-79.055847} text={"⭐"} />
+              <Marker lat={35.9132} lng={-79.055847} text={truckIcon} />
               <Marker
+                onClick={this.onMarkerClick}
                 lat={this.state.center.lat}
                 lng={this.state.center.lng}
                 text={truckIcon}
+              />
+              <InfoWindow
+                marker = {this.state.activeMarker}
+                visible = {this.state.showingInfoWindow}
+                text = {"FOOD!!!"}
               />
             </GoogleMapReact>{" "}
           </div>
