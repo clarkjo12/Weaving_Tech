@@ -22,7 +22,8 @@ const ButtonDiv = styled.div`
 class FancyLogins extends Component {
 
   state = {
-    redirectToMap: false
+    redirectToMap: false,
+    redirectToTruckerHome: false
   }
 
   googleResponse = response => {
@@ -57,7 +58,7 @@ class FancyLogins extends Component {
                 console.log("update response: ");
                 console.log(res);
                 this.setState({
-                  redirectToMap: true
+                  redirectToTruckerHome: true
                 })
               }).catch(err => {
                 console.log("update error: ");
@@ -102,7 +103,7 @@ class FancyLogins extends Component {
                 console.log("update response: ");
                 console.log(res);
                 this.setState({
-                  redirectToMap: true
+                  redirectToTruckerHome: true
                 })
               }).catch(err => {
                 console.log("update error: ");
@@ -117,6 +118,9 @@ class FancyLogins extends Component {
 
     if (this.state.redirectToMap) {
       return <Redirect to="/map" />;
+    }
+    else if (this.state.redirectToTruckerHome) {
+      return <Redirect to="/truck" />;
     }
 
     return (

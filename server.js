@@ -1,26 +1,14 @@
 const express = require("express");
 const path = require("path");
 require('dotenv').config();
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const cors = require('cors');
 
 const routes = require("./routes");
 const mongoose = require("mongoose");
 
-const session = require("express-session");
 const passport = require('./passport');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
-
-var corsOption = {
-  origin: true,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  exposedHeaders: ['x-auth-token']
-};
-app.use(cors(corsOption));
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -29,26 +17,6 @@ app.use(express.json());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
-
-app.use(
-  session({
-    secret: "food-truck", //pick a random string to make the hash that is generated secure
-    resave: false, //required
-    saveUninitialized: false //required
-  })
-);
-
-app.use((req, res, next) => {
-  console.log('req.session', req.session);
-  return next();
-});
-
-app.use(passport.initialize());
-app.use(passport.session()) // will call the deserializeUser
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 // Define API routes here
 app.use(routes);
