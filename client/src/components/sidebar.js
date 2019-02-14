@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Component } from "react";
 import { push as Menu } from "react-burger-menu";
 import styled from "styled-components";
+import API from "../utils/API";
 
 const FavCounter = styled.div``;
 
@@ -84,57 +85,74 @@ var styles = {
   }
 };
 
-export default props => {
-  return (
-    <Menu right styles={styles}>
-      <Links>
-        <a className="menu-item" href="/">
-          Landing
+class Sidebar extends Component {
+  state = {
+    activeFavorites: 10
+  }
+
+  updateFavorites = () => {
+    API.getFavs(this.props.userId)
+      .then(res => {
+        this.setState({
+          activeFavorites: res.data.length
+        });
+      }).catch(err => {
+        console.log("favorites error: ");
+        console.log(err);
+      });
+  }
+
+  render() {
+    if (((this.props.username !== "") && (sessionStorage.getItem("userType") === "eater")) && (this.state.activeFavorites === 10)) {
+      this.updateFavorites()
+    }
+    return (
+      <Menu right styles={styles}>
+        <Links>
+          <a className="menu-item" href="/">
+            Landing
         </a>
 
-        <a className="menu-item" href="/map">
-          Map
+          <a className="menu-item" href="/map">
+            Map
         </a>
 
-        <a className="menu-item" href="/truck">
-          Truck Home
+          <a className="menu-item" href="/truck">
+            Truck Home
         </a>
-      </Links>
+        </Links>
 
-      {props.username !== "" &&
-      sessionStorage.getItem("userType") === "eater" ? (
-        <div>
-          <Welcome> Hey,</Welcome>
-          <UserName>{props.username}</UserName>
-          <FavCounter>
-            Active Favorites: <FavNum>10</FavNum>
-          </FavCounter>
-        </div>
-      ) : (
-        <div />
-      )}
-      {props.username !== "" &&
-      sessionStorage.getItem("userType") === "trucker" ? (
-        <div>
-          <Welcome> Hey,</Welcome>
-          <UserName>{props.username}</UserName>
-          <Title placeholder="Title-" />
+        {((this.props.username !== "") && (sessionStorage.getItem("userType") === "eater")) ?
+          (<div><Welcome> Hey,</Welcome>
+            <UserName>{this.props.username}</UserName>
+            <FavCounter>Active Favorites: <FavNum>{this.state.activeFavorites}</FavNum></FavCounter>
+          </div>
+          ) :
+          (<div></div>)
+        }
+        {((this.props.username !== "") && (sessionStorage.getItem("userType") === "trucker")) ?
+          (<div><Welcome> Hey,</Welcome>
+            <UserName>{this.props.username}</UserName>
+           <Title placeholder="Title-" />
           <SumDiv>
             <Summary placeholder="Summary: (280 chars max)" />
             <Edit href="/truck">edit</Edit>
           </SumDiv>
-        </div>
-      ) : (
-        <div />
-      )}
+          </div>
+          ) :
+          (<div></div>)
+        }
+        <Signout onClick={this.props.logout}>
+          <a className="menu-item" href="/">
+            Sign Out
 
-      <Signout onClick={props.logout}>
-        <a className="menu-item" href="/">
-          Sign Out
         </a>
-        <br />
-        <br />
-      </Signout>
-    </Menu>
-  );
-};
+          <br />
+          <br />
+        </Signout>
+      </Menu>
+    );
+  };
+}
+
+export default Sidebar;

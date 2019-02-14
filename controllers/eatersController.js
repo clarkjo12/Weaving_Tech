@@ -23,8 +23,19 @@ module.exports = {
   },
   updateFav: function (req, res) {
     db.Eater
-      .updateOne({ _id: req.params.id }, { $push: {favorites: req.body.favorites } })
+      .updateOne({ _id: req.params.id }, { $push: { favorites: req.body.favorites } })
       .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  getFavs: function (req, res) {
+    db.Eater
+      .findById({ _id: req.params.id })
+      .then(dbModel => {
+        db.Trucker.find({username: dbModel.favorites, status: "open"}, function (error, count) {
+          console.log(count);
+          res.json(count);
+        });
+      })
       .catch(err => res.status(422).json(err));
   }
 };
