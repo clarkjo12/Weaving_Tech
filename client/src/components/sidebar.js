@@ -101,15 +101,33 @@ export default props => {
         </a>
       </Links>
 
-      <div>
-        <Welcome> Hey,</Welcome>
-        <UserName>{props.username}</UserName>
-        <Title placeholder="Title-" />
-        <SumDiv>
-          <Summary placeholder="Summary: (280 chars max)" />
-          <Edit href="/truck">edit</Edit>
-        </SumDiv>
-      </div>
+      {props.username !== "" &&
+      sessionStorage.getItem("userType") === "eater" ? (
+        <div>
+          <Welcome> Hey,</Welcome>
+          <UserName>{props.username}</UserName>
+          <FavCounter>
+            Active Favorites: <FavNum>10</FavNum>
+          </FavCounter>
+        </div>
+      ) : (
+        <div />
+      )}
+      {props.username !== "" &&
+      sessionStorage.getItem("userType") === "trucker" ? (
+        <div>
+          <Welcome> Hey,</Welcome>
+          <UserName>{props.username}</UserName>
+          <Title placeholder="Title-" />
+          <SumDiv>
+            <Summary placeholder="Summary: (280 chars max)" />
+            <Edit href="/truck">edit</Edit>
+          </SumDiv>
+        </div>
+      ) : (
+        <div />
+      )}
+
       <Signout onClick={props.logout}>
         <a className="menu-item" href="/">
           Sign Out
