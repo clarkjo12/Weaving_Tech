@@ -92,7 +92,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <SideBar username={this.state.displayName} logout={this.logout} />
+          <SideBar username={this.state.displayName} userId={this.state.userId} logout={this.logout} />
           <Switch>
             <Route exact path="/" render={(props) => <Landing {...props} updateUser={this.updateUser} latitude={this.state.latitude} longitude={this.state.longitude} />} />
             <Route exact path="/truck" render={(props) => <TruckHome {...props} updateUser={this.updateUser} />} />

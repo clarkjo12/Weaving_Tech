@@ -13,7 +13,12 @@ router
   .route("/loc/:id")
   .put(eatersController.updateLoc);
 
-// Matches with "/api/eaters/fav/:id"
+// Matches with "/api/eaters/favs/:id"
+router
+  .route("/favs/:id")
+  .get(eatersController.getFavs);
+
+  // Matches with "/api/eaters/fav/:id"
 router
   .route("/fav/:id")
   .put(eatersController.updateFav);
