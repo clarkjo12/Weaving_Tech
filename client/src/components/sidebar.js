@@ -7,7 +7,7 @@ const FavCounter = styled.div``;
 
 const Welcome = styled.div`
   /* margin-bottom: 0px; */
-  font-size:25px;
+  font-size: 25px;
 `;
 
 const UserName = styled.div`
@@ -28,6 +28,26 @@ const Links = styled.div`
 `;
 
 const Signout = styled.div``;
+
+const Title = styled.input`
+  width: 90%;
+`;
+
+const Summary = styled.textarea`
+  padding-top: 10px;
+  width: 90%;
+  height: 100px;
+  display: flex;
+`;
+
+const SumDiv = styled.div`
+  padding-top: 10px;
+  padding-bottom: 10px;
+`;
+
+const Edit = styled.a`
+  font-size: 13px;
+`;
 
 ///burger style
 var styles = {
@@ -113,6 +133,11 @@ class Sidebar extends Component {
         {((this.props.username !== "") && (sessionStorage.getItem("userType") === "trucker")) ?
           (<div><Welcome> Hey,</Welcome>
             <UserName>{this.props.username}</UserName>
+           <Title placeholder="Title-" />
+          <SumDiv>
+            <Summary placeholder="Summary: (280 chars max)" />
+            <Edit href="/truck">edit</Edit>
+          </SumDiv>
           </div>
           ) :
           (<div></div>)
@@ -120,6 +145,7 @@ class Sidebar extends Component {
         <Signout onClick={this.props.logout}>
           <a className="menu-item" href="/">
             Sign Out
+
         </a>
           <br />
           <br />

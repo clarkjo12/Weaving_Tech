@@ -5,6 +5,8 @@ import MapHeader from "./MapHeader";
 import MapButtons from "./MapButtons";
 import Modals from "./Modal";
 
+import TruckImg from "../images/truck-serving.png";
+
 const MainDiv = styled.section`
   padding: 4em;
   display: flex;
@@ -39,7 +41,7 @@ const truckStyle = styled.i`
 const Marker = ({ text }) => <div>{text}</div>;
 const InfoWindow = ({ text }) => <div style={{infoStyle}}>{text}</div>;
 
-var truckIcon = <i className="fa fa-truck fa-4x" style={{truckStyle}}></i>;
+var truckIcon = <img src={TruckImg} alt="nahh"/>;
 
 class MapDisplay extends Component {
   constructor(props) {
