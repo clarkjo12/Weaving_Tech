@@ -17,6 +17,9 @@ export default {
   updateEaterFav: function (id, eaterData) {
     return axios.put("/api/eaters/fav/" + id, eaterData);
   },
+  getFavs: function (id) {
+    return axios.get("/api/eaters/favs/" + id);
+  },
   // Saves an eater to the database
   saveEater: function (eaterData) {
     return axios.post("/api/eaters", eaterData);
