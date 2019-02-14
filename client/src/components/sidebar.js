@@ -6,7 +6,7 @@ const FavCounter = styled.div``;
 
 const Welcome = styled.div`
   /* margin-bottom: 0px; */
-  font-size:25px;
+  font-size: 25px;
 `;
 
 const UserName = styled.div`
@@ -27,6 +27,26 @@ const Links = styled.div`
 `;
 
 const Signout = styled.div``;
+
+const Title = styled.input`
+  width: 90%;
+`;
+
+const Summary = styled.textarea`
+  padding-top: 10px;
+  width: 90%;
+  height: 100px;
+  display: flex;
+`;
+
+const SumDiv = styled.div`
+  padding-top: 10px;
+  padding-bottom: 10px;
+`;
+
+const Edit = styled.a`
+  font-size: 13px;
+`;
 
 ///burger style
 var styles = {
@@ -81,21 +101,15 @@ export default props => {
         </a>
       </Links>
 
-      {((props.username !== "") && (sessionStorage.getItem("userType") === "eater")) ?
-        (<div><Welcome> Hey,</Welcome>
-          <UserName>{props.username}</UserName>
-          <FavCounter>Active Favorites: <FavNum>10</FavNum></FavCounter>
-        </div>
-        ) :
-        (<div></div>)
-      }
-      {((props.username !== "") && (sessionStorage.getItem("userType") === "trucker")) ?
-        (<div><Welcome> Hey,</Welcome>
-          <UserName>{props.username}</UserName>
-        </div>
-        ) :
-        (<div></div>)
-      }
+      <div>
+        <Welcome> Hey,</Welcome>
+        <UserName>{props.username}</UserName>
+        <Title placeholder="Title-" />
+        <SumDiv>
+          <Summary placeholder="Summary: (280 chars max)" />
+          <Edit href="/truck">edit</Edit>
+        </SumDiv>
+      </div>
       <Signout onClick={props.logout}>
         <a className="menu-item" href="/">
           Sign Out
