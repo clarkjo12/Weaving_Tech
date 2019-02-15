@@ -2,6 +2,10 @@ import axios from "axios";
 
 export default {
   // Counts the number of eaters with the username
+  favCount: function (eaterData) {
+    return axios.post("/api/eaters/favcount", eaterData);
+  },
+  // Counts the number of eaters with the username
   findEaters: function (eaterData) {
     return axios.post("/api/eaters/count", eaterData);
   },

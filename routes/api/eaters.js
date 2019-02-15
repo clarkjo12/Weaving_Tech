@@ -5,6 +5,11 @@ const eatersController = require("../../controllers/eatersController");
 router.route("/")
   .post(eatersController.create);
 
+// Matches with "/api/eaters/favcount"
+router.route("/favcount")
+  .post(eatersController.findEatersWithFav);
+
+// Matches with "/api/eaters/count"
 router.route("/count")
   .post(eatersController.findEater);
 

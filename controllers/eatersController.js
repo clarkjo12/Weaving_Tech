@@ -2,8 +2,13 @@ const db = require("../models");
 
 // Defining methods for the eatersController
 module.exports = {
+  findEatersWithFav: function (req, res) {
+    db.Eater
+      .count(req.body)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
   findEater: function (req, res) {
-    console.log(req);
     db.Eater
       .count(req.body)
       .then(dbModel => res.json(dbModel))
