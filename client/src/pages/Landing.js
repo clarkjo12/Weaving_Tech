@@ -96,7 +96,7 @@ class Landing extends Component {
         //check to make sure the username isn't in the database already
         API.findEaters({ username: this.state.username })
           .then(res => {
-            if (res.data === 0) {
+            if (!res.data) {
               API.saveEater({ username: this.state.username, password: this.state.password, location: { coordinates: [this.props.latitude, this.props.longitude] } })
                 .then(res => {
                   console.log("login response: ");
@@ -123,7 +123,7 @@ class Landing extends Component {
     } else {
       //user already exists in the database, so update
       if (this.state.username && this.state.password) {
-        API.findEater({ username: this.state.username, password: this.state.password })
+        API.findEaters({username: this.state.username})
           .then(res => {
             console.log("login response: ");
             console.log(res.data._id);
@@ -136,7 +136,7 @@ class Landing extends Component {
               });
               this.setState({ redirect: true });
             }
-            API.updateEaterLoc(res.data._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
+            API.updateEater(res.data._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
               .then(res => {
                 console.log("update response: ");
                 console.log(res);
