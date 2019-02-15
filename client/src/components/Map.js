@@ -3,7 +3,8 @@ import GoogleMapReact from "google-map-react";
 import styled from "styled-components";
 import MapHeader from "./MapHeader";
 import MapButtons from "./MapButtons";
-import Modals from "./Modal";
+import Modal from "./Modal";
+import API from "../utils/API";
 
 const MainDiv = styled.section`
   padding: 4em;
@@ -37,7 +38,7 @@ const truckStyle = styled.i`
 `;
 
 const Marker = ({ text }) => <div>{text}</div>;
-const InfoWindow = ({ text }) => <div style={{infoStyle}}>{text}</div>;
+// const InfoWindow = ({ text }) => <div style={{infoStyle}}>{text}</div>;
 
 var truckIcon = <i className="fa fa-truck fa-4x" style={{truckStyle}}></i>;
 
@@ -49,8 +50,9 @@ class MapDisplay extends Component {
         lat: this.props.latitude,
         lng: this.props.longitude
       },
+      nearbyTrucks: [],
       activeMarker: {},
-      showingInfoWindow: false
+      modalIsOpen: false
     }
     this.onMarkerClick = this.onMarkerClick.bind(this);
   };
@@ -66,11 +68,42 @@ class MapDisplay extends Component {
   onMarkerClick = (props, marker, e) => {
     this.setState({
       activeMarker: marker,
-      showingInfoWindow: true
+      modalIsOpen: true
     });
   };
 
+  loadMarkers = () => {
+    let truckState = this.state.nearbyTrucks;
+    console.log("Truck state:" + JSON.stringify(truckState));
+
+    const truckMap = truckState.map(function(coord, key) {
+      return <Marker key={key} lat={coord.location[1]} lng={coord.location[0]} text={truckIcon}/>
+    });
+  };
+
+  componentWillMount = () => {
+    API.findTrucks()
+      .then(async res => {
+        // console.log("Results: " + JSON.stringify(res));
+        if (res === 0) {
+          console.log("No trucks in database!");
+        } else {
+          let truckDBArray = res.data;
+
+          await this.setState({
+            nearbyTrucks: truckDBArray
+          });
+
+          console.log("State: " + JSON.stringify(this.state.nearbyTrucks));
+
+          //load the markers!
+          this.loadMarkers();
+        };
+      });
+  };
+
   render() {
+
     return (
       <MainDiv>
         <MapHeader />
@@ -82,23 +115,25 @@ class MapDisplay extends Component {
               defaultZoom={this.props.zoom}
               yesIWantToUseGoogleMapApiInternals
             >
-              <Marker lat={35.9132} lng={-79.055847} text={truckIcon} />
               <Marker
                 onClick={this.onMarkerClick}
                 lat={this.state.center.lat}
                 lng={this.state.center.lng}
                 text={truckIcon}
               />
-              <InfoWindow
+              {/* <InfoWindow
                 marker = {this.state.activeMarker}
-                visible = {this.state.showingInfoWindow}
+                visible = {this.state.modalIsOpen}
                 text = {"FOOD!!!"}
-              />
+              /> */}
             </GoogleMapReact>{" "}
           </div>
         </MapDiv>
+        <Modal 
+          modalIsOpen={this.state.modalIsOpen}
+          visible={this.state.modalIsOpen}
+        />
         <MapButtons />
-        <Modals />
       </MainDiv>
     );
   }
