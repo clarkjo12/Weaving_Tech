@@ -2,11 +2,27 @@ import React from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 
-const SummaryDiv = styled.div`
-  color: lightblack;
+const SummaryDiv = styled.textarea`
+  height: 40px;
+  margin-top: 7px;
+`;
+
+const HeaderDiv = styled.input`
+  margin-bottom: 15px;
+  margin-top: 7px;
 `;
 const ButtDiv = styled.div`
-  float: right;
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const ModalDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: 300px;
+  color: lightblack;
 `;
 
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
@@ -18,6 +34,7 @@ class TruckModal extends React.Component {
 
     this.state = {
       modalIsOpen: false
+      //2 strings
     };
 
     this.openModal = this.openModal.bind(this);
@@ -31,7 +48,7 @@ class TruckModal extends React.Component {
 
   afterOpenModal() {
     // references are now sync'd and can be accessed.
-    this.subtitle.style.color = "#f00";
+    //this.subtitle.style.color = "#f00";
   }
 
   closeModal() {
@@ -41,7 +58,7 @@ class TruckModal extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={this.openModal}>Open Modal</button>{" "}
+        <button onClick={this.openModal}>Edit</button>{" "}
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -59,19 +76,17 @@ class TruckModal extends React.Component {
           }}
           contentLabel="Example Modal"
         >
-          <h2 ref={subtitle => (this.subtitle = subtitle)}>
-            Fresh Tacos BOGO!
-          </h2>
-          <SummaryDiv>
-            <div>
-              Hot and Fresh, Chicken or Beef; supplies limited so come and git
-              it!
-            </div>
-          </SummaryDiv>
-          <ButtDiv>
-            <br />
-            <button onClick={this.closeModal}>close</button>
-          </ButtDiv>
+          <ModalDiv>
+            <h2>Edit Summary:</h2>
+            Title:
+            <HeaderDiv />
+            Summary:
+            <SummaryDiv />
+            <ButtDiv>
+              <br />
+              <button onClick={this.closeModal}>save</button>
+            </ButtDiv>
+          </ModalDiv>
         </Modal>
       </div>
     );
