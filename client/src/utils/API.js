@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export default {
-  // Counts the number of eaters with the username
+  //---------------------------Eaters DB-------------------------------------
+  // Counts the number of eaters with a particular favorite
   favCount: function (eaterData) {
     return axios.post("/api/eaters/favcount", eaterData);
   },
@@ -9,25 +10,27 @@ export default {
   findEaters: function (eaterData) {
     return axios.post("/api/eaters/count", eaterData);
   },
-  // Gets eater
-  findEater: function (eaterData) {
-    return axios.post("/api/eaters/login", eaterData);
-  },
-  // Updates the eater with the given id
-  updateEaterLoc: function (id, eaterData) {
-    return axios.put("/api/eaters/loc/" + id, eaterData);
-  },
-  // Updates the eater with the given id
-  updateEaterFav: function (id, eaterData) {
-    return axios.put("/api/eaters/fav/" + id, eaterData);
-  },
-  getFavs: function (id) {
-    return axios.get("/api/eaters/favs/" + id);
-  },
   // Saves an eater to the database
   saveEater: function (eaterData) {
     return axios.post("/api/eaters", eaterData);
   },
+  // Checks to see which of the eaters favorite trucks are open
+  getFavs: function (id) {
+    return axios.get("/api/eaters/favs/" + id);
+  },
+  // Gets eater
+  findEater: function (id) {
+    return axios.get("/api/eaters/"+ id);
+  },
+  // Updates the eater with the given id
+  updateEater: function (id, eaterData) {
+    return axios.put("/api/eaters/" + id, eaterData);
+  },
+  // Adds to eaters favorites with the given id
+  updateEaterFav: function (id, eaterData) {
+    return axios.put("/api/eaters/fav/" + id, eaterData);
+  },
+  //---------------------------Trucks DB-------------------------------------
   // Gets trucker
   findTrucker: function (id) {
     return axios.get("/api/truckers/" + id);
