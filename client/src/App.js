@@ -72,8 +72,8 @@ class App extends Component {
       userId: data.userId,
       displayName: upper
     });
-    sessionStorage.setItem("userid", this.state.userId);
-    sessionStorage.setItem("displayname", this.state.displayName)
+    sessionStorage.setItem("userid", data.userId);
+    sessionStorage.setItem("displayname", upper)
     sessionStorage.setItem("userType", data.userType);
   }
 

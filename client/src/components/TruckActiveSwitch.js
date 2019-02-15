@@ -25,7 +25,7 @@ class TruckActivateSwitch extends Component {
   handleChange = () => {
     this.setState({ checked: !this.state.checked });
     let status = this.state.checked ? "open" : "closed";
-    API.updateTruckerStatus(sessionStorage.getItem("userid"), {
+    API.updateTrucker(sessionStorage.getItem("userid"), {
       status: status
     })
       .then(res => {

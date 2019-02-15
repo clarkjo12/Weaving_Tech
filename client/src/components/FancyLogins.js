@@ -53,7 +53,7 @@ class FancyLogins extends Component {
                 console.log("update error: ");
                 console.log(err);
               })) :
-            (API.updateTruckerLoc(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
+            (API.updateTrucker(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
               .then(res => {
                 console.log("update response: ");
                 console.log(res);
@@ -98,7 +98,7 @@ class FancyLogins extends Component {
                 console.log("update error: ");
                 console.log(err);
               })) :
-            (API.updateTruckerLoc(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
+            (API.updateTrucker(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
               .then(res => {
                 console.log("update response: ");
                 console.log(res);

@@ -29,21 +29,17 @@ export default {
     return axios.post("/api/eaters", eaterData);
   },
   // Gets trucker
-  findTrucker: function (truckerData) {
-    return axios.get("/api/truckers/login", truckerData);
+  findTrucker: function (id) {
+    return axios.get("/api/truckers/" + id);
   },
   findTrucks: function () {
     return axios.get("/api/truckers/");
   },
   // Updates the trucker with the given id
-  updateTruckerLoc: function (id, truckerData) {
-    return axios.put("/api/truckers/loc/" + id, truckerData);
+  updateTrucker: function (id, truckerData) {
+    return axios.put("/api/truckers/" + id, truckerData);
   },
-  // Updates the trucker with the given id
-  updateTruckerStatus: function (id, truckerData) {
-    return axios.put("/api/truckers/status/" + id, truckerData);
-  },
-  // Saves a eater to the database
+ // Saves an eater to the database
   saveTrucker: function (truckerData) {
     return axios.post("/api/truckers", truckerData);
   }
