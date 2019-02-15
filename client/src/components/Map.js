@@ -6,7 +6,7 @@ import MapButtons from "./MapButtons";
 import Modal from "./Modal";
 import API from "../utils/API";
 
-import TruckImg from "../images/truck-serving.png";
+import TruckImg from "../images/truck-all.png";
 
 const MainDiv = styled.section`
   padding: 4em;
@@ -23,7 +23,7 @@ const MainDiv = styled.section`
 
 const MapDiv = styled.div`
   border: 3px solid gray;
-  border-radius: 5px;
+  border-radius: 3px;
 `;
 
 const infoStyle = styled.div`
