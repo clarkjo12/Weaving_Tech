@@ -121,16 +121,33 @@ class Sidebar extends Component {
           </a>
         </Links>
 
-        <div>
-          <Welcome> Hey,</Welcome>
-          <UserName>{this.props.username}</UserName>
-          <SumDiv>
-            <Heart img src={BlueHeart} alt="no dice" />
-            <h1>
-              : <FavCount>342</FavCount>
-            </h1>
-          </SumDiv>
-        </div>
+        {this.props.username !== "" &&
+        sessionStorage.getItem("userType") === "eater" ? (
+          <div>
+            <Welcome> Hey,</Welcome>
+            <UserName>{this.props.username}</UserName>
+            <FavCounter>
+              Active Favorites: <FavNum>{this.state.activeFavorites}</FavNum>
+            </FavCounter>
+          </div>
+        ) : (
+          <div />
+        )}
+        {this.props.username !== "" &&
+        sessionStorage.getItem("userType") === "trucker" ? (
+          <div>
+            <Welcome> Hey,</Welcome>
+            <UserName>{this.props.username}</UserName>
+            <SumDiv>
+              <Heart img src={BlueHeart} alt="no dice" />
+              <h1>
+                : <FavCount>342</FavCount>
+              </h1>
+            </SumDiv>
+          </div>
+        ) : (
+          <div />
+        )}
 
         <Signout onClick={this.props.logout}>
           <a className="menu-item" href="/">
