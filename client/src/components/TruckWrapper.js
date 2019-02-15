@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import TruckModals from "./TruckModal";
 
 const TruckMain = styled.div`
   display: flex;
@@ -44,8 +45,9 @@ const SumDiv = styled.div`
   padding-bottom: 10px;
 `;
 
-const Edit = styled.a`
+const Edit = styled.div`
   font-size: 13px;
+  text-decoration: underline;
 `;
 
 const MainSumDiv = styled.div`
@@ -54,6 +56,10 @@ const MainSumDiv = styled.div`
   align-items: center;
   flex-direction: column;
 `;
+
+function launchEdit() {
+  alert("oh yea");
+}
 
 class TruckWrapper extends Component {
   render() {
@@ -70,7 +76,7 @@ class TruckWrapper extends Component {
           <SumDiv>
             Summary:
             <Summary>We only use the freshest stuff..</Summary>
-            <Edit href="/truck">edit</Edit>
+            <TruckModals />
           </SumDiv>
         </MainSumDiv>
       </TruckMain>

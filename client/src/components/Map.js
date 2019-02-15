@@ -32,16 +32,10 @@ const infoStyle = styled.div`
   z-index: 0;
 `;
 
-const truckStyle = styled.i`
-  color: red;
-  background-color: red;
-  z-index: 1;
-`;
-
 const Marker = ({ text }) => <div>{text}</div>;
-const InfoWindow = ({ text }) => <div style={{infoStyle}}>{text}</div>;
+const InfoWindow = ({ text }) => <div style={{ infoStyle }}>{text}</div>;
 
-var truckIcon = <img src={TruckImg} alt="nahh"/>;
+var truckIcon = <img src={TruckImg} alt="nahh" />;
 
 class MapDisplay extends Component {
   constructor(props) {
@@ -53,9 +47,9 @@ class MapDisplay extends Component {
       },
       activeMarker: {},
       showingInfoWindow: false
-    }
+    };
     this.onMarkerClick = this.onMarkerClick.bind(this);
-  };
+  }
 
   static defaultProps = {
     center: {
@@ -92,9 +86,9 @@ class MapDisplay extends Component {
                 text={truckIcon}
               />
               <InfoWindow
-                marker = {this.state.activeMarker}
-                visible = {this.state.showingInfoWindow}
-                text = {"FOOD!!!"}
+                marker={this.state.activeMarker}
+                visible={this.state.showingInfoWindow}
+                text={"FOOD!!!"}
               />
             </GoogleMapReact>{" "}
           </div>
