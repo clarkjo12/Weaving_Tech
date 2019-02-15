@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import BlueHeart from "../images/heartblue.png";
 
-const TruckMiddle = styled.div`
-  display: flex;
-  justify-content: center;
-  padding-right: 10px;
-`;
 const TruckMain = styled.div`
   display: flex;
   flex-direction: column;
@@ -19,8 +13,25 @@ const Grey = styled.h2`
   text-decoration: underline;
   margin: 0;
 `;
-const Heart = styled.img`
-  height: 75px;
+
+const Title = styled.input`
+  width: 90%;
+`;
+
+const Summary = styled.textarea`
+  padding-top: 10px;
+  width: 90%;
+  height: 100px;
+  display: flex;
+`;
+
+const SumDiv = styled.div`
+  padding-top: 10px;
+  padding-bottom: 10px;
+`;
+
+const Edit = styled.a`
+  font-size: 13px;
 `;
 
 class TruckWrapper extends Component {
@@ -28,12 +39,13 @@ class TruckWrapper extends Component {
     return (
       <TruckMain>
         <Grey>
-          <h2>Favorited</h2>
+          <h2>Current Summary:</h2>
         </Grey>
-        <TruckMiddle>
-          <Heart img src={BlueHeart} alt="no dice" />
-          <h1>: 342</h1>
-        </TruckMiddle>
+        <Title placeholder="Title-" />
+        <SumDiv>
+          <Summary placeholder="Summary: (280 chars max)" />
+          <Edit href="/truck">edit</Edit>
+        </SumDiv>
       </TruckMain>
     );
   }
