@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import API from "../utils/API";
 import TruckModals from "./TruckModal";
 
 const TruckMain = styled.div`
@@ -62,6 +63,36 @@ function launchEdit() {
 }
 
 class TruckWrapper extends Component {
+  state = {
+    title: "Come Get It!",
+    summary: "Fresh Ingredients!"
+  }
+
+  componentDidMount = () => {
+    if (sessionStorage.getItem("userid")) {
+      API.findTrucker(sessionStorage.getItem("userid"))
+        .then(res => {
+          console.log(res);
+          this.setState({
+            title: res.data.title,
+            summary: res.data.summary
+          });
+        })
+        .catch(err => {
+          console.log("favorites error: ");
+          console.log(err);
+        });
+    }
+
+  }
+
+  updateTitleSummary = (title, summary) => {
+    this.setState({
+      title: title,
+      summary: summary
+    })
+  }
+
   render() {
     return (
       <TruckMain>
@@ -71,12 +102,12 @@ class TruckWrapper extends Component {
         <MainSumDiv>
           Title:
           <Title>
-            <h3>Come Down and See Us!!!</h3>
+            <h3>{this.state.title}</h3>
           </Title>
           <SumDiv>
             Summary:
-            <Summary>We only use the freshest stuff..</Summary>
-            <TruckModals />
+            <Summary>{this.state.summary}</Summary>
+            <TruckModals updateTitleSummary={this.updateTitleSummary} />
           </SumDiv>
         </MainSumDiv>
       </TruckMain>

@@ -1,6 +1,7 @@
 import React from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
+import API from "../utils/API";
 
 const SummaryDiv = styled.textarea`
   height: 40px;
@@ -33,8 +34,9 @@ class TruckModal extends React.Component {
     super();
 
     this.state = {
-      modalIsOpen: false
-      //2 strings
+      modalIsOpen: false,
+      title: "",
+      summary: ""
     };
 
     this.openModal = this.openModal.bind(this);
@@ -53,6 +55,20 @@ class TruckModal extends React.Component {
 
   closeModal() {
     this.setState({ modalIsOpen: false });
+  }
+
+  handleTitleChange = event => {
+    this.setState({ title: event.target.value });
+  };
+
+  handleSummaryChange = event => {
+    this.setState({ summary: event.target.value });
+  };
+
+  handleSubmit = () => {
+    API.updateTrucker(sessionStorage.getItem("userid"), {title: this.state.title, summary: this.state.summary});
+    this.props.updateTitleSummary(this.state.title, this.state.summary);
+    this.closeModal();
   }
 
   render() {
@@ -79,12 +95,12 @@ class TruckModal extends React.Component {
           <ModalDiv>
             <h2>Edit Summary:</h2>
             Title:
-            <HeaderDiv />
+            <HeaderDiv onChange={this.handleTitleChange} />
             Summary:
-            <SummaryDiv />
+            <SummaryDiv onChange={this.handleSummaryChange} />
             <ButtDiv>
               <br />
-              <button onClick={this.closeModal}>save</button>
+              <button onClick={this.handleSubmit}>save</button>
             </ButtDiv>
           </ModalDiv>
         </Modal>
