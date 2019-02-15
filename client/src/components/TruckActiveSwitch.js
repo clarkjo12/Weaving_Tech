@@ -13,30 +13,30 @@ const ButtonDiv = styled.div`
 const H3 = styled.h3`
   color: darkslategrey;
   margin: 0;
-  padding-top: 20px;
 `;
 
 class TruckActivateSwitch extends Component {
-  state = { 
-    checked: false 
+  state = {
+    checked: false
   };
-  
-  componentWillMount() {
-    
-  }
+
+  componentWillMount() {}
 
   handleChange = () => {
     this.setState({ checked: !this.state.checked });
-    let status =  this.state.checked ? "open" : "closed";
-    API.updateTruckerStatus(sessionStorage.getItem("userid"), { status: status })
+    let status = this.state.checked ? "open" : "closed";
+    API.updateTruckerStatus(sessionStorage.getItem("userid"), {
+      status: status
+    })
       .then(res => {
         console.log("updated truck status");
         console.log(res);
-      }).catch(err => {
+      })
+      .catch(err => {
         console.log("update truck status error");
         console.log(err);
-      })
-  }
+      });
+  };
 
   render() {
     return (
