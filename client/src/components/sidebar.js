@@ -81,7 +81,8 @@ var styles = {
 
 class Sidebar extends Component {
   state = {
-    activeFavorites: 10
+    activeFavorites: 10,
+    favoritedNum: 342
   };
 
   updateFavorites = () => {
@@ -97,6 +98,19 @@ class Sidebar extends Component {
       });
   };
 
+  updateActiveFavorites = () => {
+    API.favCount({ favorites: this.props.username })
+      .then(res => {
+        this.setState({
+          favoritedNum: res.data
+        });
+      })
+      .catch(err => {
+        console.log("favorites error: ");
+        console.log(err);
+      });
+  };
+
   render() {
     if (
       this.props.username !== "" &&
@@ -104,6 +118,13 @@ class Sidebar extends Component {
       this.state.activeFavorites === 10
     ) {
       this.updateFavorites();
+    }
+    else if (
+      this.props.username !== "" &&
+      sessionStorage.getItem("userType") === "trucker" &&
+      this.state.favoritedNum === 342
+    ) {
+      this.updateActiveFavorites();
     }
     return (
       <Menu right styles={styles}>
@@ -141,7 +162,7 @@ class Sidebar extends Component {
             <SumDiv>
               <Heart img src={BlueHeart} alt="no dice" />
               <h1>
-                : <FavCount>342</FavCount>
+                : <FavCount>{this.state.favoritedNum}</FavCount>
               </h1>
             </SumDiv>
           </div>
