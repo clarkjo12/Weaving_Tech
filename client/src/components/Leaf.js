@@ -20,8 +20,8 @@ var myIcon = L.icon({
 
 export default class SimpleExample extends Component {
   state = {
-    lat: 36.0127039,
-    lng: -78.8246802,
+    lat: 35.91,
+    lng: -79.05,
     zoom: 13
   };
 
