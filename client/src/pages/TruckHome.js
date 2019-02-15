@@ -18,16 +18,16 @@ const TruckMapHeader = styled.div`
 
 class TruckHome extends Component {
   componentDidMount = () => {
-    const loggedIn = (sessionStorage.getItem("userid")) ? true : false;
+    const loggedIn = sessionStorage.getItem("userid") ? true : false;
     if (loggedIn) {
       this.props.updateUser({
         userId: sessionStorage.getItem("userid"),
         username: sessionStorage.getItem("displayname"),
         loggedIn: loggedIn,
         userType: sessionStorage.getItem("userType")
-      })
+      });
     }
-  }
+  };
 
   render() {
     return (
@@ -35,8 +35,8 @@ class TruckHome extends Component {
         <TruckMapHeader>
           <MapHeader />
         </TruckMapHeader>
-        <TruckWrapper />
         <Toggle />
+        <TruckWrapper />
       </TruckHomeDiv>
     );
   }

@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { push as Menu } from "react-burger-menu";
 import styled from "styled-components";
 import API from "../utils/API";
+import BlueHeart from "../images/heartblue.png";
 
 const FavCounter = styled.div``;
 
 const Welcome = styled.div`
   /* margin-bottom: 0px; */
-  font-size:25px;
+  font-size: 25px;
 `;
 
 const UserName = styled.div`
@@ -28,6 +29,19 @@ const Links = styled.div`
 `;
 
 const Signout = styled.div``;
+
+const SumDiv = styled.div`
+  padding-top: 10px;
+  padding-bottom: 10px;
+`;
+
+const FavCount = styled.div`
+  color: red;
+`;
+
+const Heart = styled.img`
+  height: 75px;
+`;
 
 ///burger style
 var styles = {
@@ -67,8 +81,9 @@ var styles = {
 
 class Sidebar extends Component {
   state = {
-    activeFavorites: 10
-  }
+    activeFavorites: 10,
+    favoritedNum: 342
+  };
 
   updateFavorites = () => {
     API.getFavs(this.props.userId)
@@ -76,57 +91,95 @@ class Sidebar extends Component {
         this.setState({
           activeFavorites: res.data.length
         });
-      }).catch(err => {
+      })
+      .catch(err => {
         console.log("favorites error: ");
         console.log(err);
       });
-  }
+  };
+
+  updateActiveFavorites = () => {
+    API.favCount({ favorites: this.props.username })
+      .then(res => {
+        this.setState({
+          favoritedNum: res.data
+        });
+      })
+      .catch(err => {
+        console.log("favorites error: ");
+        console.log(err);
+      });
+  };
 
   render() {
-    if (((this.props.username !== "") && (sessionStorage.getItem("userType") === "eater")) && (this.state.activeFavorites === 10)) {
-      this.updateFavorites()
+    if (
+      this.props.username !== "" &&
+      sessionStorage.getItem("userType") === "eater" &&
+      this.state.activeFavorites === 10
+    ) {
+      this.updateFavorites();
+    }
+    else if (
+      this.props.username !== "" &&
+      sessionStorage.getItem("userType") === "trucker" &&
+      this.state.favoritedNum === 342
+    ) {
+      this.updateActiveFavorites();
     }
     return (
       <Menu right styles={styles}>
         <Links>
           <a className="menu-item" href="/">
             Landing
-        </a>
+          </a>
 
           <a className="menu-item" href="/map">
             Map
-        </a>
+          </a>
 
           <a className="menu-item" href="/truck">
             Truck Home
-        </a>
+          </a>
         </Links>
 
-        {((this.props.username !== "") && (sessionStorage.getItem("userType") === "eater")) ?
-          (<div><Welcome> Hey,</Welcome>
+        {this.props.username !== "" &&
+        sessionStorage.getItem("userType") === "eater" ? (
+          <div>
+            <Welcome> Hey,</Welcome>
             <UserName>{this.props.username}</UserName>
-            <FavCounter>Active Favorites: <FavNum>{this.state.activeFavorites}</FavNum></FavCounter>
+            <FavCounter>
+              Active Favorites: <FavNum>{this.state.activeFavorites}</FavNum>
+            </FavCounter>
           </div>
-          ) :
-          (<div></div>)
-        }
-        {((this.props.username !== "") && (sessionStorage.getItem("userType") === "trucker")) ?
-          (<div><Welcome> Hey,</Welcome>
+        ) : (
+          <div />
+        )}
+        {this.props.username !== "" &&
+        sessionStorage.getItem("userType") === "trucker" ? (
+          <div>
+            <Welcome> Hey,</Welcome>
             <UserName>{this.props.username}</UserName>
+            <SumDiv>
+              <Heart img src={BlueHeart} alt="no dice" />
+              <h1>
+                : <FavCount>{this.state.favoritedNum}</FavCount>
+              </h1>
+            </SumDiv>
           </div>
-          ) :
-          (<div></div>)
-        }
+        ) : (
+          <div />
+        )}
+
         <Signout onClick={this.props.logout}>
           <a className="menu-item" href="/">
             Sign Out
-        </a>
+          </a>
           <br />
           <br />
         </Signout>
       </Menu>
     );
-  };
+  }
 }
 
 export default Sidebar;

@@ -6,6 +6,8 @@ import MapButtons from "./MapButtons";
 import Modal from "./Modal";
 import API from "../utils/API";
 
+import TruckImg from "../images/truck-serving.png";
+
 const MainDiv = styled.section`
   padding: 4em;
   display: flex;
@@ -31,16 +33,10 @@ const infoStyle = styled.div`
   z-index: 0;
 `;
 
-const truckStyle = styled.i`
-  color: red;
-  background-color: red;
-  z-index: 1;
-`;
-
 const Marker = ({ text }) => <div>{text}</div>;
-// const InfoWindow = ({ text }) => <div style={{infoStyle}}>{text}</div>;
+const InfoWindow = ({ text }) => <div style={{ infoStyle }}>{text}</div>;
 
-var truckIcon = <i className="fa fa-truck fa-4x" style={{truckStyle}}></i>;
+var truckIcon = <img src={TruckImg} alt="nahh" />;
 
 class MapDisplay extends Component {
   constructor(props) {
@@ -53,9 +49,10 @@ class MapDisplay extends Component {
       nearbyTrucks: [],
       activeMarker: {},
       modalIsOpen: false
-    }
+    };
+
     this.onMarkerClick = this.onMarkerClick.bind(this);
-  };
+  }
 
   static defaultProps = {
     center: {
@@ -121,6 +118,7 @@ class MapDisplay extends Component {
                 lng={this.state.center.lng}
                 text={truckIcon}
               />
+      
               {/* <InfoWindow
                 marker = {this.state.activeMarker}
                 visible = {this.state.modalIsOpen}
