@@ -13,11 +13,11 @@ const ButtDiv = styled.div`
 //Modal.setAppElement('#yourAppElement')
 
 class Modals extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      modalIsOpen: false
+      modalIsOpen: props.modalIsOpen
     };
 
     this.openModal = this.openModal.bind(this);

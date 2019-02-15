@@ -10,7 +10,7 @@ const ButtonDiv = styled.div`
   align-items: center;
 `;
 
-const H3 = styled.h3`
+const HeaderDiv = styled.h3`
   color: darkslategrey;
   margin: 0;
 `;
@@ -41,9 +41,9 @@ class TruckActivateSwitch extends Component {
   render() {
     return (
       <ButtonDiv>
-        <H3>
+        <HeaderDiv>
           <h3>Activate Truck:</h3>
-        </H3>
+        </HeaderDiv>
         <label htmlFor="normal-switch">
           <FlipSwitch
             onChange={this.handleChange}

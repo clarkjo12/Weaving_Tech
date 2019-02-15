@@ -32,6 +32,9 @@ export default {
   findTrucker: function (id) {
     return axios.get("/api/truckers/" + id);
   },
+  findTrucks: function () {
+    return axios.get("/api/truckers/");
+  },
   // Updates the trucker with the given id
   updateTrucker: function (id, truckerData) {
     return axios.put("/api/truckers/" + id, truckerData);
