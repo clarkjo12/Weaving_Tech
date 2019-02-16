@@ -35,4 +35,10 @@ router
   .route("/fav/:id")
   .put(eatersController.updateFav);
 
+// Pulls favorites from array
+// Matches with "/api/eaters/removefav/:id"
+router
+.route("/removefav/:id")
+.put(eatersController.removeFav);
+
 module.exports = router;

@@ -125,6 +125,7 @@ class MapDisplay extends Component {
             <Leaf 
               lat={this.state.center.lat}
               lng={this.state.center.lng}
+              userId={this.props.userId}
             />
           </div>
         </MapDiv>
