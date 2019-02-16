@@ -10,12 +10,12 @@ const fstrategy = new FacebookStrategy({
 },
     function (req, accessToken, refreshToken, profile, done) {
         if (req.body.loginType === "eater") {
-            Eater.upsertFbUser(accessToken, profile, function (err, user) {
+            Eater.upsertFbUser(accessToken, refreshToken, profile, function (err, user) {
                 return done(err, user);
             });
         }
         else {
-            Trucker.upsertFbUser(accessToken, profile, function (err, user) {
+            Trucker.upsertFbUser(accessToken, refreshToken, profile, function (err, user) {
                 return done(err, user);
             });
         }
