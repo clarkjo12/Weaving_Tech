@@ -8,7 +8,7 @@
     "axios": "^0.18.0",
     "google-map-react": "^1.1.2",
     "google-maps-react": "^2.0.2",
-    "leaflet" : "*",
+    "leaflet": "*",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-burger-menu": "^2.6.3",

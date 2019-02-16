@@ -4,6 +4,7 @@ import AllTruck from "../images/truck-all.png";
 import styled from "styled-components";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import Modal from "./Modal";
 import API from "../utils/API";
 
 import truckImg from "../images/navimg.png";
@@ -20,6 +21,7 @@ const PopDiv = styled.div``;
 const PopHead = styled.h3`
   margin-top: 0;
   margin-bottom: 5px;
+  min-width: 100px;
 `;
 
 const PopWrapper = styled.div``;
@@ -31,14 +33,11 @@ const NavImg = styled.img`
 
 const HeartImg = styled.img`
   width: 25%;
-  padding-right: 5px;
+  padding-right: 8px;
 `;
 
-const ProfImg = styled.img`
-  border-radius: 50%;
+const ProfImg = styled.div`
   border: 1px solid red;
-  width: 30px;
-  height: 27px;
 `;
 
 //////Styling ^
@@ -60,7 +59,7 @@ class SimpleExample extends Component {
       zoom: 13,
       nearbyTrucks: []
     };
-  };
+  }
 
   componentWillMount = () => {
     API.findTrucks()
@@ -107,7 +106,7 @@ class SimpleExample extends Component {
                     alt="nahh"
                   />
                   <NavImg src={truckImg} alt="nahh" />
-                  <ProfImg src={profileImg} alt="nahh" />
+                  <Modal />
                 </PopWrapper>
               </PopDiv>
             </Popup>
