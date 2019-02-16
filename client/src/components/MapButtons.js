@@ -34,6 +34,7 @@ const FavButton = styled.button`
   border: solid 2px gray;
   position: relative;
   margin-right: -1px;
+  z-index: 20000;
 
   :hover {
     background-color: darkred;
@@ -49,6 +50,8 @@ const AllButton = styled.button`
   border-radius: 3px;
   border: solid 2px gray;
   position: relative;
+  z-index: 20000;
+
   :hover {
     background-color: lightseagreen;
   }
