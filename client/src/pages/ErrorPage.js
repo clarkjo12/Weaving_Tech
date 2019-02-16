@@ -7,7 +7,7 @@ class ErrorPage extends Component {
   render() {
     return (
       <div>
-        <h1>Error!</h1>
+        <h1>Errror!</h1>
         <img src={Jack} alt="error?" />
         <L />
       </div>
