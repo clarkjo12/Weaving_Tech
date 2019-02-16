@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import MapHeader from "./MapHeader";
 import MapButtons from "./MapButtons";
-import Modal from "./Modal";
 import API from "../utils/API";
 import Leaf from "./Leaf";
 
@@ -52,7 +51,7 @@ class MapDisplay extends Component {
       modalIsOpen: false
     };
 
-    this.onMarkerClick = this.onMarkerClick.bind(this);
+    // this.onMarkerClick = this.onMarkerClick.bind(this);
   }
 
   static defaultProps = {
@@ -63,47 +62,7 @@ class MapDisplay extends Component {
     zoom: 11
   };
 
-  onMarkerClick = (props, marker, e) => {
-    this.setState({
-      activeMarker: marker,
-      modalIsOpen: true
-    });
-  };
-
-  loadMarkers = () => {
-    let truckState = this.state.nearbyTrucks;
-    console.log("Truck state:" + JSON.stringify(truckState));
-
-    const truckMap = truckState.map(function(coord, key) {
-      return <Marker key={key} lat={coord.location[1]} lng={coord.location[0]} text={truckIcon}/>
-    });
-
-    console.log(truckMap);
-  };
-
-  componentWillMount = () => {
-    API.findTrucks()
-      .then(async res => {
-        // console.log("Results: " + JSON.stringify(res));
-        if (res === 0) {
-          console.log("No trucks in database!");
-        } else {
-          let truckDBArray = res.data;
-
-          await this.setState({
-            nearbyTrucks: truckDBArray
-          });
-
-          console.log("State: " + JSON.stringify(this.state.nearbyTrucks));
-
-          //load the markers!
-          this.loadMarkers();
-        };
-      });
-  };
-
   render() {
-
     return (
       <MainDiv>
         <MapHeader />
@@ -122,17 +81,9 @@ class MapDisplay extends Component {
                 text={truckIcon}
               />
             </GoogleMapReact> */}
-            <Leaf 
-              lat={this.state.center.lat}
-              lng={this.state.center.lng}
-              userId={this.props.userId}
-            />
+            <Leaf lat={this.state.center.lat} lng={this.state.center.lng} userId={this.props.userId} />
           </div>
         </MapDiv>
-        <Modal 
-          modalIsOpen={this.state.modalIsOpen}
-          visible={this.state.modalIsOpen}
-        />
         <MapButtons />
       </MainDiv>
     );

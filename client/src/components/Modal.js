@@ -1,12 +1,19 @@
 import React from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
+import Mega from "../images/mega.png";
 
 const SummaryDiv = styled.div`
   color: lightblack;
 `;
 const ButtDiv = styled.div`
   float: right;
+`;
+
+const MegaImg = styled.img`
+  height: 27px;
+  float: right;
+  margin-top: -30px;
 `;
 
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
@@ -41,12 +48,14 @@ class Modals extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={this.openModal}>Open Modal</button>{" "}
+        <MegaImg src={Mega} onClick={this.openModal} />
+
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
           style={{
+            overlay: { zIndex: "100000" },
             content: {
               background: "#ffde59",
               top: "50%",
@@ -54,7 +63,8 @@ class Modals extends React.Component {
               right: "auto",
               bottom: "auto",
               marginRight: "-50%",
-              transform: "translate(-50%, -50%)"
+              transform: "translate(-50%, -50%)",
+              display: "flex"
             }
           }}
           contentLabel="Example Modal"
