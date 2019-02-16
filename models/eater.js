@@ -8,14 +8,11 @@ const eaterSchema = new Schema({
   picture: { type: String },
   location: {
     type: {
-      type: String, // Don't do `{ location: { type: String } }`
-      enum: ['Point'] // 'location.type' must be 'Point'
+      type: String,
+      enum: ['Point'],
     },
-    coordinates: {
-      type: [Number],
-      required: true
-    },
-    timestamp: { type: Number, default: Date.now }
+    coordinates: {},
+    timestamp: { type: Number }
   },
   favorites: { type: Array },
   facebookProvider: {
