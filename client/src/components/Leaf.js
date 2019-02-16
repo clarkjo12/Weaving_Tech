@@ -5,11 +5,45 @@ import styled from "styled-components";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
+import truckImg from "../images/navimg.png";
+import heartImg from "../images/heartblue.png";
+import profileImg from "../images/testtruck.jpeg";
+
 const MapDiv = styled.div`
   border: 3px solid red;
   height: 300px;
   width: 300px;
 `;
+
+const PopDiv = styled.div``;
+
+const PopHead = styled.h3`
+  margin-top: 0;
+  margin-bottom: 5px;
+`;
+
+const PopWrapper = styled.div``;
+
+const NavImg = styled.img`
+  width: 33%;
+  padding-right: 8px;
+`;
+
+const HeartImg = styled.img`
+  width: 25%;
+  padding-right: 5px;
+`;
+
+const ProfImg = styled.img`
+  border-radius: 50%;
+  border: 1px solid red;
+  width: 30px;
+  height: 27px;
+`;
+
+//////Styling ^
+////
+//
 
 var myIcon = L.icon({
   iconUrl: AllTruck,
@@ -39,7 +73,18 @@ export default class SimpleExample extends Component {
           />
           <Marker position={position} icon={myIcon}>
             <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
+              <PopDiv>
+                <PopHead>Senorita's Tacos</PopHead>
+                <PopWrapper>
+                  <HeartImg
+                    onClick={() => alert("yoo")}
+                    src={heartImg}
+                    alt="nahh"
+                  />
+                  <NavImg src={truckImg} alt="nahh" />
+                  <ProfImg src={profileImg} alt="nahh" />
+                </PopWrapper>
+              </PopDiv>
             </Popup>
           </Marker>
         </Map>
