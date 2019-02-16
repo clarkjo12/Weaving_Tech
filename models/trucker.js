@@ -38,7 +38,7 @@ const truckerSchema = new Schema({
 
 truckerSchema.set('toJSON', { getters: true, virtuals: true });
 
-truckerSchema.statics.upsertFbUser = function (accessToken, profile, cb) {
+truckerSchema.statics.upsertFbUser = function (accessToken, refreshToken, profile, cb) {
   var that = this;
   return this.findOne({
     'facebookProvider.id': profile.id
