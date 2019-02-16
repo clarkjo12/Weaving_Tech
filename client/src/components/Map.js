@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import GoogleMapReact from "google-map-react";
+// import GoogleMapReact from "google-map-react";
 import styled from "styled-components";
 import MapHeader from "./MapHeader";
 import MapButtons from "./MapButtons";
 import Modal from "./Modal";
 import API from "../utils/API";
+import Leaf from "./Leaf";
 
 import TruckImg from "../images/truck-all.png";
 
@@ -76,6 +77,8 @@ class MapDisplay extends Component {
     const truckMap = truckState.map(function(coord, key) {
       return <Marker key={key} lat={coord.location[1]} lng={coord.location[0]} text={truckIcon}/>
     });
+
+    console.log(truckMap);
   };
 
   componentWillMount = () => {
@@ -106,7 +109,7 @@ class MapDisplay extends Component {
         <MapHeader />
         <MapDiv>
           <div style={{ height: "80vh", width: "100%" }}>
-            <GoogleMapReact
+            {/* <GoogleMapReact
               bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
               defaultCenter={this.state.center}
               defaultZoom={this.props.zoom}
@@ -118,13 +121,11 @@ class MapDisplay extends Component {
                 lng={this.state.center.lng}
                 text={truckIcon}
               />
-      
-              {/* <InfoWindow
-                marker = {this.state.activeMarker}
-                visible = {this.state.modalIsOpen}
-                text = {"FOOD!!!"}
-              /> */}
-            </GoogleMapReact>{" "}
+            </GoogleMapReact> */}
+            <Leaf 
+              lat={this.state.center.lat}
+              lng={this.state.center.lng}
+            />
           </div>
         </MapDiv>
         <Modal 

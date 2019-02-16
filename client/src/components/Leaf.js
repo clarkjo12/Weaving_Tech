@@ -10,9 +10,8 @@ import heartImg from "../images/heartblue.png";
 import profileImg from "../images/testtruck.jpeg";
 
 const MapDiv = styled.div`
-  border: 3px solid red;
-  height: 300px;
-  width: 300px;
+  height: 100%;
+  width: 100%;
 `;
 
 const PopDiv = styled.div``;
@@ -52,10 +51,13 @@ var myIcon = L.icon({
 });
 
 export default class SimpleExample extends Component {
-  state = {
-    lat: 35.91,
-    lng: -79.05,
-    zoom: 13
+  constructor(props){
+    super(props);
+    this.state = {
+      lat: this.props.lat,
+      lng: this.props.lng,
+      zoom: 13
+    };
   };
 
   render() {
