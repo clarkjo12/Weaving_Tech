@@ -7,14 +7,11 @@ const truckerSchema = new Schema({
   picture: { type: String, default: "https://via.placeholder.com/200" },
   location: {
     type: {
-      type: String, // Don't do `{ location: { type: String } }`
-      enum: ['Point'], // 'location.type' must be 'Point'
+      type: String,
+      enum: ['Point'],
     },
-    coordinates: {
-      type: [Number],
-      required: true
-    },
-    timestamp: { type: Number, default: Date.now }
+    coordinates: {},
+    timestamp: { type: Number }
   },
   status: { type: String, default: "closed" },
   favorites: { type: Number },
