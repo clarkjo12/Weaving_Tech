@@ -4,6 +4,7 @@ import AllTruck from "../images/truck-all.png";
 import styled from "styled-components";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import API from "../utils/API";
 
 import truckImg from "../images/navimg.png";
 import heartImg from "../images/heartblue.png";
@@ -50,14 +51,36 @@ var myIcon = L.icon({
   popupAnchor: [0, -30]
 });
 
-export default class SimpleExample extends Component {
+class SimpleExample extends Component {
   constructor(props){
     super(props);
     this.state = {
       lat: this.props.lat,
       lng: this.props.lng,
-      zoom: 13
+      zoom: 13,
+      nearbyTrucks: []
     };
+  };
+
+  componentWillMount = () => {
+    API.findTrucks()
+      .then(async res => {
+        // console.log("Results: " + JSON.stringify(res));
+        if (res === 0) {
+          console.log("No trucks in database!");
+        } else {
+          let truckDBArray = res.data;
+
+          await this.setState({
+            nearbyTrucks: truckDBArray
+          });
+
+          console.log("State: " + JSON.stringify(this.state.nearbyTrucks));
+
+          //load the markers!
+          //this.loadMarkers();
+        };
+      });
   };
 
   render() {
@@ -69,11 +92,11 @@ export default class SimpleExample extends Component {
           center={position}
           zoom={this.state.zoom}
         >
-          <TileLayer
+         <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={position} icon={myIcon}>
+           {/* <Marker position={position} icon={myIcon}>
             <Popup>
               <PopDiv>
                 <PopHead>Senorita's Tacos</PopHead>
@@ -88,9 +111,36 @@ export default class SimpleExample extends Component {
                 </PopWrapper>
               </PopDiv>
             </Popup>
-          </Marker>
+         </Marker> */}
+
+         {this.state.nearbyTrucks.map((truck, key) => {
+           return(
+            <Marker 
+                key={key} 
+                position={truck.location}
+                icon={myIcon}
+            >
+            <Popup>
+              <PopDiv>
+                <PopHead>Senorita's Tacos</PopHead>
+                <PopWrapper>
+                  <HeartImg
+                    onClick={() => alert("yoo")}
+                    src={heartImg}
+                    alt="nahh"
+                  />
+                  <NavImg src={truckImg} alt="nahh" />
+                  <ProfImg src={profileImg} alt="nahh" />
+                </PopWrapper>
+              </PopDiv>
+            </Popup>
+            </Marker>
+           );
+        })}
         </Map>
       </MapDiv>
     );
   }
 }
+
+export default SimpleExample;

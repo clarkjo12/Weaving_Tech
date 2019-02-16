@@ -52,7 +52,7 @@ class MapDisplay extends Component {
       modalIsOpen: false
     };
 
-    this.onMarkerClick = this.onMarkerClick.bind(this);
+    // this.onMarkerClick = this.onMarkerClick.bind(this);
   }
 
   static defaultProps = {
@@ -63,44 +63,44 @@ class MapDisplay extends Component {
     zoom: 11
   };
 
-  onMarkerClick = (props, marker, e) => {
-    this.setState({
-      activeMarker: marker,
-      modalIsOpen: true
-    });
-  };
+  // onMarkerClick = (props, marker, e) => {
+  //   this.setState({
+  //     activeMarker: marker,
+  //     modalIsOpen: true
+  //   });
+  // };
 
-  loadMarkers = () => {
-    let truckState = this.state.nearbyTrucks;
-    console.log("Truck state:" + JSON.stringify(truckState));
+  // loadMarkers = () => {
+  //   let truckState = this.state.nearbyTrucks;
+  //   console.log("Truck state:" + JSON.stringify(truckState));
 
-    const truckMap = truckState.map(function(coord, key) {
-      return <Marker key={key} lat={coord.location[1]} lng={coord.location[0]} text={truckIcon}/>
-    });
+  //   const truckMap = truckState.map(function(coord, key) {
+  //     return <Marker key={key} lat={coord.location[1]} lng={coord.location[0]} text={truckIcon}/>
+  //   });
 
-    console.log(truckMap);
-  };
+  //   console.log(truckMap);
+  // };
 
-  componentWillMount = () => {
-    API.findTrucks()
-      .then(async res => {
-        // console.log("Results: " + JSON.stringify(res));
-        if (res === 0) {
-          console.log("No trucks in database!");
-        } else {
-          let truckDBArray = res.data;
+  // componentWillMount = () => {
+  //   API.findTrucks()
+  //     .then(async res => {
+  //       // console.log("Results: " + JSON.stringify(res));
+  //       if (res === 0) {
+  //         console.log("No trucks in database!");
+  //       } else {
+  //         let truckDBArray = res.data;
 
-          await this.setState({
-            nearbyTrucks: truckDBArray
-          });
+  //         await this.setState({
+  //           nearbyTrucks: truckDBArray
+  //         });
 
-          console.log("State: " + JSON.stringify(this.state.nearbyTrucks));
+  //         console.log("State: " + JSON.stringify(this.state.nearbyTrucks));
 
-          //load the markers!
-          this.loadMarkers();
-        };
-      });
-  };
+  //         //load the markers!
+  //         this.loadMarkers();
+  //       };
+  //     });
+  // };
 
   render() {
 
