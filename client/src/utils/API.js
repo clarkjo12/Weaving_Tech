@@ -20,7 +20,7 @@ export default {
   },
   // Gets eater
   findEater: function (id) {
-    return axios.get("/api/eaters/"+ id);
+    return axios.get("/api/eaters/" + id);
   },
   // Updates the eater with the given id
   updateEater: function (id, eaterData) {
@@ -29,6 +29,10 @@ export default {
   // Adds to eaters favorites with the given id
   updateEaterFav: function (id, eaterData) {
     return axios.put("/api/eaters/fav/" + id, eaterData);
+  },
+  // Removes from eaters favorites with the given id
+  removeEaterFav: function (id, eaterData) {
+    return axios.put("/api/eaters/removefav/" + id, eaterData);
   },
   //---------------------------Trucks DB-------------------------------------
   // Gets trucker

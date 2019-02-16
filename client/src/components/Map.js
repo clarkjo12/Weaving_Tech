@@ -81,7 +81,7 @@ class MapDisplay extends Component {
                 text={truckIcon}
               />
             </GoogleMapReact> */}
-            <Leaf lat={this.state.center.lat} lng={this.state.center.lng} />
+            <Leaf lat={this.state.center.lat} lng={this.state.center.lng} userId={this.props.userId} />
           </div>
         </MapDiv>
         <MapButtons />

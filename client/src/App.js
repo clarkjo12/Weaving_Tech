@@ -96,7 +96,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" render={(props) => <Landing {...props} updateUser={this.updateUser} latitude={this.state.latitude} longitude={this.state.longitude} />} />
             <Route exact path="/truck" render={(props) => <TruckHome {...props} updateUser={this.updateUser} />} />
-            <Route exact path="/map" render={(props) => <CustomerMap {...props} {...props} updateUser={this.updateUser} latitude={this.state.latitude} longitude={this.state.longitude} />} />
+            <Route exact path="/map" render={(props) => <CustomerMap {...props} {...props} updateUser={this.updateUser} latitude={this.state.latitude} longitude={this.state.longitude} userId={this.state.userId} />} />
             <Route component={ErrorPage} />
           </Switch>
         </div>

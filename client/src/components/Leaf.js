@@ -9,6 +9,7 @@ import API from "../utils/API";
 
 import truckImg from "../images/navimg.png";
 import heartImg from "../images/heartblue.png";
+import heartImg40 from "../images/heartblue40.png";
 import profileImg from "../images/testtruck.jpeg";
 
 const MapDiv = styled.div`
@@ -51,14 +52,12 @@ var myIcon = L.icon({
 });
 
 class SimpleExample extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      lat: this.props.lat,
-      lng: this.props.lng,
-      zoom: 13,
-      nearbyTrucks: []
-    };
+  state = {
+    lat: this.props.lat,
+    lng: this.props.lng,
+    zoom: 13,
+    profileImgSrc: heartImg,
+    nearbyTrucks: []
   }
 
   componentWillMount = () => {
@@ -81,6 +80,36 @@ class SimpleExample extends Component {
         };
       });
   };
+
+  componentDidMount = () => {
+    console.log(this.props.userId);
+    API.findEater(this.props.userId).then(res => {
+      const favorites = res.data.favorites;
+      let found = false;
+      // for (let i = 0; i< favorites.length; i++) {
+      //   if (favorites[i] === truckusername) {
+      //     found = true;
+      //   }
+      // }
+     {(found) ? this.setState({profileImgSrc: heartImg40}) : this.setState({profileImgSrc: heartImg})}
+    })
+    .catch(err => {
+      console.log("eater favorites error: ");
+      console.log(err);
+    });
+  }
+
+  addTrucktoUserFavs = () => {
+    (this.state.profileImgSrc === heartImg) ? 
+    (
+      this.setState({profileImgSrc: heartImg40})
+      //API.updateEaterFav(this.props.userId, truckusername)
+    ) : 
+    (
+      this.setState({profileImgSrc: heartImg})
+      //API.removeEaterFav(this.props.userId, truckusername)
+    )
+  }
 
   render() {
     const position = [this.state.lat, this.state.lng];
@@ -124,8 +153,8 @@ class SimpleExample extends Component {
                 <PopHead>Senorita's Tacos</PopHead>
                 <PopWrapper>
                   <HeartImg
-                    onClick={() => alert("yoo")}
-                    src={heartImg}
+                    onClick={this.addTrucktoUserFavs}
+                    src={this.state.profileImgSrc}
                     alt="nahh"
                   />
                   <NavImg src={truckImg} alt="nahh" />

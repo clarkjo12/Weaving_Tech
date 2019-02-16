@@ -45,7 +45,13 @@ module.exports = {
   },
   updateFav: function (req, res) {
     db.Eater
-      .updateOne({ _id: req.params.id }, { $push: { favorites: req.body.favorites } })
+      .updateOne({ _id: req.params.id }, { $push: { favorites: req.body } })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  removeFav: function (req, res) {
+    db.Eater
+      .updateOne({ _id: req.params.id }, { $pull: { favorites: req.body } })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   }

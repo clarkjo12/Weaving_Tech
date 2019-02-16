@@ -17,7 +17,7 @@ class CustomerMap extends Component {
   render() {
     return (
       <div>
-        <Map latitude={this.props.latitude} longitude={this.props.longitude} />
+        <Map latitude={this.props.latitude} longitude={this.props.longitude} userId={this.props.userId} />
       </div>
     );
   }
