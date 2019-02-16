@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import AllTruck from "../images/truck-all.png";
-import Dot from "../images/dot.png";
 import styled from "styled-components";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
