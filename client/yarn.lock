@@ -2801,6 +2801,11 @@ css-what@2.1, css-what@^2.1.2:
   resolved "https://registry.yarnpkg.com/css-what/-/css-what-2.1.2.tgz#c0876d9d0480927d7d4920dcd72af3595649554d"
   integrity sha512-wan8dMWQ0GUeF7DGEPVjhHemVW/vy6xUYmFzRY8RYqgA0JtXC9rJmbScBjqSu6dg9q0lwPQy6ZAmJVr3PPTvqQ==
 
+cssbeautify@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/cssbeautify/-/cssbeautify-0.3.1.tgz#12dd1f734035c2e6faca67dcbdcef74e42811397"
+  integrity sha1-Et0fc0A1wub6ymfcvc73TkKBE5c=
+
 cssdb@^4.1.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/cssdb/-/cssdb-4.3.0.tgz#2e1229900616f80c66ff2d568ea2b4f92db1c78c"
@@ -8315,6 +8320,11 @@ react-nouislider@^2.0.1:
   dependencies:
     nouislider "^9.2.0"
 
+react-parm@^1.0.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-parm/-/react-parm-1.1.1.tgz#a88af214ff942aac517ec21a4aea8a57104512d3"
+  integrity sha512-fei1OHIwwYWTdAeiJSCz8VHCIIeZTI65fmtFRtoejwYMOQGgJcim0K1RTz69kTnvwviQI+a9vU3t0MZR52hSLQ==
+
 react-router-dom@^4.3.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.3.1.tgz#4c2619fc24c4fa87c9fd18f4fb4a43fe63fbd5c6"
@@ -8406,6 +8416,15 @@ react-social-login@^3.4.4:
     react "16.1.0"
     uuid "3.1.0"
     whatwg-fetch "2.0.3"
+
+react-style-tag@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-style-tag/-/react-style-tag-2.0.1.tgz#e055a320dcd40ba0fcbab16e1991734f4a6c3d41"
+  integrity sha512-KwNLha72FDlgEvQiKClPEZCMyFqoU8M7LCpJH8eCYcb7wr1BWsKrtO+ZGoEGhrGepvLlL4RlSj7lwOU4DsmTiw==
+  dependencies:
+    cssbeautify "^0.3.1"
+    react-parm "^1.0.0"
+    stylis "^3.5.0"
 
 react-switch@^4.0.1:
   version "4.0.1"

@@ -6,9 +6,9 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import Modal from "./Modal";
 import API from "../utils/API";
+import { Style } from "react-style-tag";
 
 import truckImg from "../images/navimg.png";
-import profileImg from "../images/testtruck.jpeg";
 import heartImg from "../images/heartblue.png";
 import heartImg40 from "../images/heartblue40.png";
 
@@ -21,24 +21,22 @@ const PopDiv = styled.div``;
 
 const PopHead = styled.h3`
   margin-top: 0;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   min-width: 100px;
+  text-align: center;
 `;
 
 const PopWrapper = styled.div``;
 
 const NavImg = styled.img`
   width: 33%;
-  padding-right: 8px;
+  /* padding-right: 18px; */
 `;
 
 const HeartImg = styled.img`
   width: 25%;
-  padding-right: 8px;
-`;
-
-const ProfImg = styled.div`
-  border: 1px solid red;
+  padding-right: 7px;
+  margin-bottom: -2px;
 `;
 
 //////Styling ^
@@ -55,33 +53,33 @@ class SimpleExample extends Component {
   state = {
     lat: this.props.lat,
     lng: this.props.lng,
-    zoom: 13,
+    zoom: 2,
     nearbyTrucks: [],
     userFavorites: []
-  }
+  };
 
   componentWillMount = () => {
-    API.findTrucks()
-      .then(async res => {
-        // console.log("Results: " + JSON.stringify(res));
-        if (res === 0) {
-          console.log("No trucks in database!");
-        } else {
-          let truckDBArray = res.data;
+    API.findTrucks().then(async res => {
+      // console.log("Results: " + JSON.stringify(res));
+      if (res === 0) {
+        console.log("No trucks in database!");
+      } else {
+        let truckDBArray = res.data;
 
-          await this.setState({
-            nearbyTrucks: truckDBArray
-          });
+        await this.setState({
+          nearbyTrucks: truckDBArray
+        });
 
-          console.log("State: " + JSON.stringify(this.state.nearbyTrucks));
+        console.log("State: " + JSON.stringify(this.state.nearbyTrucks));
 
-          //load the markers!
-          //this.loadMarkers();
-        };
-      });
+        //load the markers!
+        //this.loadMarkers();
+      }
+    });
   };
 
   componentDidMount = () => {
+
     if (this.props.userId) {
       API.findEater(this.props.userId).then(res => {
         const favorites = res.data.favorites;
@@ -91,9 +89,10 @@ class SimpleExample extends Component {
     }
   }
 
+
   checkIfFav = (username, favorites) => {
-    if(favorites) {
-      for (let i = 0; i< favorites.length; i++) {
+    if (favorites) {
+      for (let i = 0; i < favorites.length; i++) {
         console.log(favorites[i]);
         console.log(username);
         if (favorites[i] === username) {
@@ -130,6 +129,25 @@ class SimpleExample extends Component {
         console.log(err);
       })
     }
+  };
+
+  openDirections() {
+    var uLat = 32.01;
+    var ulong = -85.24;
+    var tLat = 39.01;
+    var tLong = -90.24;
+    var directionLink =
+      "https://www.google.com/maps/dir/'" +
+      uLat +
+      "," +
+      ulong +
+      "'/'" +
+      tLat +
+      "," +
+      tLong +
+      "'";
+
+    window.open(directionLink);
   }
 
   render() {
@@ -141,11 +159,11 @@ class SimpleExample extends Component {
           center={position}
           zoom={this.state.zoom}
         >
-         <TileLayer
+          <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-           {/* <Marker position={position} icon={myIcon}>
+          {/* <Marker position={position} icon={myIcon}>
             <Popup>
               <PopDiv>
                 <PopHead>Senorita's Tacos</PopHead>
@@ -162,38 +180,56 @@ class SimpleExample extends Component {
             </Popup>
          </Marker> */}
 
-         {this.state.nearbyTrucks.map((truck, key) => {
-           console.log(key + truck.location.coordinates);
-           return(
-            <Marker 
-                key={key} 
+          {this.state.nearbyTrucks.map((truck, key) => {
+            console.log(key + truck.location.coordinates);
+            return (
+              <Marker
+                key={key}
                 position={truck.location.coordinates}
                 icon={myIcon}
-            >
-            <Popup>
-              <PopDiv>
-                <PopHead>{truck.title}</PopHead>
-                <PopWrapper>
-                  {(this.checkIfFav(truck.username, this.state.userFavorites)) ? 
-                  (
-                  <HeartImg
-                    onClick={(e) => this.addTruckToUserFavs(truck.username, e)}
-                    src={heartImg40}
-                    alt="nahh"
-                  />) :
-                  (<HeartImg
-                    onClick={(e) => this.addTruckToUserFavs(truck.username, e)}
-                    src={heartImg}
-                    alt="nahh"
-                  />)}
-                  <NavImg src={truckImg} alt="nahh" />
-                  <ProfImg src={profileImg} alt="nahh" />
-                </PopWrapper>
-              </PopDiv>
-            </Popup>
-            </Marker>
-           );
-        })}
+              >
+                <Popup className="mypopup">
+                  <PopDiv>
+                    <PopHead>{truck.title}</PopHead>
+                    <PopWrapper>
+                      {this.checkIfFav(
+                        truck.username,
+                        this.state.userFavorites
+                      ) ? (
+                        <HeartImg
+                          onClick={e =>
+                            this.addTruckToUserFavs(truck.username, e)
+                          }
+                          src={heartImg40}
+                          alt="nahh"
+                        />
+                      ) : (
+                        <HeartImg
+                          onClick={e =>
+                            this.addTruckToUserFavs(truck.username, e)
+                          }
+                          src={heartImg}
+                          alt="nahh"
+                        />
+                      )}
+                      <NavImg
+                        onClick={() => this.openDirections()}
+                        src={truckImg}
+                        alt="nahh"
+                      />
+                      <Modal />
+                    </PopWrapper>
+                  </PopDiv>
+                  <Style>{`
+                      .mypopup .leaflet-popup-tip,
+                      .mypopup .leaflet-popup-content-wrapper {
+                          background: #ffde59;
+                      }
+                    `}</Style>
+                </Popup>
+              </Marker>
+            );
+          })}
         </Map>
       </MapDiv>
     );
