@@ -10,7 +10,7 @@ const ButtonDiv = styled.div`
   align-items: center;
 `;
 
-const HeaderDiv = styled.h3`
+const HeaderDiv = styled.div`
   color: darkslategrey;
   margin: 0;
 `;
