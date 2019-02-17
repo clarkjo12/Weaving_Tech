@@ -44,14 +44,16 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   updateFav: function (req, res) {
+    console.log(req.body.username);
     db.Eater
-      .updateOne({ _id: req.params.id }, { $push: { favorites: req.body } })
+      .updateOne({ _id: req.params.id }, { $push: { favorites: req.body.username } })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   removeFav: function (req, res) {
+    console.log(req.body.username);
     db.Eater
-      .updateOne({ _id: req.params.id }, { $pull: { favorites: req.body } })
+      .updateOne({ _id: req.params.id }, { $pull: { favorites: req.body.username } })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   }

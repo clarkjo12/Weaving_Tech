@@ -12,13 +12,13 @@ const eaterSeed = [
   {
     username: "jon",
     password: "test",
-    location: { coordinates: [-73.856077, 40.848447] },
+    location: { coordinates: [40.848447, -73.856077] },
     favorites: ["Dusty Donuts", "Brendan's Kitchen"]
   },
   {
     username: "tim",
     password: "password",
-    location: { coordinates: [-73.556077, 40.848447] },
+    location: { coordinates: [40.848447, -73.556077] },
   }
 ];
 
@@ -29,7 +29,9 @@ const truckerSeed = [
     title: "Brendan's Kitchen",
     status: "open",
     favorites: 1,
-    location: [-79.06636637852995, 35.87921661138],
+    location: {
+      coordinates: [35.87921661138, -79.06636637852995]
+    },
     picture: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/ff5604ba-57a5-48f8-a91f-85c1de625100/dcx57lk-7d24cb48-7fef-4059-a305-b01026e62124.jpg",
     summary: "Now serving hamberders!",
   },
@@ -39,7 +41,9 @@ const truckerSeed = [
     title: "Beth's Kitchen",
     status: "closed",
     favorites: 0,
-    location: [-79.16636637852995, 35.87921661138],
+    location: {
+      coordinates: [35.87921661138, -79.16636637852995]
+    },
     picture: "https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwiv06j50p3gAhWwZd8KHbuyCssQjRx6BAgBEAU&url=http%3A%2F%2Fthemetapicture.com%2Fi-hate-tacos%2F&psig=AOvVaw1sMD6HB7A3PpdLH25DoR7c&ust=1549217445029750",
     summary: "Tacos, Tacos, Who wants tacos?",
   }
