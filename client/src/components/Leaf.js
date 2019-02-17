@@ -8,9 +8,9 @@ import Modal from "./Modal";
 import API from "../utils/API";
 
 import truckImg from "../images/navimg.png";
+import profileImg from "../images/testtruck.jpeg";
 import heartImg from "../images/heartblue.png";
 import heartImg40 from "../images/heartblue40.png";
-import profileImg from "../images/testtruck.jpeg";
 
 const MapDiv = styled.div`
   height: 100%;
@@ -56,8 +56,8 @@ class SimpleExample extends Component {
     lat: this.props.lat,
     lng: this.props.lng,
     zoom: 13,
-    profileImgSrc: heartImg,
-    nearbyTrucks: []
+    nearbyTrucks: [],
+    userFavorites: []
   }
 
   componentWillMount = () => {
@@ -82,33 +82,50 @@ class SimpleExample extends Component {
   };
 
   componentDidMount = () => {
-    console.log(this.props.userId);
     API.findEater(this.props.userId).then(res => {
       const favorites = res.data.favorites;
-      let found = false;
-      // for (let i = 0; i< favorites.length; i++) {
-      //   if (favorites[i] === truckusername) {
-      //     found = true;
-      //   }
-      // }
-     {(found) ? this.setState({profileImgSrc: heartImg40}) : this.setState({profileImgSrc: heartImg})}
-    })
-    .catch(err => {
-      console.log("eater favorites error: ");
-      console.log(err);
+      console.log(favorites);
+      this.setState({userFavorites: favorites});
     });
   }
 
-  addTrucktoUserFavs = () => {
-    (this.state.profileImgSrc === heartImg) ? 
-    (
-      this.setState({profileImgSrc: heartImg40})
-      //API.updateEaterFav(this.props.userId, truckusername)
-    ) : 
-    (
-      this.setState({profileImgSrc: heartImg})
-      //API.removeEaterFav(this.props.userId, truckusername)
-    )
+  checkIfFav = (username, favorites) => {
+    if(favorites) {
+      for (let i = 0; i< favorites.length; i++) {
+        console.log(favorites[i]);
+        console.log(username);
+        if (favorites[i] === username) {
+          return true;
+        }
+      }
+      return false;
+    }
+  };
+
+  addTruckToUserFavs = (username, e) => {
+    e.preventDefault();
+    if (!this.checkIfFav(username, this.state.userFavorites)) {
+    API.updateEaterFav(this.props.userId, {username: username}).then(res => {
+        console.log("Added favorite" + username);
+        let favoritesArr = this.state.userFavorites;
+        favoritesArr.push(username);
+        this.setState({userFavorites: favoritesArr});
+      }).catch(err => {
+        console.log("eater favorites error: ");
+        console.log(err);
+      })
+     } 
+     else {
+      API.removeEaterFav(this.props.userId, {username: username}).then(res => {
+        console.log("Removed favorite");
+        let favoritesArr = this.state.userFavorites;
+        favoritesArr.splice(favoritesArr.indexOf(username), 1);
+        this.setState({userFavorites: favoritesArr});
+      }).catch(err => {
+        console.log("eater favorites error: ");
+        console.log(err);
+      })
+    }
   }
 
   render() {
@@ -142,21 +159,29 @@ class SimpleExample extends Component {
          </Marker> */}
 
          {this.state.nearbyTrucks.map((truck, key) => {
+           console.log(key + truck.location.coordinates);
            return(
             <Marker 
                 key={key} 
-                position={truck.location}
+                position={truck.location.coordinates}
                 icon={myIcon}
             >
             <Popup>
               <PopDiv>
-                <PopHead>Senorita's Tacos</PopHead>
+                <PopHead>{truck.title}</PopHead>
                 <PopWrapper>
+                  {(this.checkIfFav(truck.username, this.state.userFavorites)) ? 
+                  (
                   <HeartImg
-                    onClick={this.addTrucktoUserFavs}
-                    src={this.state.profileImgSrc}
+                    onClick={(e) => this.addTruckToUserFavs(truck.username, e)}
+                    src={heartImg40}
                     alt="nahh"
-                  />
+                  />) :
+                  (<HeartImg
+                    onClick={(e) => this.addTruckToUserFavs(truck.username, e)}
+                    src={heartImg}
+                    alt="nahh"
+                  />)}
                   <NavImg src={truckImg} alt="nahh" />
                   <ProfImg src={profileImg} alt="nahh" />
                 </PopWrapper>
