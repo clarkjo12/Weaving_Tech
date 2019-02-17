@@ -19,7 +19,7 @@ const MapDiv = styled.div`
 
 const PopDiv = styled.div``;
 
-const PopHead = styled.h3`
+const PopHead = styled.h5`
   margin-top: 0;
   margin-bottom: 8px;
   min-width: 100px;
