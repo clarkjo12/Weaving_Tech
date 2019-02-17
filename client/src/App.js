@@ -5,6 +5,7 @@ import Landing from "./pages/Landing";
 import CustomerMap from "./pages/CustomerMap";
 import TruckHome from "./pages/TruckHome";
 import ErrorPage from "./pages/ErrorPage";
+import API from "./utils/API";
 
 // import NavBar from "./components/NavBar";
 import SideBar from "./components/sidebar";
@@ -17,7 +18,9 @@ class App extends Component {
     userId: sessionStorage.getItem("userId") || "",
     displayName: sessionStorage.getItem("displayName") || "",
     longitude: -49.089977,
-    latitude: -21.805149
+    latitude: -21.805149, 
+    activeFavorites: 10,
+    favoritedNum: 342
   };
 
   componentDidMount = () => {
@@ -64,6 +67,37 @@ class App extends Component {
     }
   }
 
+  updateFavorites = () => {
+    console.log("Update Favorites called");
+    if (this.state.userId !== "") {
+    API.getFavs(this.state.userId)
+      .then(res => {
+        this.setState({
+          activeFavorites: res.data.length
+        });
+      })
+      .catch(err => {
+        console.log("favorites error: ");
+        console.log(err);
+      });
+    }
+  }
+
+  updateActiveFavorites = () => {
+    console.log("HER" + sessionStorage.getItem("displayname"));
+    API.favCount({ favorites: sessionStorage.getItem("displayname") })
+      .then(res => {
+        console.log("HE" + res);
+        this.setState({
+          favoritedNum: res.data
+        });
+      })
+      .catch(err => {
+        console.log("favorites error: ");
+        console.log(err);
+      });
+  };
+
   updateUser = (data) => {
     const user = data.username;
     const upper = user.replace(/^\w/, c => c.toUpperCase());
@@ -92,11 +126,11 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <SideBar username={this.state.displayName} userId={this.state.userId} logout={this.logout} />
+          <SideBar username={this.state.displayName} userId={this.state.userId} logout={this.logout} favorites={this.state.activeFavorites} favoritedNum={this.state.favoritedNum}/>
           <Switch>
             <Route exact path="/" render={(props) => <Landing {...props} updateUser={this.updateUser} latitude={this.state.latitude} longitude={this.state.longitude} />} />
-            <Route exact path="/truck" render={(props) => <TruckHome {...props} updateUser={this.updateUser} />} />
-            <Route exact path="/map" render={(props) => <CustomerMap {...props} {...props} updateUser={this.updateUser} latitude={this.state.latitude} longitude={this.state.longitude} userId={this.state.userId} />} />
+            <Route exact path="/truck" render={(props) => <TruckHome {...props} updateUser={this.updateUser} updateActiveFavs={this.updateActiveFavorites} />} />
+            <Route exact path="/map" render={(props) => <CustomerMap {...props} {...props} updateUser={this.updateUser} updateFavs={this.updateFavorites} latitude={this.state.latitude} longitude={this.state.longitude} userId={this.state.userId} />} />
             <Route component={ErrorPage} />
           </Switch>
         </div>

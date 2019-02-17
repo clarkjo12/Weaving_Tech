@@ -79,12 +79,16 @@ class SimpleExample extends Component {
   };
 
   componentDidMount = () => {
-    API.findEater(this.props.userId).then(res => {
-      const favorites = res.data.favorites;
-      console.log(favorites);
-      this.setState({ userFavorites: favorites });
-    });
-  };
+
+    if (this.props.userId) {
+      API.findEater(this.props.userId).then(res => {
+        const favorites = res.data.favorites;
+        console.log(favorites);
+        this.setState({userFavorites: favorites});
+      });
+    }
+  }
+
 
   checkIfFav = (username, favorites) => {
     if (favorites) {
@@ -102,29 +106,28 @@ class SimpleExample extends Component {
   addTruckToUserFavs = (username, e) => {
     e.preventDefault();
     if (!this.checkIfFav(username, this.state.userFavorites)) {
-      API.updateEaterFav(this.props.userId, { username: username })
-        .then(res => {
-          console.log("Added favorite" + username);
-          let favoritesArr = this.state.userFavorites;
-          favoritesArr.push(username);
-          this.setState({ userFavorites: favoritesArr });
-        })
-        .catch(err => {
-          console.log("eater favorites error: ");
-          console.log(err);
-        });
-    } else {
-      API.removeEaterFav(this.props.userId, { username: username })
-        .then(res => {
-          console.log("Removed favorite");
-          let favoritesArr = this.state.userFavorites;
-          favoritesArr.splice(favoritesArr.indexOf(username), 1);
-          this.setState({ userFavorites: favoritesArr });
-        })
-        .catch(err => {
-          console.log("eater favorites error: ");
-          console.log(err);
-        });
+    API.updateEaterFav(this.props.userId, {username: username}).then(res => {
+        console.log("Added favorite" + username);
+        let favoritesArr = this.state.userFavorites;
+        favoritesArr.push(username);
+        this.setState({userFavorites: favoritesArr});
+        this.props.updateFavs();
+      }).catch(err => {
+        console.log("eater favorites error: ");
+        console.log(err);
+      })
+     } 
+     else {
+      API.removeEaterFav(this.props.userId, {username: username}).then(res => {
+        console.log("Removed favorite");
+        let favoritesArr = this.state.userFavorites;
+        favoritesArr.splice(favoritesArr.indexOf(username), 1);
+        this.setState({userFavorites: favoritesArr});
+        this.props.updateFavs();
+      }).catch(err => {
+        console.log("eater favorites error: ");
+        console.log(err);
+      })
     }
   };
 
