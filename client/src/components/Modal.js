@@ -11,9 +11,9 @@ const ButtDiv = styled.div`
 `;
 
 const MegaImg = styled.img`
-  height: 27px;
+  height: 25px;
   float: right;
-  margin-top: -30px;
+  margin-top: -27px;
 `;
 
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
