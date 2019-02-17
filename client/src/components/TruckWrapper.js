@@ -11,7 +11,7 @@ const TruckMain = styled.div`
   padding-top: 10px;
 `;
 
-const Grey = styled.h3`
+const Grey = styled.div`
   color: darkslategray;
   text-decoration: underline;
   margin: 0;

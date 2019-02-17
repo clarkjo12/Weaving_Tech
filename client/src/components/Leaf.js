@@ -82,11 +82,13 @@ class SimpleExample extends Component {
   };
 
   componentDidMount = () => {
-    API.findEater(this.props.userId).then(res => {
-      const favorites = res.data.favorites;
-      console.log(favorites);
-      this.setState({userFavorites: favorites});
-    });
+    if (this.props.userId) {
+      API.findEater(this.props.userId).then(res => {
+        const favorites = res.data.favorites;
+        console.log(favorites);
+        this.setState({userFavorites: favorites});
+      });
+    }
   }
 
   checkIfFav = (username, favorites) => {
@@ -110,6 +112,7 @@ class SimpleExample extends Component {
         let favoritesArr = this.state.userFavorites;
         favoritesArr.push(username);
         this.setState({userFavorites: favoritesArr});
+        this.props.updateFavs();
       }).catch(err => {
         console.log("eater favorites error: ");
         console.log(err);
@@ -121,6 +124,7 @@ class SimpleExample extends Component {
         let favoritesArr = this.state.userFavorites;
         favoritesArr.splice(favoritesArr.indexOf(username), 1);
         this.setState({userFavorites: favoritesArr});
+        this.props.updateFavs();
       }).catch(err => {
         console.log("eater favorites error: ");
         console.log(err);
