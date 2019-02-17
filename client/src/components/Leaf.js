@@ -30,7 +30,7 @@ const PopWrapper = styled.div``;
 
 const NavImg = styled.img`
   width: 33%;
-  padding-right: 18px;
+  /* padding-right: 18px; */
 `;
 
 const HeartImg = styled.img`
