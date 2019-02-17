@@ -93,9 +93,13 @@ class Sidebar extends Component {
             Landing
           </a>
 
+          <br />
+
           <a className="menu-item" href="/map">
             Map
           </a>
+
+          <br />
 
           <a className="menu-item" href="/truck">
             Truck Home
