@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Mega from "../images/mega.png";
 import testTruck from "../images/testtruck.jpeg";
 import heartImg from "../images/heartblue.png";
+import API from "../utils/API";
 
 const SummaryDiv = styled.div`
   margin-top: 8px;
@@ -59,7 +60,8 @@ class Modals extends React.Component {
     super(props);
 
     this.state = {
-      modalIsOpen: props.modalIsOpen
+      modalIsOpen: props.modalIsOpen,
+      favorites: 0
     };
 
     this.openModal = this.openModal.bind(this);
@@ -69,6 +71,7 @@ class Modals extends React.Component {
 
   openModal() {
     this.setState({ modalIsOpen: true });
+    this.updateActiveFavorites(this.props.username);
   }
 
   afterOpenModal() {
@@ -79,6 +82,17 @@ class Modals extends React.Component {
   closeModal() {
     this.setState({ modalIsOpen: false });
   }
+
+  updateActiveFavorites = (truckname) => {
+    API.favCount({ favorites: truckname })
+      .then(res => {
+        this.setState({favorites: res.data});
+      })
+      .catch(err => {
+        console.log("favorites error: ");
+        console.log(err);
+      });
+  };
 
   render() {
     return (
@@ -108,19 +122,18 @@ class Modals extends React.Component {
           }}
           contentLabel="Example Modal"
         >
-          <TruckName>Senorita's Tacos</TruckName>
-          <ProfileImg src={testTruck} />
+          <TruckName>{this.props.username}</TruckName>
+          <ProfileImg src={this.props.picture} />
           <LoveWrapper>
-            <Heart src={heartImg} />: <LoveCount>223</LoveCount>
+            <Heart src={heartImg} />: <LoveCount>{this.state.favorites}</LoveCount>
           </LoveWrapper>
           {/* <h2 ref={subtitle => (this.subtitle = subtitle)}>
             Fresh Tacos BOGO!
           </h2> */}
-          <TruckTitle>Fresh Tacos BoGO!</TruckTitle>
+          <TruckTitle>{this.props.title}</TruckTitle>
           <SummaryDiv>
             <div>
-              Hot and Fresh, Chicken or Beef; supplies limited so come and git
-              it!
+              {this.props.summary}
             </div>
           </SummaryDiv>
           <ButtDiv>

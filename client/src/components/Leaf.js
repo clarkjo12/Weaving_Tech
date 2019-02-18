@@ -89,7 +89,6 @@ class SimpleExample extends Component {
     }
   }
 
-
   checkIfFav = (username, favorites) => {
     if (favorites) {
       for (let i = 0; i < favorites.length; i++) {
@@ -217,7 +216,7 @@ class SimpleExample extends Component {
                         src={truckImg}
                         alt="nahh"
                       />
-                      <Modal />
+                      <Modal username={truck.username} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites}/>
                     </PopWrapper>
                   </PopDiv>
                   <Style>{`
