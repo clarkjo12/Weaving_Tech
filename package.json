@@ -43,6 +43,7 @@
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.0.2",
     "react-native-open-maps": "^0.3.3",
+    "react-style-tag": "^2.0.1",
     "react-switch": "^4.0.1"
   }
 }

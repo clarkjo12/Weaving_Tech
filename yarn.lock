@@ -552,6 +552,11 @@ crypto-random-string@^1.0.0:
   resolved "https://registry.yarnpkg.com/crypto-random-string/-/crypto-random-string-1.0.0.tgz#a230f64f568310e1498009940790ec99545bca7e"
   integrity sha1-ojD2T1aDEOFJgAmUB5DsmVRbyn4=
 
+cssbeautify@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/cssbeautify/-/cssbeautify-0.3.1.tgz#12dd1f734035c2e6faca67dcbdcef74e42811397"
+  integrity sha1-Et0fc0A1wub6ymfcvc73TkKBE5c=
+
 csstype@^2.2.0:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.2.tgz#3043d5e065454579afc7478a18de41909c8a2f01"
@@ -2314,6 +2319,20 @@ react-native-open-maps@^0.3.3:
   dependencies:
     query-string "^6.1.0"
 
+react-parm@^1.0.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-parm/-/react-parm-1.1.1.tgz#a88af214ff942aac517ec21a4aea8a57104512d3"
+  integrity sha512-fei1OHIwwYWTdAeiJSCz8VHCIIeZTI65fmtFRtoejwYMOQGgJcim0K1RTz69kTnvwviQI+a9vU3t0MZR52hSLQ==
+
+react-style-tag@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-style-tag/-/react-style-tag-2.0.1.tgz#e055a320dcd40ba0fcbab16e1991734f4a6c3d41"
+  integrity sha512-KwNLha72FDlgEvQiKClPEZCMyFqoU8M7LCpJH8eCYcb7wr1BWsKrtO+ZGoEGhrGepvLlL4RlSj7lwOU4DsmTiw==
+  dependencies:
+    cssbeautify "^0.3.1"
+    react-parm "^1.0.0"
+    stylis "^3.5.0"
+
 react-switch@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/react-switch/-/react-switch-4.0.1.tgz#6adace6126f15ff5efbbf104936a7f5846619097"
@@ -2820,6 +2839,11 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
+
+stylis@^3.5.0:
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.5.4.tgz#f665f25f5e299cf3d64654ab949a57c768b73fbe"
+  integrity sha512-8/3pSmthWM7lsPBKv7NXkzn2Uc9W7NotcwGNpJaa3k7WMM1XDCA4MgT5k/8BIexd5ydZdboXtU90XH9Ec4Bv/Q==
 
 supports-color@^4.5.0:
   version "4.5.0"

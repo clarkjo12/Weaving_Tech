@@ -53,7 +53,7 @@ class SimpleExample extends Component {
   state = {
     lat: this.props.lat,
     lng: this.props.lng,
-    zoom: 2,
+    zoom: 11,
     nearbyTrucks: [],
     userFavorites: []
   };
@@ -180,7 +180,7 @@ class SimpleExample extends Component {
             return (
               <Marker
                 key={key}
-                position={truck.location.coordinates}
+                position={truck.location}
                 icon={myIcon}
               >
                 <Popup className="mypopup">
