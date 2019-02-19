@@ -12,6 +12,7 @@ class CustomerMap extends Component {
         userType: sessionStorage.getItem("userType")
       })
     }
+    this.props.updateFavs(); 
   }
 
   render() {

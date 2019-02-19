@@ -30,6 +30,7 @@ class TruckHome extends Component {
     if (sessionStorage.getItem("userType") === "trucker") {
       this.props.updateActiveFavs();
     }
+    this.props.updateActiveFavs(); 
   };
 
   render() {
