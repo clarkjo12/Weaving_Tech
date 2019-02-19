@@ -83,7 +83,6 @@ class SimpleExample extends Component {
     if (this.props.userId) {
       API.findEater(this.props.userId).then(res => {
         const favorites = res.data.favorites;
-        console.log(favorites);
         this.setState({userFavorites: favorites});
       });
     }
@@ -92,8 +91,6 @@ class SimpleExample extends Component {
   checkIfFav = (username, favorites) => {
     if (favorites) {
       for (let i = 0; i < favorites.length; i++) {
-        console.log(favorites[i]);
-        console.log(username);
         if (favorites[i] === username) {
           return true;
         }
@@ -180,7 +177,6 @@ class SimpleExample extends Component {
          </Marker> */}
 
           {this.state.nearbyTrucks.map((truck, key) => {
-            console.log(key + truck.location.coordinates);
             return (
               <Marker
                 key={key}

@@ -17,6 +17,7 @@ class App extends Component {
     loggedIn: false,
     userId: sessionStorage.getItem("userId") || "",
     displayName: sessionStorage.getItem("displayName") || "",
+    userType: sessionStorage.getItem("userType") || "",
     longitude: -49.089977,
     latitude: -21.805149, 
     activeFavorites: 10,
@@ -84,10 +85,9 @@ class App extends Component {
   }
 
   updateActiveFavorites = () => {
-    console.log("HER" + sessionStorage.getItem("displayname"));
+    console.log("Update Active Favorites called");
     API.favCount({ favorites: sessionStorage.getItem("displayname") })
       .then(res => {
-        console.log("HE" + res);
         this.setState({
           favoritedNum: res.data
         });
@@ -104,6 +104,7 @@ class App extends Component {
     this.setState({
       loggedIn: data.loggedIn,
       userId: data.userId,
+      userType: data.userType,
       displayName: upper
     });
     sessionStorage.setItem("userid", data.userId);
@@ -118,6 +119,7 @@ class App extends Component {
     this.setState({
       loggedIn: false,
       userId: "",
+      userType: "",
       displayName: ""
     });
   }
