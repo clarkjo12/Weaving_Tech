@@ -12,6 +12,9 @@ import truckImg from "../images/navimg.png";
 import heartImg from "../images/heartblue.png";
 import heartImg40 from "../images/heartblue40.png";
 
+import openSocket from 'socket.io-client';
+const socket = openSocket('http://localhost:8000');
+
 const MapDiv = styled.div`
   height: 100%;
   width: 100%;
@@ -50,13 +53,17 @@ var myIcon = L.icon({
 });
 
 class SimpleExample extends Component {
-  state = {
-    lat: this.props.lat,
-    lng: this.props.lng,
-    zoom: 11,
-    nearbyTrucks: [],
-    userFavorites: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      lat: this.props.lat,
+      lng: this.props.lng,
+      zoom: 11,
+      nearbyTrucks: [],
+      userFavorites: []
+    };
+    this.sendSocketIO = this.sendSocketIO.bind(this);
+  }
 
   componentWillMount = () => {
     API.findTrucks().then(async res => {
@@ -83,7 +90,7 @@ class SimpleExample extends Component {
     if (this.props.userId) {
       API.findEater(this.props.userId).then(res => {
         const favorites = res.data.favorites;
-        this.setState({userFavorites: favorites});
+        this.setState({ userFavorites: favorites });
       });
     }
   }
@@ -99,26 +106,31 @@ class SimpleExample extends Component {
     }
   };
 
+  sendSocketIO(truckname) {
+    socket.emit('user updated favorties', truckname);
+  }
+
   addTruckToUserFavs = (username, e) => {
     e.preventDefault();
+    this.sendSocketIO(username);
     if (!this.checkIfFav(username, this.state.userFavorites)) {
-    API.updateEaterFav(this.props.userId, {username: username}).then(res => {
+      API.updateEaterFav(this.props.userId, { username: username }).then(res => {
         console.log("Added favorite" + username);
         let favoritesArr = this.state.userFavorites;
         favoritesArr.push(username);
-        this.setState({userFavorites: favoritesArr});
+        this.setState({ userFavorites: favoritesArr });
         this.props.updateFavs();
       }).catch(err => {
         console.log("eater favorites error: ");
         console.log(err);
       })
-     } 
-     else {
-      API.removeEaterFav(this.props.userId, {username: username}).then(res => {
+    }
+    else {
+      API.removeEaterFav(this.props.userId, { username: username }).then(res => {
         console.log("Removed favorite");
         let favoritesArr = this.state.userFavorites;
         favoritesArr.splice(favoritesArr.indexOf(username), 1);
-        this.setState({userFavorites: favoritesArr});
+        this.setState({ userFavorites: favoritesArr });
         this.props.updateFavs();
       }).catch(err => {
         console.log("eater favorites error: ");
@@ -191,28 +203,28 @@ class SimpleExample extends Component {
                         truck.username,
                         this.state.userFavorites
                       ) ? (
-                        <HeartImg
-                          onClick={e =>
-                            this.addTruckToUserFavs(truck.username, e)
-                          }
-                          src={heartImg40}
-                          alt="nahh"
-                        />
-                      ) : (
-                        <HeartImg
-                          onClick={e =>
-                            this.addTruckToUserFavs(truck.username, e)
-                          }
-                          src={heartImg}
-                          alt="nahh"
-                        />
-                      )}
+                          <HeartImg
+                            onClick={e =>
+                              this.addTruckToUserFavs(truck.username, e)
+                            }
+                            src={heartImg40}
+                            alt="nahh"
+                          />
+                        ) : (
+                          <HeartImg
+                            onClick={e =>
+                              this.addTruckToUserFavs(truck.username, e)
+                            }
+                            src={heartImg}
+                            alt="nahh"
+                          />
+                        )}
                       <NavImg
                         onClick={() => this.openDirections(truck.location.coordinates[0], truck.location.coordinates[1])}
                         src={truckImg}
                         alt="nahh"
                       />
-                      <Modal username={truck.username} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites}/>
+                      <Modal username={truck.username} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites} />
                     </PopWrapper>
                   </PopDiv>
                   <Style>{`

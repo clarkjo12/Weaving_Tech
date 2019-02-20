@@ -27,7 +27,7 @@ class TruckHome extends Component {
         userType: sessionStorage.getItem("userType")
       });
     }
-    if (sessionStorage.getItem("userType") === "trucker") {
+    if (this.props.userType === "trucker") {
       this.props.updateActiveFavs();
     }
     this.props.updateActiveFavs(); 
@@ -39,8 +39,8 @@ class TruckHome extends Component {
         <TruckMapHeader>
           <MapHeader />
         </TruckMapHeader>
-        <Toggle />
-        <TruckWrapper />
+        <Toggle userId={this.props.userId} />
+        <TruckWrapper userId={this.props.userId} />
       </TruckHomeDiv>
     );
   }

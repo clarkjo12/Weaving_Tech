@@ -23,6 +23,7 @@
     "@turf/distance": "^6.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "connect-mongo": "^2.0.3",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
@@ -46,6 +47,7 @@
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.0.2",
     "react-native-open-maps": "^0.3.3",
-    "react-switch": "^4.0.1"
+    "react-switch": "^4.0.1",
+    "socket.io": "^2.2.0"
   }
 }

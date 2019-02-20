@@ -66,7 +66,7 @@ class TruckModal extends React.Component {
   };
 
   handleSubmit = () => {
-    API.updateTrucker(sessionStorage.getItem("userid"), {title: this.state.title, summary: this.state.summary});
+    API.updateTrucker(this.props.userId, {title: this.state.title, summary: this.state.summary});
     this.props.updateTitleSummary(this.state.title, this.state.summary);
     this.closeModal();
   }
