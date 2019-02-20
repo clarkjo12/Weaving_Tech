@@ -55,27 +55,37 @@ class SimpleExample extends Component {
     lng: this.props.lng,
     zoom: 11,
     nearbyTrucks: [],
-    userFavorites: []
+    userFavorites: [],
+    isFavoritesActive: this.props.isFavoritesActive
   };
 
   componentWillMount = () => {
-    API.findTrucks().then(async res => {
-      // console.log("Results: " + JSON.stringify(res));
-      if (res === 0) {
-        console.log("No trucks in database!");
-      } else {
-        let truckDBArray = res.data;
+    // if (!this.state.isFavoritesActive) {
+    //   API.findTrucks().then(async res => {
+        
+    //     if (res === 0) {
+    //       console.log("No trucks in database!");
+    //     } else {
+    //       let truckDBArray = res.data;
 
-        await this.setState({
-          nearbyTrucks: truckDBArray
-        });
-
-        console.log("State: " + JSON.stringify(this.state.nearbyTrucks));
-
-        //load the markers!
-        //this.loadMarkers();
-      }
-    });
+    //       await this.setState({
+    //         nearbyTrucks: truckDBArray
+    //       });
+    //     }
+    //   });
+    // } else {
+    //   API.findFavs().then(async res => {
+    //     if (res === 0) {
+    //       console.log("No favorites found!");
+    //     } else {
+    //       let truckDBArray = res.data;
+          
+    //       await this.setState({
+    //         nearbyTrucks: truckDBArray
+    //       });
+    //     }
+    //   });
+    // }
   };
 
   componentDidMount = () => {
@@ -84,6 +94,33 @@ class SimpleExample extends Component {
       API.findEater(this.props.userId).then(res => {
         const favorites = res.data.favorites;
         this.setState({userFavorites: favorites});
+      });
+    }
+
+    if (!this.state.isFavoritesActive) {
+      API.findTrucks().then(async res => {
+        
+        if (res === 0) {
+          console.log("No trucks in database!");
+        } else {
+          let truckDBArray = res.data;
+
+          await this.setState({
+            nearbyTrucks: truckDBArray
+          });
+        }
+      });
+    } else {
+      API.findFavs().then(async res => {
+        if (res === 0) {
+          console.log("No favorites found!");
+        } else {
+          let truckDBArray = res.data;
+          
+          await this.setState({
+            nearbyTrucks: truckDBArray
+          });
+        }
       });
     }
   }
@@ -148,6 +185,57 @@ class SimpleExample extends Component {
 
   render() {
     const position = [this.state.lat, this.state.lng];
+
+    let markers = this.state.nearbyTrucks.map((truck, key) => {
+      return (
+        <Marker
+          key={key}
+          position={truck.location.coordinates}
+          icon={myIcon}
+        >
+          <Popup className="mypopup">
+            <PopDiv>
+              <PopHead>{truck.title}</PopHead>
+              <PopWrapper>
+                {this.checkIfFav(
+                  truck.username,
+                  this.state.userFavorites
+                ) ? (
+                  <HeartImg
+                    onClick={e =>
+                      this.addTruckToUserFavs(truck.username, e)
+                    }
+                    src={heartImg40}
+                    alt="nahh"
+                  />
+                ) : (
+                  <HeartImg
+                    onClick={e =>
+                      this.addTruckToUserFavs(truck.username, e)
+                    }
+                    src={heartImg}
+                    alt="nahh"
+                  />
+                )}
+                <NavImg
+                  onClick={() => this.openDirections(truck.location.coordinates[0], truck.location.coordinates[1])}
+                  src={truckImg}
+                  alt="nahh"
+                />
+                <Modal username={truck.username} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites}/>
+              </PopWrapper>
+            </PopDiv>
+            <Style>{`
+                .mypopup .leaflet-popup-tip,
+                .mypopup .leaflet-popup-content-wrapper {
+                    background: #ffde59;
+                }
+              `}</Style>
+          </Popup>
+        </Marker>
+      );
+    });
+
     return (
       <MapDiv>
         <Map
@@ -159,72 +247,8 @@ class SimpleExample extends Component {
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {/* <Marker position={position} icon={myIcon}>
-            <Popup>
-              <PopDiv>
-                <PopHead>Senorita's Tacos</PopHead>
-                <PopWrapper>
-                  <HeartImg
-                    onClick={() => alert("yoo")}
-                    src={heartImg}
-                    alt="nahh"
-                  />
-                  <NavImg src={truckImg} alt="nahh" />
-                  <Modal />
-                </PopWrapper>
-              </PopDiv>
-            </Popup>
-         </Marker> */}
 
-          {this.state.nearbyTrucks.map((truck, key) => {
-            return (
-              <Marker
-                key={key}
-                position={truck.location.coordinates}
-                icon={myIcon}
-              >
-                <Popup className="mypopup">
-                  <PopDiv>
-                    <PopHead>{truck.title}</PopHead>
-                    <PopWrapper>
-                      {this.checkIfFav(
-                        truck.username,
-                        this.state.userFavorites
-                      ) ? (
-                        <HeartImg
-                          onClick={e =>
-                            this.addTruckToUserFavs(truck.username, e)
-                          }
-                          src={heartImg40}
-                          alt="nahh"
-                        />
-                      ) : (
-                        <HeartImg
-                          onClick={e =>
-                            this.addTruckToUserFavs(truck.username, e)
-                          }
-                          src={heartImg}
-                          alt="nahh"
-                        />
-                      )}
-                      <NavImg
-                        onClick={() => this.openDirections(truck.location.coordinates[0], truck.location.coordinates[1])}
-                        src={truckImg}
-                        alt="nahh"
-                      />
-                      <Modal username={truck.username} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites}/>
-                    </PopWrapper>
-                  </PopDiv>
-                  <Style>{`
-                      .mypopup .leaflet-popup-tip,
-                      .mypopup .leaflet-popup-content-wrapper {
-                          background: #ffde59;
-                      }
-                    `}</Style>
-                </Popup>
-              </Marker>
-            );
-          })}
+          {markers}
         </Map>
       </MapDiv>
     );

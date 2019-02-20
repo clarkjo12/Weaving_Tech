@@ -61,9 +61,12 @@ const AllButton = styled.button`
 //var favs = 0;
 
 class MapButtons extends Component {
-  constructor() {
-    super();
-    this.state = { filter: 0 };
+  constructor(props) {
+    super(props);
+    this.state = { 
+      filter: 0,
+      isFavoritesActive: this.props.isFavoritesActive
+    };
   }
 
   // initalFavClick = () => {
@@ -87,6 +90,14 @@ class MapButtons extends Component {
   seeFavs = () => {
     this.setState({ filter: 1 });
     console.log(this.state.filter);
+
+    if (!this.state.isFavoritesActive) {
+      this.setState({isFavoritesActive: true});
+      this.props.mapFavCallback(true);
+    } else {
+      this.setState({isFavoritesActive: false});
+      this.props.mapFavCallback(false);
+    }
   };
 
   render() {

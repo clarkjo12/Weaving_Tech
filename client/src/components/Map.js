@@ -7,6 +7,7 @@ import API from "../utils/API";
 import Leaf from "./Leaf";
 
 import TruckImg from "../images/truck-all.png";
+import { set } from "mongoose";
 
 const MainDiv = styled.section`
   padding: 4em;
@@ -48,18 +49,24 @@ class MapDisplay extends Component {
       },
       nearbyTrucks: [],
       activeMarker: {},
-      modalIsOpen: false
+      modalIsOpen: false,
+      isFavoritesActive: false
     };
 
     // this.onMarkerClick = this.onMarkerClick.bind(this);
   }
 
-  static defaultProps = {
-    center: {
-      lat: 35.91,
-      lng: -79.05
-    },
-    zoom: 11
+  // static defaultProps = {
+  //   center: {
+  //     lat: 35.91,
+  //     lng: -79.05
+  //   },
+  //   zoom: 11
+  // };
+
+  mapFavCallback = (boolean) => {
+    console.log("Testing Callback: " + boolean);
+    return this.setState({isFavoriteActive: boolean});
   };
 
   render() {
@@ -81,10 +88,10 @@ class MapDisplay extends Component {
                 text={truckIcon}
               />
             </GoogleMapReact> */}
-            <Leaf lat={this.state.center.lat} lng={this.state.center.lng} userId={this.props.userId} updateFavs={this.props.updateFavs} />
+            <Leaf lat={this.state.center.lat} lng={this.state.center.lng} userId={this.props.userId} updateFavs={this.props.updateFavs} isFavoritesActive={this.state.isFavoritesActive} />
           </div>
         </MapDiv>
-        <MapButtons />
+        <MapButtons isFavoritesActive={this.state.isFavoritesActive} mapFavCallback={this.mapFavCallback} />
       </MainDiv>
     );
   }
