@@ -28,6 +28,15 @@ const eaterSchema = new Schema({
       token: String
     },
     select: false
+  },
+  pushToken: {
+    type: String
+  },
+  receiveNotifications: {
+    type: Boolean
+  },
+  notificationDistance: {
+    type: Number
   }
 });
 
