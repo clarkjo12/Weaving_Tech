@@ -53,7 +53,7 @@ class SimpleExample extends Component {
   state = {
     lat: this.props.lat,
     lng: this.props.lng,
-    zoom: 2,
+    zoom: 11,
     nearbyTrucks: [],
     userFavorites: []
   };
@@ -127,11 +127,11 @@ class SimpleExample extends Component {
     }
   };
 
-  openDirections() {
-    var uLat = 32.01;
-    var ulong = -85.24;
-    var tLat = 39.01;
-    var tLong = -90.24;
+  openDirections(lat, lng) {
+    var uLat = this.state.lat;
+    var ulong = this.state.lng;
+    var tLat = lat;
+    var tLong = lng;
     var directionLink =
       "https://www.google.com/maps/dir/'" +
       uLat +
@@ -208,7 +208,7 @@ class SimpleExample extends Component {
                         />
                       )}
                       <NavImg
-                        onClick={() => this.openDirections()}
+                        onClick={() => this.openDirections(truck.location.coordinates[0], truck.location.coordinates[1])}
                         src={truckImg}
                         alt="nahh"
                       />
