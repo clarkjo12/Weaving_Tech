@@ -4,7 +4,9 @@ import styled from "styled-components";
 import API from "../utils/API";
 import BlueHeart from "../images/heartblue.png";
 
-const FavCounter = styled.div``;
+const FavCounter = styled.div`
+  display: flex;
+`;
 
 const Welcome = styled.div`
   /* margin-bottom: 0px; */
@@ -23,16 +25,12 @@ const FavNum = styled.div`
   font-size: 40px;
 `;
 
-const Links = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
 const Signout = styled.div``;
 
 const SumDiv = styled.div`
   padding-top: 10px;
   padding-bottom: 10px;
+  display: flex;
 `;
 
 const FavCount = styled.div`
@@ -83,25 +81,11 @@ class Sidebar extends Component {
   state = {
     activeFavorites: 10,
     favoritedNum: 342
-  };  
+  };
 
   render() {
     return (
       <Menu right styles={styles}>
-        <Links>
-          <a className="menu-item" href="/">
-            Landing
-          </a>
-
-          <a className="menu-item" href="/map">
-            Map
-          </a>
-
-          <a className="menu-item" href="/truck">
-            Truck Home
-          </a>
-        </Links>
-
         {this.props.username !== "" &&
         sessionStorage.getItem("userType") === "eater" ? (
           <div>
@@ -121,9 +105,8 @@ class Sidebar extends Component {
             <UserName>{this.props.username}</UserName>
             <SumDiv>
               <Heart img src={BlueHeart} alt="no dice" />
-              <h1>
-                : <FavCount>{this.props.favoritedNum}</FavCount>
-              </h1>
+              <h1>:</h1>
+              <FavCount>{this.props.favoritedNum}</FavCount>
             </SumDiv>
           </div>
         ) : (

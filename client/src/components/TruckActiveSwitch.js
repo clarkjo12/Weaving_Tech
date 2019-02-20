@@ -15,6 +15,10 @@ const HeaderDiv = styled.div`
   margin: 0;
 `;
 
+const HeaderText = styled.h3`
+  text-decoration: underline;
+`;
+
 class TruckActivateSwitch extends Component {
   state = {
     checked: false
@@ -42,7 +46,7 @@ class TruckActivateSwitch extends Component {
     return (
       <ButtonDiv>
         <HeaderDiv>
-          <h3>Activate Truck:</h3>
+          <HeaderText>Activate Truck:</HeaderText>
         </HeaderDiv>
         <label htmlFor="normal-switch">
           <FlipSwitch
@@ -55,32 +59,5 @@ class TruckActivateSwitch extends Component {
     );
   }
 }
-
-// class TruckActivateSwitch extends React.Component {
-
-//   render() {
-//     return (
-//       <div className="switch-container">
-//         <h3>Activate Truck:</h3>
-//         <label>
-//           <input
-//             ref="switch"
-//             checked={this.state.isChecked}
-//             onChange={this._handleChange}
-//             className="switch"
-//             type="checkbox"
-//           />
-//           <div>
-//             <div />
-//           </div>
-//         </label>
-//       </div>
-//     );
-//   }
-
-//   //   _handleChange() {
-//   //     this.setState({ isChecked: !this.state.isChecked });
-//   //   }
-// }
 
 export default TruckActivateSwitch;

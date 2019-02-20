@@ -58,15 +58,11 @@ const MainSumDiv = styled.div`
   flex-direction: column;
 `;
 
-function launchEdit() {
-  alert("oh yea");
-}
-
 class TruckWrapper extends Component {
   state = {
     title: "Come Get It!",
     summary: "Fresh Ingredients!"
-  }
+  };
 
   componentDidMount = () => {
     if (sessionStorage.getItem("userid")) {
@@ -83,15 +79,14 @@ class TruckWrapper extends Component {
           console.log(err);
         });
     }
-
-  }
+  };
 
   updateTitleSummary = (title, summary) => {
     this.setState({
       title: title,
       summary: summary
-    })
-  }
+    });
+  };
 
   render() {
     return (
