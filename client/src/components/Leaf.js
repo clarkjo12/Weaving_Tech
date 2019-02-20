@@ -195,7 +195,7 @@ class SimpleExample extends Component {
                           onClick={e =>
                             this.addTruckToUserFavs(truck.username, e)
                           }
-                          src={heartImg40}
+                          src={heartImg}
                           alt="nahh"
                         />
                       ) : (
@@ -203,7 +203,7 @@ class SimpleExample extends Component {
                           onClick={e =>
                             this.addTruckToUserFavs(truck.username, e)
                           }
-                          src={heartImg}
+                          src={heartImg40}
                           alt="nahh"
                         />
                       )}
