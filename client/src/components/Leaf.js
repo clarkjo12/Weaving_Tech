@@ -203,22 +203,22 @@ class SimpleExample extends Component {
                         truck.username,
                         this.state.userFavorites
                       ) ? (
-                          <HeartImg
-                            onClick={e =>
-                              this.addTruckToUserFavs(truck.username, e)
-                            }
-                            src={heartImg40}
-                            alt="nahh"
-                          />
-                        ) : (
-                          <HeartImg
-                            onClick={e =>
-                              this.addTruckToUserFavs(truck.username, e)
-                            }
-                            src={heartImg}
-                            alt="nahh"
-                          />
-                        )}
+                        <HeartImg
+                          onClick={e =>
+                            this.addTruckToUserFavs(truck.username, e)
+                          }
+                          src={heartImg}
+                          alt="nahh"
+                        />
+                      ) : (
+                        <HeartImg
+                          onClick={e =>
+                            this.addTruckToUserFavs(truck.username, e)
+                          }
+                          src={heartImg40}
+                          alt="nahh"
+                        />
+                      )}
                       <NavImg
                         onClick={() => this.openDirections(truck.location.coordinates[0], truck.location.coordinates[1])}
                         src={truckImg}
