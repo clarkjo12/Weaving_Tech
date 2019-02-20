@@ -3,6 +3,9 @@ import FlipSwitch from "react-switch";
 import API from "../utils/API";
 import styled from "styled-components";
 
+import openSocket from 'socket.io-client';
+const socket = openSocket('http://localhost:8000');
+
 const ButtonDiv = styled.div`
   display: flex;
   justify-content: center;
@@ -20,27 +23,45 @@ const HeaderText = styled.h3`
 `;
 
 class TruckActivateSwitch extends Component {
-  state = {
-    checked: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      checked: false
+    };
+    this.sendSocketIO = this.sendSocketIO.bind(this);
   };
 
-  componentWillMount() {}
+  componentDidMount() {
+    API.findTrucker(this.props.userId).then(res => {
+      if (res.data.status === "open") {
+        this.setState({
+          checked: true
+        })
+      }
+    })
+  }
 
   handleChange = () => {
     this.setState({ checked: !this.state.checked });
+
     let status = this.state.checked ? "open" : "closed";
-    API.updateTrucker(sessionStorage.getItem("userid"), {
+    API.updateTrucker(this.props.userId, {
       status: status
     })
       .then(res => {
         console.log("updated truck status");
-        console.log(res);
+        this.sendSocketIO();
       })
       .catch(err => {
         console.log("update truck status error");
         console.log(err);
       });
   };
+
+  sendSocketIO() {
+    socket.emit('truck status change');
+    console.log("updated truck status");
+  }
 
   render() {
     return (

@@ -28,4 +28,17 @@ app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
 });
 
-require("./notifyCustomers")()
+// Socket.io
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+io.on('connection', function(socket){
+  socket.on('user updated favorties', function(truckname){
+    io.emit("favorite updated", truckname);
+  });
+  socket.on('truck status change', function(){
+    io.emit("truck status changed");
+  });
+});
+io.listen(8000);
+
+//require("./notifyCustomers")()

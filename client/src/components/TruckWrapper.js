@@ -46,11 +46,6 @@ const SumDiv = styled.div`
   padding-bottom: 10px;
 `;
 
-const Edit = styled.div`
-  font-size: 13px;
-  text-decoration: underline;
-`;
-
 const MainSumDiv = styled.div`
   display: flex;
   justify-content: center;
@@ -65,10 +60,9 @@ class TruckWrapper extends Component {
   };
 
   componentDidMount = () => {
-    if (sessionStorage.getItem("userid")) {
-      API.findTrucker(sessionStorage.getItem("userid"))
+    if (this.props.userId) {
+      API.findTrucker(this.props.userId)
         .then(res => {
-          console.log(res);
           this.setState({
             title: res.data.title,
             summary: res.data.summary
@@ -102,7 +96,7 @@ class TruckWrapper extends Component {
           <SumDiv>
             Summary:
             <Summary>{this.state.summary}</Summary>
-            <TruckModals updateTitleSummary={this.updateTitleSummary} />
+            <TruckModals updateTitleSummary={this.updateTitleSummary} userId={this.props.userId} />
           </SumDiv>
         </MainSumDiv>
       </TruckMain>

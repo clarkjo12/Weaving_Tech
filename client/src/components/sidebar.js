@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { push as Menu } from "react-burger-menu";
 import styled from "styled-components";
-import API from "../utils/API";
 import BlueHeart from "../images/heartblue.png";
 
 const FavCounter = styled.div`
@@ -78,40 +77,43 @@ var styles = {
 };
 
 class Sidebar extends Component {
-  state = {
-    activeFavorites: 10,
-    favoritedNum: 342
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeFavorites: 10,
+      favoritedNum: 342
+    };
+  }
 
   render() {
     return (
       <Menu right styles={styles}>
         {this.props.username !== "" &&
-        sessionStorage.getItem("userType") === "eater" ? (
-          <div>
-            <Welcome> Hey,</Welcome>
-            <UserName>{this.props.username}</UserName>
-            <FavCounter>
-              Active Favorites: <FavNum>{this.props.favorites}</FavNum>
-            </FavCounter>
-          </div>
-        ) : (
-          <div />
-        )}
+          this.props.userType === "eater" ? (
+            <div>
+              <Welcome> Hey,</Welcome>
+              <UserName>{this.props.username}</UserName>
+              <FavCounter>
+                Active Favorites: <FavNum>{this.props.favorites}</FavNum>
+              </FavCounter>
+            </div>
+          ) : (
+            <div />
+          )}
         {this.props.username !== "" &&
-        sessionStorage.getItem("userType") === "trucker" ? (
-          <div>
-            <Welcome> Hey,</Welcome>
-            <UserName>{this.props.username}</UserName>
-            <SumDiv>
-              <Heart img src={BlueHeart} alt="no dice" />
-              <h1>:</h1>
-              <FavCount>{this.props.favoritedNum}</FavCount>
-            </SumDiv>
-          </div>
-        ) : (
-          <div />
-        )}
+          this.props.userType === "trucker" ? (
+            <div>
+              <Welcome> Hey,</Welcome>
+              <UserName>{this.props.username}</UserName>
+              <SumDiv>
+                <Heart img src={BlueHeart} alt="no dice" />
+                <h1>:</h1>
+                <FavCount>{this.props.favoritedNum}</FavCount>
+              </SumDiv>
+            </div>
+          ) : (
+            <div />
+          )}
 
         <Signout onClick={this.props.logout}>
           <a className="menu-item" href="/">
