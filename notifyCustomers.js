@@ -19,33 +19,34 @@ let notifyCustomers = async _id => {
   let customersWithin100k = await
     db.Eater
       .find({
-        location: {
-          $nearSphere: {
-            $geometry: truck.location,
-            $maxDistance: 100000
-          }
-        },
-        // receiveNotifications: true,
-        // pushToken: { $exists: true }
+        // location: {
+        //   $nearSphere: {
+        //     $geometry: truck.location,
+        //     $maxDistance: 100000
+        //   }
+        // },
+        favorites: truck._id.toString(),
+        receiveNotifications: true,
+        pushToken: { $exists: true }
       })
       .catch(console.error)
 
 
-  let withinTheirRange = customersWithin100k.filter(c => distance(c.location, truck.location, 'kilometers') * 1000 < c.notificationDistance)
+  // let withinTheirRange = customersWithin100k.filter(c => distance(c.location, truck.location, 'kilometers') * 1000 < c.notificationDistance)
 
-    , shouldNotify = withinTheirRange.filter(c => c.receiveNotifications && c.pushToken)
+  //   , shouldNotify = withinTheirRange.filter(c => c.receiveNotifications && c.pushToken)
 
-    console.log('customersWithin100k: ', customersWithin100k.map(c => c.pushToken))
-    console.log('withinTheirRange: ', withinTheirRange.map(c => c.pushToken))
+    // console.log('customersWithin100k: ', customersWithin100k.map(c => c.pushToken))
+  //   console.log('withinTheirRange: ', withinTheirRange.map(c => c.pushToken))
 
-  return notify(truck, customersWithin100k) // notify(truck, shouldNotify)
+  return notify(truck, customersWithin100k.filter(c => c.pushToken)) // notify(truck, shouldNotify)
 }
 
 let notify = (truck, customers) => {
   let messages = customers.map(c => Expo.isExpoPushToken(c.pushToken) && {
     to: c.pushToken,
     title: truck.title + " is now serving nearby!",
-    data: { location: truck.location }
+    data: { id: truck._id, location: truck.location }
   }).filter(Boolean)
 
   console.log('Notifying tokens: ', messages.map(m => m.to))
@@ -91,14 +92,20 @@ let handleReceiptChunk = async transactions => {
   } catch (e) {console.error(e)}
 }
 
-module.exports = () => db.Trucker.watch().on('change', async change => {
-  if (change.operationType === 'update' && true || change.updateDescription.updatedFields.status === 'open') {
-    let title = (await db.Trucker.findById(change.documentKey._id)).title
+module.exports = () => {
+  if (!process.env.MONGODB_URI && !(process.env.LOGNAME === 'brendan')) return
 
-    console.log(`Notifying customers of ${title}`)
+  db.Trucker.watch().on('change', async change => {
+    if (change.operationType === 'update' && change.updateDescription.updatedFields.status === 'open') {
+      let title = (await db.Trucker.findById(change.documentKey._id)).title
 
-    notifyCustomers(change.documentKey._id)
-  }
-});
+      console.log(`Notifying customers of ${title}`)
+
+      notifyCustomers(change.documentKey._id)
+    }
+  });
+
+  console.log("Waiting to notify customers...")
+}
 
 module.exports.notify = notify
