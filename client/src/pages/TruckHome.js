@@ -13,7 +13,7 @@ const TruckHomeDiv = styled.div`
 `;
 
 const TruckMapHeader = styled.div`
-  margin-top: 20px;
+  margin-top: 60px;
 `;
 
 class TruckHome extends Component {
@@ -30,7 +30,7 @@ class TruckHome extends Component {
     if (this.props.userType === "trucker") {
       this.props.updateActiveFavs();
     }
-    this.props.updateActiveFavs(); 
+    this.props.updateActiveFavs();
   };
 
   render() {

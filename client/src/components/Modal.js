@@ -2,7 +2,6 @@ import React from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 import Mega from "../images/mega.png";
-import testTruck from "../images/testtruck.jpeg";
 import heartImg from "../images/heartblue.png";
 import API from "../utils/API";
 
@@ -83,10 +82,10 @@ class Modals extends React.Component {
     this.setState({ modalIsOpen: false });
   }
 
-  updateActiveFavorites = (truckname) => {
+  updateActiveFavorites = truckname => {
     API.favCount({ favorites: truckname })
       .then(res => {
-        this.setState({favorites: res.data});
+        this.setState({ favorites: res.data });
       })
       .catch(err => {
         console.log("favorites error: ");
@@ -125,16 +124,15 @@ class Modals extends React.Component {
           <TruckName>{this.props.username}</TruckName>
           <ProfileImg src={this.props.picture} />
           <LoveWrapper>
-            <Heart src={heartImg} />: <LoveCount>{this.state.favorites}</LoveCount>
+            <Heart src={heartImg} />:{" "}
+            <LoveCount>{this.state.favorites}</LoveCount>
           </LoveWrapper>
           {/* <h2 ref={subtitle => (this.subtitle = subtitle)}>
             Fresh Tacos BOGO!
           </h2> */}
           <TruckTitle>{this.props.title}</TruckTitle>
           <SummaryDiv>
-            <div>
-              {this.props.summary}
-            </div>
+            <div>{this.props.summary}</div>
           </SummaryDiv>
           <ButtDiv>
             <br />
