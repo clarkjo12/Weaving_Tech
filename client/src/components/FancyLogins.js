@@ -4,8 +4,9 @@ import styled from "styled-components";
 import FaceButton from "./FBButton";
 import GoogButton from "./GGButton";
 import API from "../utils/API";
-import config from './../config.json';
 
+import openSocket from 'socket.io-client';
+const socket = openSocket('http://localhost:8000');
 
 // const FBButton = styled.div``;
 
@@ -20,11 +21,14 @@ const ButtonDiv = styled.div`
 `;
 
 class FancyLogins extends Component {
-
-  state = {
-    redirectToMap: false,
-    redirectToTruckerHome: false
-  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      redirectToMap: false,
+      redirectToTruckerHome: false
+    }
+    this.sendSocketIO = this.sendSocketIO.bind(this);
+  };
 
   googleResponse = response => {
     console.log(response.token);
@@ -41,29 +45,31 @@ class FancyLogins extends Component {
         if (token) {
           this.props.updateUser(user.username, user._id);
         }
-        {(this.props.loginType === "eater") ?
-            (API.updateEater(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
-              .then(res => {
-                console.log("update response: ");
-                console.log(res);
-                this.setState({
-                  redirectToMap: true
-                })
-              }).catch(err => {
-                console.log("update error: ");
-                console.log(err);
-              })) :
-            (API.updateTrucker(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
-              .then(res => {
-                console.log("update response: ");
-                console.log(res);
-                this.setState({
-                  redirectToTruckerHome: true
-                })
-              }).catch(err => {
-                console.log("update error: ");
-                console.log(err);
-              }))
+        {
+          (this.props.loginType === "eater") ?
+          (API.updateEater(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
+            .then(res => {
+              console.log("update response: ");
+              console.log(res);
+              this.setState({
+                redirectToMap: true
+              })
+            }).catch(err => {
+              console.log("update error: ");
+              console.log(err);
+            })) :
+          (API.updateTrucker(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
+            .then(res => {
+              console.log("update response: ");
+              console.log(res);
+              this.sendSocketIO();
+              this.setState({
+                redirectToTruckerHome: true
+              })
+            }).catch(err => {
+              console.log("update error: ");
+              console.log(err);
+            }))
         }
       });
     })
@@ -102,6 +108,7 @@ class FancyLogins extends Component {
               .then(res => {
                 console.log("update response: ");
                 console.log(res);
+                this.sendSocketIO();
                 this.setState({
                   redirectToTruckerHome: true
                 })
@@ -114,8 +121,13 @@ class FancyLogins extends Component {
     });
   };
 
-  render() {
+  sendSocketIO() {
+    socket.emit('truck status change');
+    console.log("updated truck coordinates");
+  }
 
+  render() {
+    
     if (this.state.redirectToMap) {
       return <Redirect to="/map" />;
     }
@@ -128,7 +140,7 @@ class FancyLogins extends Component {
         <ButtonDiv>
           <FaceButton
             provider="facebook"
-            appId={config.FACEBOOK_APP_ID}
+            appId={process.env.REACT_APP_FACEBOOK_CLIENT_ID}
             onLoginSuccess={this.facebookResponse}
             onLoginFailure={this.onFailure}
           >
@@ -136,7 +148,7 @@ class FancyLogins extends Component {
           </FaceButton>
           <GoogButton
             provider="google"
-            appId={config.GOOGLE_CLIENT_ID}
+            appId={process.env.REACT_APP_GOOGLE_CLIENT_ID}       
             onLoginSuccess={this.googleResponse}
             onLoginFailure={this.onFailure}
           >

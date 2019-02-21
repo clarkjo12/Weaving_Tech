@@ -64,12 +64,13 @@ class SimpleExample extends Component {
       isFavoritesActive: this.props.isFavoritesActive
     };
     this.sendSocketIO = this.sendSocketIO.bind(this);
+    this.receiveSocketIO = this.receiveSocketIO.bind(this);
   }
 
   componentWillMount = () => {
     // if (!this.state.isFavoritesActive) {
     //   API.findTrucks().then(async res => {
-        
+
     //     if (res === 0) {
     //       console.log("No trucks in database!");
     //     } else {
@@ -86,7 +87,7 @@ class SimpleExample extends Component {
     //       console.log("No favorites found!");
     //     } else {
     //       let truckDBArray = res.data;
-          
+
     //       await this.setState({
     //         nearbyTrucks: truckDBArray
     //       });
@@ -96,7 +97,10 @@ class SimpleExample extends Component {
   };
 
   componentDidMount = () => {
+    this.updateTrucksArray();    
+  }
 
+  updateTrucksArray = () => {
     if (this.props.userId) {
       API.findEater(this.props.userId).then(res => {
         const favorites = res.data.favorites;
@@ -106,7 +110,7 @@ class SimpleExample extends Component {
 
     if (!this.state.isFavoritesActive) {
       API.findTrucks().then(async res => {
-        
+
         if (res === 0) {
           console.log("No trucks in database!");
         } else {
@@ -123,13 +127,20 @@ class SimpleExample extends Component {
           console.log("No favorites found!");
         } else {
           let truckDBArray = res.data;
-          
+
           await this.setState({
             nearbyTrucks: truckDBArray
           });
         }
       });
     }
+  }
+
+  receiveSocketIO(updateTrucksArray) {
+    socket.on("truck status changed", function () {
+      //update the trucks array
+      updateTrucksArray();       
+    });
   }
 
   checkIfFav = (username, favorites) => {
@@ -196,6 +207,9 @@ class SimpleExample extends Component {
   }
 
   render() {
+
+    this.receiveSocketIO(this.updateTrucksArray);
+
     const position = [this.state.lat, this.state.lng];
 
     let markers = this.state.nearbyTrucks.map((truck, key) => {
@@ -213,28 +227,28 @@ class SimpleExample extends Component {
                   truck.username,
                   this.state.userFavorites
                 ) ? (
-                  <HeartImg
-                    onClick={e =>
-                      this.addTruckToUserFavs(truck.username, e)
-                    }
-                    src={heartImg}
-                    alt="nahh"
-                  />
-                ) : (
-                  <HeartImg
-                    onClick={e =>
-                      this.addTruckToUserFavs(truck.username, e)
-                    }
-                    src={heartImg40}
-                    alt="nahh"
-                  />
-                )}
+                    <HeartImg
+                      onClick={e =>
+                        this.addTruckToUserFavs(truck.username, e)
+                      }
+                      src={heartImg}
+                      alt="nahh"
+                    />
+                  ) : (
+                    <HeartImg
+                      onClick={e =>
+                        this.addTruckToUserFavs(truck.username, e)
+                      }
+                      src={heartImg40}
+                      alt="nahh"
+                    />
+                  )}
                 <NavImg
                   onClick={() => this.openDirections(truck.location.coordinates[0], truck.location.coordinates[1])}
                   src={truckImg}
                   alt="nahh"
                 />
-                <Modal username={truck.username} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites}/>
+                <Modal username={truck.username} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites} />
               </PopWrapper>
             </PopDiv>
             <Style>{`
