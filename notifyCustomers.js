@@ -38,14 +38,14 @@ let notifyCustomers = async _id => {
     console.log('customersWithin100k: ', customersWithin100k.map(c => c.pushToken))
     console.log('withinTheirRange: ', withinTheirRange.map(c => c.pushToken))
 
-  return notify(truck, customersWithin100k) // notify(truck, shouldNotify)
+  return notify(truck, customersWithin100k.filter(c => c.pushToken)) // notify(truck, shouldNotify)
 }
 
 let notify = (truck, customers) => {
   let messages = customers.map(c => Expo.isExpoPushToken(c.pushToken) && {
     to: c.pushToken,
     title: truck.title + " is now serving nearby!",
-    data: { location: truck.location }
+    data: { id: truck._id, location: truck.location }
   }).filter(Boolean)
 
   console.log('Notifying tokens: ', messages.map(m => m.to))
@@ -91,14 +91,24 @@ let handleReceiptChunk = async transactions => {
   } catch (e) {console.error(e)}
 }
 
-module.exports = () => db.Trucker.watch().on('change', async change => {
-  if (change.operationType === 'update' && true || change.updateDescription.updatedFields.status === 'open') {
-    let title = (await db.Trucker.findById(change.documentKey._id)).title
+module.exports = () => {
+  try {
+    db.Trucker.watch().on('change', async change => {
+      if (change.operationType === 'update' && true || change.updateDescription.updatedFields.status === 'open') {
+        let title = (await db.Trucker.findById(change.documentKey._id)).title
 
-    console.log(`Notifying customers of ${title}`)
+        console.log(`Notifying customers of ${title}`)
 
-    notifyCustomers(change.documentKey._id)
+        notifyCustomers(change.documentKey._id)
+      }
+    });
+
+    console.log("Waiting to notify customers...")
+  } catch (e) {
+    if (process.env.MONGODB_URI) {
+      console.log("Attempt to launch change stream listener failed with message: " + e.message)
+    }
   }
-});
+}
 
 module.exports.notify = notify
