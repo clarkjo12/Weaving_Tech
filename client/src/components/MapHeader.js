@@ -8,7 +8,7 @@ const MapHead = styled.div`
 `;
 
 const MapLogoBlue = styled.img`
-  height: 100px;
+  height: 90px;
   margin-bottom: 30px;
   margin-top: -30px;
 `;
