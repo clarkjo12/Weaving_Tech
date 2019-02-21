@@ -63,7 +63,7 @@ const AllButton = styled.button`
 class MapButtons extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       filter: 0,
       isFavoritesActive: this.props.isFavoritesActive
     };
@@ -72,6 +72,11 @@ class MapButtons extends Component {
   seeAll = () => {
     this.setState({ filter: 0 });
     console.log("filter= " + this.state.filter);
+
+    if (this.state.isFavoritesActive) {
+      this.setState({ isFavoritesActive: false });
+      this.props.mapFavCallback(false);
+    }
   };
 
   seeFavs = () => {
@@ -79,11 +84,8 @@ class MapButtons extends Component {
     console.log(this.state.filter);
 
     if (!this.state.isFavoritesActive) {
-      this.setState({isFavoritesActive: true});
+      this.setState({ isFavoritesActive: true });
       this.props.mapFavCallback(true);
-    } else {
-      this.setState({isFavoritesActive: false});
-      this.props.mapFavCallback(false);
     }
   };
 
