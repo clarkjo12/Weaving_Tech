@@ -3,11 +3,10 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import MapHeader from "./MapHeader";
 import MapButtons from "./MapButtons";
-import API from "../utils/API";
+//import API from "../utils/API";
 import Leaf from "./Leaf";
 
-import TruckImg from "../images/truck-all.png";
-import { set } from "mongoose";
+//import { set } from "mongoose";
 
 const MainDiv = styled.section`
   padding: 4em;
@@ -27,17 +26,17 @@ const MapDiv = styled.div`
   border-radius: 3px;
 `;
 
-const infoStyle = styled.div`
-  color: white;
-  border: 3px solid gray;
-  border-radius: 5px;
-  z-index: 0;
-`;
+// const infoStyle = styled.div`
+//   color: white;
+//   border: 3px solid gray;
+//   border-radius: 5px;
+//   z-index: 0;
+// `;
 
-const Marker = ({ text }) => <div>{text}</div>;
-const InfoWindow = ({ text }) => <div style={{ infoStyle }}>{text}</div>;
+// const Marker = ({ text }) => <div>{text}</div>;
+// const InfoWindow = ({ text }) => <div style={{ infoStyle }}>{text}</div>;
 
-var truckIcon = <img src={TruckImg} alt="nahh" />;
+//var truckIcon = <img src={TruckImg} alt="nahh" />;
 
 class MapDisplay extends Component {
   constructor(props) {
@@ -64,9 +63,9 @@ class MapDisplay extends Component {
   //   zoom: 11
   // };
 
-  mapFavCallback = (boolean) => {
+  mapFavCallback = boolean => {
     console.log("Testing Callback: " + boolean);
-    return this.setState({isFavoriteActive: boolean});
+    return this.setState({ isFavoriteActive: boolean });
   };
 
   render() {
@@ -88,10 +87,19 @@ class MapDisplay extends Component {
                 text={truckIcon}
               />
             </GoogleMapReact> */}
-            <Leaf lat={this.state.center.lat} lng={this.state.center.lng} userId={this.props.userId} updateFavs={this.props.updateFavs} isFavoritesActive={this.state.isFavoritesActive} />
+            <Leaf
+              lat={this.state.center.lat}
+              lng={this.state.center.lng}
+              userId={this.props.userId}
+              updateFavs={this.props.updateFavs}
+              isFavoritesActive={this.state.isFavoritesActive}
+            />
           </div>
         </MapDiv>
-        <MapButtons isFavoritesActive={this.state.isFavoritesActive} mapFavCallback={this.mapFavCallback} />
+        <MapButtons
+          isFavoritesActive={this.state.isFavoritesActive}
+          mapFavCallback={this.mapFavCallback}
+        />
       </MainDiv>
     );
   }

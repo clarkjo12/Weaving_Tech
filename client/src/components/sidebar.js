@@ -5,6 +5,7 @@ import BlueHeart from "../images/heartblue.png";
 
 const FavCounter = styled.div`
   display: flex;
+  flex-direction: column;
 `;
 
 const Welcome = styled.div`
@@ -20,20 +21,28 @@ const UserName = styled.div`
 
 const FavNum = styled.div`
   margin-top: 5px;
-  color: darkred;
+  color: firebrick;
   font-size: 40px;
+`;
+
+const CurrLove = styled.p`
+  padding: 5px;
+  margin-bottom: 0;
 `;
 
 const Signout = styled.div``;
 
 const SumDiv = styled.div`
-  padding-top: 10px;
+  padding-top: 0px;
   padding-bottom: 10px;
   display: flex;
+  align-items: center;
 `;
 
 const FavCount = styled.div`
-  color: red;
+  color: firebrick;
+  padding-left: 5px;
+  font-size: 25px;
 `;
 
 const Heart = styled.img`
@@ -87,42 +96,55 @@ class Sidebar extends Component {
 
   render() {
     return (
-      <Menu right styles={styles}>
-        {this.props.username !== "" &&
-          this.props.userType === "eater" ? (
+      <div>
+        {this.props.username !== "" && this.props.userType === "eater" ? (
+          <Menu right styles={styles}>
             <div>
               <Welcome> Hey,</Welcome>
               <UserName>{this.props.username}</UserName>
-              <FavCounter>
-                Active Favorites: <FavNum>{this.props.favorites}</FavNum>
-              </FavCounter>
             </div>
-          ) : (
-            <div />
-          )}
-        {this.props.username !== "" &&
-          this.props.userType === "trucker" ? (
+
+            <FavCounter>
+              Active Favorites: <FavNum>{this.props.favorites}</FavNum>
+            </FavCounter>
+
+            <Signout onClick={this.props.logout}>
+              <a className="menu-item" href="/">
+                Sign Out
+              </a>
+              <br />
+              <br />
+            </Signout>
+          </Menu>
+        ) : (
+          <div />
+        )}
+        {this.props.username !== "" && this.props.userType === "trucker" ? (
+          <Menu right styles={styles}>
             <div>
               <Welcome> Hey,</Welcome>
               <UserName>{this.props.username}</UserName>
+            </div>
+            <div>
+              <CurrLove>Current Love:</CurrLove>
               <SumDiv>
                 <Heart img src={BlueHeart} alt="no dice" />
                 <h1>:</h1>
                 <FavCount>{this.props.favoritedNum}</FavCount>
               </SumDiv>
             </div>
-          ) : (
-            <div />
-          )}
-
-        <Signout onClick={this.props.logout}>
-          <a className="menu-item" href="/">
-            Sign Out
-          </a>
-          <br />
-          <br />
-        </Signout>
-      </Menu>
+            <Signout onClick={this.props.logout}>
+              <a className="menu-item" href="/">
+                Sign Out
+              </a>
+              <br />
+              <br />
+            </Signout>
+          </Menu>
+        ) : (
+          <div />
+        )}
+      </div>
     );
   }
 }
