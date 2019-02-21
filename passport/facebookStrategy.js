@@ -1,12 +1,16 @@
 const Eater = require('../models/eater')
 const Trucker = require('../models/trucker')
-var config = require('./config')
 const FacebookStrategy = require('passport-facebook-token');
 
+const FCLIENTID = process.env.REACT_APP_FACEBOOK_CLIENT_ID;
+const FCLIENTSECRET = process.env.REACT_APP_FACEBOOK_CLIENT_SECRET;
+const FCALLBACKURL = process.env.REACT_APP_FACEBOOK_CALLBACK_URL;
+
+
 const fstrategy = new FacebookStrategy({
-    clientID: config.facebookAuth.clientID,
-    clientSecret: config.facebookAuth.clientSecret,
-    passReqToCallback: true
+    clientID: `${FCLIENTID}`,
+    clientSecret: `${FCLIENTSECRET}`,
+    passReqToCallback: `${FCALLBACKURL}`
 },
     function (req, accessToken, refreshToken, profile, done) {
         if (req.body.loginType === "eater") {
