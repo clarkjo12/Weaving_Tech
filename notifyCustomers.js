@@ -109,3 +109,5 @@ module.exports = () => {
 }
 
 module.exports.notify = notify
+
+module.exports.notifyCustomers = notifyCustomers
