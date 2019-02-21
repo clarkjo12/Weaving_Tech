@@ -271,7 +271,8 @@ class SimpleExample extends Component {
     });
 
     let favMarkers = this.state.nearbyTrucks.map((truck, key) => {
-      if (this.checkIfFav(truck)) {
+      console.log(this.checkIfFav(truck.username, this.state.userFavorites) + " checking favorites");
+      if (this.checkIfFav(truck.username, this.state.userFavorites)) {
       return (
         <Marker
           key={key}
