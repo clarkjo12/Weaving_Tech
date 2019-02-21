@@ -92,23 +92,19 @@ let handleReceiptChunk = async transactions => {
 }
 
 module.exports = () => {
-  try {
-    db.Trucker.watch().on('change', async change => {
-      if (change.operationType === 'update' && true || change.updateDescription.updatedFields.status === 'open') {
-        let title = (await db.Trucker.findById(change.documentKey._id)).title
+  if (!process.env.MONGODB_URI && !(process.env.LOGNAME === 'brendan')) return
 
-        console.log(`Notifying customers of ${title}`)
+  db.Trucker.watch().on('change', async change => {
+    if (change.operationType === 'update' && true || change.updateDescription.updatedFields.status === 'open') {
+      let title = (await db.Trucker.findById(change.documentKey._id)).title
 
-        notifyCustomers(change.documentKey._id)
-      }
-    });
+      console.log(`Notifying customers of ${title}`)
 
-    console.log("Waiting to notify customers...")
-  } catch (e) {
-    if (process.env.MONGODB_URI) {
-      console.log("Attempt to launch change stream listener failed with message: " + e.message)
+      notifyCustomers(change.documentKey._id)
     }
-  }
+  });
+
+  console.log("Waiting to notify customers...")
 }
 
 module.exports.notify = notify
