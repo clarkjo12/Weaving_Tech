@@ -137,8 +137,7 @@ class App extends Component {
     });
     socket.on("truck status changed", function () {
       if(userType === "eater") {
-        //if the truck is in the eaters favs
-        console.log("HERE");
+        //update the eaters active favorites
         updateFavorites();
       }
     });
