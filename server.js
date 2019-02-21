@@ -42,4 +42,4 @@ io.on('connection', function(socket){
 });
 io.listen(8000);
 
-//require("./notifyCustomers")()
+require("./notifyCustomers")()

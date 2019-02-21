@@ -25,7 +25,7 @@ let notifyCustomers = async _id => {
         //     $maxDistance: 100000
         //   }
         // },
-        favorites: truck._id,
+        favorites: truck._id.toString(),
         receiveNotifications: true,
         pushToken: { $exists: true }
       })
@@ -36,7 +36,7 @@ let notifyCustomers = async _id => {
 
   //   , shouldNotify = withinTheirRange.filter(c => c.receiveNotifications && c.pushToken)
 
-  //   console.log('customersWithin100k: ', customersWithin100k.map(c => c.pushToken))
+    // console.log('customersWithin100k: ', customersWithin100k.map(c => c.pushToken))
   //   console.log('withinTheirRange: ', withinTheirRange.map(c => c.pushToken))
 
   return notify(truck, customersWithin100k.filter(c => c.pushToken)) // notify(truck, shouldNotify)
@@ -96,7 +96,7 @@ module.exports = () => {
   if (!process.env.MONGODB_URI && !(process.env.LOGNAME === 'brendan')) return
 
   db.Trucker.watch().on('change', async change => {
-    if (change.operationType === 'update' && true || change.updateDescription.updatedFields.status === 'open') {
+    if (change.operationType === 'update' && change.updateDescription.updatedFields.status === 'open') {
       let title = (await db.Trucker.findById(change.documentKey._id)).title
 
       console.log(`Notifying customers of ${title}`)
