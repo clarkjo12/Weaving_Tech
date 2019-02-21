@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import AllTruck from "../images/truck-all.png";
+import FavTruck from "../images/truck-fav.png";
 import styled from "styled-components";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -45,12 +46,6 @@ const HeartImg = styled.img`
 //////Styling ^
 ////
 //
-
-var myIcon = L.icon({
-  iconUrl: AllTruck,
-  iconAnchor: [25, 45],
-  popupAnchor: [0, -30]
-});
 
 class SimpleExample extends Component {
   constructor(props) {
@@ -97,7 +92,7 @@ class SimpleExample extends Component {
   };
 
   componentDidMount = () => {
-    this.updateTrucksArray();    
+    this.updateTrucksArray();
   }
 
   updateTrucksArray = () => {
@@ -139,7 +134,7 @@ class SimpleExample extends Component {
   receiveSocketIO(updateTrucksArray) {
     socket.on("truck status changed", function () {
       //update the trucks array
-      updateTrucksArray();       
+      updateTrucksArray();
     });
   }
 
@@ -221,36 +216,36 @@ class SimpleExample extends Component {
     const position = [this.state.lat, this.state.lng];
 
     let allMarkers = this.state.nearbyTrucks.map((truck, key) => {
+    let heartSrc = heartImg40;
+    let truckSrc = AllTruck;
+
+    if (this.checkIfFav(truck.username, this.state.userFavorites)) {
+        heartSrc = heartImg;
+        truckSrc = FavTruck;
+      }
       return (
         <Marker
           key={key}
           position={truck.location.coordinates}
-          icon={myIcon}
+          icon={
+            L.icon({
+              iconUrl: truckSrc,
+              iconAnchor: [25, 45],
+              popupAnchor: [0, -30]
+            })
+          }
         >
           <Popup className="mypopup">
             <PopDiv>
               <PopHead>{truck.title}</PopHead>
               <PopWrapper>
-                {this.checkIfFav(
-                  truck.username,
-                  this.state.userFavorites
-                ) ? (
-                    <HeartImg
+                <HeartImg
                       onClick={e =>
                         this.addTruckToUserFavs(truck.username, e)
                       }
-                      src={heartImg}
+                      src={heartSrc}
                       alt="nahh"
                     />
-                  ) : (
-                    <HeartImg
-                      onClick={e =>
-                        this.addTruckToUserFavs(truck.username, e)
-                      }
-                      src={heartImg40}
-                      alt="nahh"
-                    />
-                  )}
                 <NavImg
                   onClick={() => this.openDirections(truck.location.coordinates[0], truck.location.coordinates[1])}
                   src={truckImg}
@@ -266,7 +261,7 @@ class SimpleExample extends Component {
                 }
               `}</Style>
           </Popup>
-        </Marker>
+        </Marker >
       );
     });
 
@@ -346,7 +341,7 @@ class SimpleExample extends Component {
           {marker}
 
         </Map>
-      </MapDiv>
+      </MapDiv >
     );
   }
 }
