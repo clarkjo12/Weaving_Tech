@@ -12,17 +12,24 @@ import SideBar from "./components/sidebar";
 
 import "./App.css";
 
+import openSocket from 'socket.io-client';
+const socket = openSocket('http://localhost:8000');
+
 class App extends Component {
-  state = {
-    loggedIn: false,
-    userId: sessionStorage.getItem("userId") || "",
-    displayName: sessionStorage.getItem("displayName") || "",
-    userType: sessionStorage.getItem("userType") || "",
-    longitude: -49.089977,
-    latitude: -21.805149, 
-    activeFavorites: 10,
-    favoritedNum: 342
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: false,
+      userId: sessionStorage.getItem("userId") || "",
+      displayName: sessionStorage.getItem("displayName") || "",
+      userType: sessionStorage.getItem("userType") || "",
+      longitude: -49.089977,
+      latitude: -21.805149,
+      activeFavorites: 10,
+      favoritedNum: 342
+    };
+    this.receiveSocketIO = this.receiveSocketIO.bind(this);
+  }
 
   componentDidMount = () => {
     if (navigator.geolocation) {
@@ -69,24 +76,22 @@ class App extends Component {
   }
 
   updateFavorites = () => {
-    console.log("Update Favorites called");
     if (this.state.userId !== "") {
-    API.getFavs(this.state.userId)
-      .then(res => {
-        this.setState({
-          activeFavorites: res.data.length
+      API.getFavs(this.state.userId)
+        .then(res => {
+          this.setState({
+            activeFavorites: res.data.length
+          });
+        })
+        .catch(err => {
+          console.log("favorites error: ");
+          console.log(err);
         });
-      })
-      .catch(err => {
-        console.log("favorites error: ");
-        console.log(err);
-      });
     }
   }
 
   updateActiveFavorites = () => {
-    console.log("Update Active Favorites called");
-    API.favCount({ favorites: sessionStorage.getItem("displayname") })
+    API.favCount({ favorites: this.state.displayName })
       .then(res => {
         this.setState({
           favoritedNum: res.data
@@ -99,16 +104,14 @@ class App extends Component {
   };
 
   updateUser = (data) => {
-    const user = data.username;
-    const upper = user.replace(/^\w/, c => c.toUpperCase());
     this.setState({
       loggedIn: data.loggedIn,
       userId: data.userId,
       userType: data.userType,
-      displayName: upper
+      displayName: data.username
     });
     sessionStorage.setItem("userid", data.userId);
-    sessionStorage.setItem("displayname", upper)
+    sessionStorage.setItem("displayname", data.username);
     sessionStorage.setItem("userType", data.userType);
   }
 
@@ -124,14 +127,31 @@ class App extends Component {
     });
   }
 
+  receiveSocketIO(username, userType, updateFavorites, updateActiveFavorites) {
+    socket.on("favorite updated", function (truck) {
+      if (truck === username) {
+        if (userType === "trucker") {
+          updateActiveFavorites();
+        }
+      }
+    });
+    socket.on("truck status changed", function () {
+      if(userType === "eater") {
+        //if the truck is in the eaters favs
+        updateFavorites();
+      }
+    });
+  }
+
   render() {
+    this.receiveSocketIO(this.state.displayName, this.state.userType, this.updateFavorites, this.updateActiveFavorites);
     return (
       <BrowserRouter>
         <div>
-          <SideBar username={this.state.displayName} userId={this.state.userId} logout={this.logout} favorites={this.state.activeFavorites} favoritedNum={this.state.favoritedNum}/>
+          <SideBar username={this.state.displayName} userId={this.state.userId} userType={this.state.userType} logout={this.logout} favorites={this.state.activeFavorites} favoritedNum={this.state.favoritedNum} />
           <Switch>
-            <Route exact path="/" render={(props) => <Landing {...props} updateUser={this.updateUser} latitude={this.state.latitude} longitude={this.state.longitude} />} />
-            <Route exact path="/truck" render={(props) => <TruckHome {...props} updateUser={this.updateUser} updateActiveFavs={this.updateActiveFavorites} />} />
+            <Route exact path="/" render={(props) => <Landing {...props} updateUser={this.updateUser} username={this.state.displayName} userType={this.state.userType} latitude={this.state.latitude} longitude={this.state.longitude} />} />
+            <Route exact path="/truck" render={(props) => <TruckHome {...props} userId={this.state.userId} userType={this.state.userType} updateUser={this.updateUser} updateActiveFavs={this.updateActiveFavorites} />} />
             <Route exact path="/map" render={(props) => <CustomerMap {...props} {...props} updateUser={this.updateUser} updateFavs={this.updateFavorites} latitude={this.state.latitude} longitude={this.state.longitude} userId={this.state.userId} />} />
             <Route component={ErrorPage} />
           </Switch>

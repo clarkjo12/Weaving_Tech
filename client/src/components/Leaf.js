@@ -12,6 +12,9 @@ import truckImg from "../images/navimg.png";
 import heartImg from "../images/heartblue.png";
 import heartImg40 from "../images/heartblue40.png";
 
+import openSocket from 'socket.io-client';
+const socket = openSocket('http://localhost:8000');
+
 const MapDiv = styled.div`
   height: 100%;
   width: 100%;
@@ -50,6 +53,7 @@ var myIcon = L.icon({
 });
 
 class SimpleExample extends Component {
+
   state = {
     lat: this.props.lat,
     lng: this.props.lng,
@@ -57,7 +61,8 @@ class SimpleExample extends Component {
     nearbyTrucks: [],
     userFavorites: [],
     isFavoritesActive: this.props.isFavoritesActive
-  };
+    this.sendSocketIO = this.sendSocketIO.bind(this);
+  }
 
   componentWillMount = () => {
     // if (!this.state.isFavoritesActive) {
@@ -93,7 +98,7 @@ class SimpleExample extends Component {
     if (this.props.userId) {
       API.findEater(this.props.userId).then(res => {
         const favorites = res.data.favorites;
-        this.setState({userFavorites: favorites});
+        this.setState({ userFavorites: favorites });
       });
     }
 
@@ -136,26 +141,31 @@ class SimpleExample extends Component {
     }
   };
 
+  sendSocketIO(truckname) {
+    socket.emit('user updated favorties', truckname);
+  }
+
   addTruckToUserFavs = (username, e) => {
     e.preventDefault();
+    this.sendSocketIO(username);
     if (!this.checkIfFav(username, this.state.userFavorites)) {
-    API.updateEaterFav(this.props.userId, {username: username}).then(res => {
+      API.updateEaterFav(this.props.userId, { username: username }).then(res => {
         console.log("Added favorite" + username);
         let favoritesArr = this.state.userFavorites;
         favoritesArr.push(username);
-        this.setState({userFavorites: favoritesArr});
+        this.setState({ userFavorites: favoritesArr });
         this.props.updateFavs();
       }).catch(err => {
         console.log("eater favorites error: ");
         console.log(err);
       })
-     } 
-     else {
-      API.removeEaterFav(this.props.userId, {username: username}).then(res => {
+    }
+    else {
+      API.removeEaterFav(this.props.userId, { username: username }).then(res => {
         console.log("Removed favorite");
         let favoritesArr = this.state.userFavorites;
         favoritesArr.splice(favoritesArr.indexOf(username), 1);
-        this.setState({userFavorites: favoritesArr});
+        this.setState({ userFavorites: favoritesArr });
         this.props.updateFavs();
       }).catch(err => {
         console.log("eater favorites error: ");
@@ -249,6 +259,7 @@ class SimpleExample extends Component {
           />
 
           {markers}
+
         </Map>
       </MapDiv>
     );

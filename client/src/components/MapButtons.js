@@ -69,19 +69,6 @@ class MapButtons extends Component {
     };
   }
 
-  // initalFavClick = () => {
-  //   if (favs < 1) {
-  //     // alert("You havent Liked, Any Trucks yet.");
-  //     //console.log(favs);
-  //     favs++;
-  //     this.seeFavs();
-  //   } else {
-  //     // alert("Many Trucks.");
-  //     //console.log(favs);
-  //     this.seeFavs();
-  //   }
-  // };
-
   seeAll = () => {
     this.setState({ filter: 0 });
     console.log("filter= " + this.state.filter);

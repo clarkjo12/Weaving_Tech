@@ -32,8 +32,8 @@ class Landing extends Component {
   };
 
   componentDidMount = () => {
-    if (sessionStorage.getItem("displayname")) {
-      if (sessionStorage.getItem("userType") === "eater") {
+    if (this.props.username) {
+      if (this.props.userType === "eater") {
         window.location.href = "/map";
       }
       else {
@@ -99,8 +99,6 @@ class Landing extends Component {
             if (!res.data) {
               API.saveEater({ username: this.state.username, password: this.state.password, location: { coordinates: [this.props.latitude, this.props.longitude] } })
                 .then(res => {
-                  console.log("login response: ");
-                  console.log(res);
                   if (res.status === 200) {
                     this.handleUser(res.data.username, res.data._id);
                     this.setState({ redirect: true });
@@ -125,8 +123,6 @@ class Landing extends Component {
       if (this.state.username && this.state.password) {
         API.findEaters({username: this.state.username})
           .then(res => {
-            console.log("login response: ");
-            console.log(res.data._id);
             if (res.status === 200) {
               this.props.updateUser({
                 loggedIn: true,
@@ -139,7 +135,6 @@ class Landing extends Component {
             API.updateEater(res.data._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
               .then(res => {
                 console.log("update response: ");
-                console.log(res);
               }).catch(err => {
                 console.log("update error: ");
                 console.log(err);
