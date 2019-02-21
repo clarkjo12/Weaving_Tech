@@ -216,10 +216,10 @@ class SimpleExample extends Component {
     const position = [this.state.lat, this.state.lng];
 
     let allMarkers = this.state.nearbyTrucks.map((truck, key) => {
-    let heartSrc = heartImg40;
-    let truckSrc = AllTruck;
+      let heartSrc = heartImg40;
+      let truckSrc = AllTruck;
 
-    if (this.checkIfFav(truck.username, this.state.userFavorites)) {
+      if (this.checkIfFav(truck.username, this.state.userFavorites)) {
         heartSrc = heartImg;
         truckSrc = FavTruck;
       }
@@ -240,12 +240,12 @@ class SimpleExample extends Component {
               <PopHead>{truck.title}</PopHead>
               <PopWrapper>
                 <HeartImg
-                      onClick={e =>
-                        this.addTruckToUserFavs(truck.username, e)
-                      }
-                      src={heartSrc}
-                      alt="nahh"
-                    />
+                  onClick={e =>
+                    this.addTruckToUserFavs(truck.username, e)
+                  }
+                  src={heartSrc}
+                  alt="nahh"
+                />
                 <NavImg
                   onClick={() => this.openDirections(truck.location.coordinates[0], truck.location.coordinates[1])}
                   src={truckImg}
@@ -266,55 +266,52 @@ class SimpleExample extends Component {
     });
 
     let favMarkers = this.state.nearbyTrucks.map((truck, key) => {
+
+      let heartSrc = heartImg40;
+      let truckSrc = AllTruck;
+
       console.log(this.checkIfFav(truck.username, this.state.userFavorites) + " checking favorites");
       if (this.checkIfFav(truck.username, this.state.userFavorites)) {
-      return (
-        <Marker
-          key={key}
-          position={truck.location.coordinates}
-          icon={myIcon}
-        >
-          <Popup className="mypopup">
-            <PopDiv>
-              <PopHead>{truck.title}</PopHead>
-              <PopWrapper>
-                {this.checkIfFav(
-                  truck.username,
-                  this.state.userFavorites
-                ) ? (
-                    <HeartImg
-                      onClick={e =>
-                        this.addTruckToUserFavs(truck.username, e)
-                      }
-                      src={heartImg}
-                      alt="nahh"
-                    />
-                  ) : (
-                    <HeartImg
-                      onClick={e =>
-                        this.addTruckToUserFavs(truck.username, e)
-                      }
-                      src={heartImg40}
-                      alt="nahh"
-                    />
-                  )}
-                <NavImg
-                  onClick={() => this.openDirections(truck.location.coordinates[0], truck.location.coordinates[1])}
-                  src={truckImg}
-                  alt="nahh"
-                />
-                <Modal username={truck.username} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites} />
-              </PopWrapper>
-            </PopDiv>
-            <Style>{`
+        heartSrc = heartImg;
+        truckSrc = FavTruck;
+        return (
+          <Marker
+            key={key}
+            position={truck.location.coordinates}
+            icon={L.icon({
+              iconUrl: truckSrc,
+              iconAnchor: [25, 45],
+              popupAnchor: [0, -30]
+            })}
+          >
+            <Popup className="mypopup">
+              <PopDiv>
+                <PopHead>{truck.title}</PopHead>
+                <PopWrapper>
+                  <HeartImg
+                    onClick={e =>
+                      this.addTruckToUserFavs(truck.username, e)
+                    }
+                    src={heartSrc}
+                    alt="nahh"
+                  />
+                  <NavImg
+                    onClick={() => this.openDirections(truck.location.coordinates[0], truck.location.coordinates[1])}
+                    src={truckImg}
+                    alt="nahh"
+                  />
+                  <Modal username={truck.username} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites} />
+                </PopWrapper>
+              </PopDiv>
+              <Style>{`
                 .mypopup .leaflet-popup-tip,
                 .mypopup .leaflet-popup-content-wrapper {
                     background: #ffde59;
                 }
               `}</Style>
-          </Popup>
-        </Marker>
-      );
+            </Popup>
+          </Marker>
+        );
       };
     });
 
