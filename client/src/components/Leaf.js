@@ -14,7 +14,7 @@ import heartImg from "../images/heartblue.png";
 import heartImg40 from "../images/heartblue40.png";
 
 import openSocket from 'socket.io-client';
-const socket = openSocket('http://localhost:8000');
+const socket = openSocket(window.location.hostname + ":8000");
 
 const MapDiv = styled.div`
   height: 100%;

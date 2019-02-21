@@ -34,9 +34,11 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 io.on('connection', function(socket){
   socket.on('user updated favorties', function(truckname){
+    console.log("user updated favorties");
     io.emit("favorite updated", truckname);
   });
   socket.on('truck status change', function(){
+    console.log("truck status changed");
     io.emit("truck status changed");
   });
 });
