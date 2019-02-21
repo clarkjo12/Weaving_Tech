@@ -19,24 +19,25 @@ let notifyCustomers = async _id => {
   let customersWithin100k = await
     db.Eater
       .find({
-        location: {
-          $nearSphere: {
-            $geometry: truck.location,
-            $maxDistance: 100000
-          }
-        },
-        // receiveNotifications: true,
-        // pushToken: { $exists: true }
+        // location: {
+        //   $nearSphere: {
+        //     $geometry: truck.location,
+        //     $maxDistance: 100000
+        //   }
+        // },
+        favorites: truck._id,
+        receiveNotifications: true,
+        pushToken: { $exists: true }
       })
       .catch(console.error)
 
 
-  let withinTheirRange = customersWithin100k.filter(c => distance(c.location, truck.location, 'kilometers') * 1000 < c.notificationDistance)
+  // let withinTheirRange = customersWithin100k.filter(c => distance(c.location, truck.location, 'kilometers') * 1000 < c.notificationDistance)
 
-    , shouldNotify = withinTheirRange.filter(c => c.receiveNotifications && c.pushToken)
+  //   , shouldNotify = withinTheirRange.filter(c => c.receiveNotifications && c.pushToken)
 
-    console.log('customersWithin100k: ', customersWithin100k.map(c => c.pushToken))
-    console.log('withinTheirRange: ', withinTheirRange.map(c => c.pushToken))
+  //   console.log('customersWithin100k: ', customersWithin100k.map(c => c.pushToken))
+  //   console.log('withinTheirRange: ', withinTheirRange.map(c => c.pushToken))
 
   return notify(truck, customersWithin100k.filter(c => c.pushToken)) // notify(truck, shouldNotify)
 }
