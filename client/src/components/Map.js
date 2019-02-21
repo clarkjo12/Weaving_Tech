@@ -49,7 +49,7 @@ class MapDisplay extends Component {
       nearbyTrucks: [],
       activeMarker: {},
       modalIsOpen: false,
-      isFavoritesActive: false
+      isFavoritesActive: null
     };
 
     // this.onMarkerClick = this.onMarkerClick.bind(this);
@@ -63,9 +63,10 @@ class MapDisplay extends Component {
   //   zoom: 11
   // };
 
-  mapFavCallback = boolean => {
+  mapFavCallback = (boolean) => {
     console.log("Testing Callback: " + boolean);
-    return this.setState({ isFavoriteActive: boolean });
+    console.log(this.state.isFavoritesActive);
+    this.setState({ isFavoritesActive: boolean });
   };
 
   render() {

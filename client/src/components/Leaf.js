@@ -201,17 +201,25 @@ class SimpleExample extends Component {
     window.open(directionLink);
   }
 
+  // markerRender = (props) => {
+  //   if (!this.state.isFavoritesActive) {
+  //     return {allMarkers}
+  //   } else {
+  //     return {favMarkers}
+  //   }
+  // };
+
   render() {
 
     this.receiveSocketIO(this.updateTrucksArray);
 
     const position = [this.state.lat, this.state.lng];
 
+    let allMarkers = this.state.nearbyTrucks.map((truck, key) => {
     let heartSrc = heartImg40;
     let truckSrc = AllTruck;
 
-    let markers = this.state.nearbyTrucks.map((truck, key) => {
-      if (this.checkIfFav(truck.username, this.state.userFavorites)) {
+    if (this.checkIfFav(truck.username, this.state.userFavorites)) {
         heartSrc = heartImg;
         truckSrc = FavTruck;
       }
@@ -257,6 +265,67 @@ class SimpleExample extends Component {
       );
     });
 
+    let favMarkers = this.state.nearbyTrucks.map((truck, key) => {
+      console.log(this.checkIfFav(truck.username, this.state.userFavorites) + " checking favorites");
+      if (this.checkIfFav(truck.username, this.state.userFavorites)) {
+      return (
+        <Marker
+          key={key}
+          position={truck.location.coordinates}
+          icon={myIcon}
+        >
+          <Popup className="mypopup">
+            <PopDiv>
+              <PopHead>{truck.title}</PopHead>
+              <PopWrapper>
+                {this.checkIfFav(
+                  truck.username,
+                  this.state.userFavorites
+                ) ? (
+                    <HeartImg
+                      onClick={e =>
+                        this.addTruckToUserFavs(truck.username, e)
+                      }
+                      src={heartImg}
+                      alt="nahh"
+                    />
+                  ) : (
+                    <HeartImg
+                      onClick={e =>
+                        this.addTruckToUserFavs(truck.username, e)
+                      }
+                      src={heartImg40}
+                      alt="nahh"
+                    />
+                  )}
+                <NavImg
+                  onClick={() => this.openDirections(truck.location.coordinates[0], truck.location.coordinates[1])}
+                  src={truckImg}
+                  alt="nahh"
+                />
+                <Modal username={truck.username} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites} />
+              </PopWrapper>
+            </PopDiv>
+            <Style>{`
+                .mypopup .leaflet-popup-tip,
+                .mypopup .leaflet-popup-content-wrapper {
+                    background: #ffde59;
+                }
+              `}</Style>
+          </Popup>
+        </Marker>
+      );
+      };
+    });
+
+    let marker;
+
+    if (this.props.isFavoritesActive) {
+      marker = favMarkers;
+    } else {
+      marker = allMarkers;
+    };
+
     return (
       <MapDiv>
         <Map
@@ -268,7 +337,8 @@ class SimpleExample extends Component {
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {markers}
+
+          {marker}
 
         </Map>
       </MapDiv >
