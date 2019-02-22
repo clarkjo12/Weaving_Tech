@@ -6,7 +6,7 @@ import GoogButton from "./GGButton";
 import API from "../utils/API";
 
 import openSocket from 'socket.io-client';
-const socket = openSocket('http://localhost:8000');
+const socket = openSocket(window.location.hostname + ":8000");
 
 // const FBButton = styled.div``;
 

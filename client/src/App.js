@@ -13,7 +13,7 @@ import SideBar from "./components/sidebar";
 import "./App.css";
 
 import openSocket from 'socket.io-client';
-const socket = openSocket('http://localhost:8000');
+const socket = openSocket(window.location.hostname + ":8000");
 
 class App extends Component {
   constructor(props) {
@@ -128,6 +128,7 @@ class App extends Component {
   }
 
   receiveSocketIO(username, userType, updateFavorites, updateActiveFavorites) {
+    console.log("HERE");
     socket.on("favorite updated", function (truck) {
       if (truck === username) {
         if (userType === "trucker") {
