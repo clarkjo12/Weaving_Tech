@@ -26,8 +26,9 @@ const PopDiv = styled.div``;
 const PopHead = styled.h5`
   margin-top: 0;
   margin-bottom: 8px;
-  min-width: 100px;
-  text-align: center;
+  padding-right: 35px;
+  min-width: 80px;
+  text-align: right;
 `;
 
 const PopWrapper = styled.div``;
@@ -53,7 +54,7 @@ class SimpleExample extends Component {
     this.state = {
       lat: this.props.lat,
       lng: this.props.lng,
-      zoom: 11,
+      zoom: 2,
       nearbyTrucks: [],
       userFavorites: [],
       isFavoritesActive: this.props.isFavoritesActive
@@ -237,20 +238,9 @@ class SimpleExample extends Component {
         >
           <Popup className="mypopup">
             <PopDiv>
-              <PopHead>{truck.title}</PopHead>
+              
               <PopWrapper>
-                <HeartImg
-                  onClick={e =>
-                    this.addTruckToUserFavs(truck.username, e)
-                  }
-                  src={heartSrc}
-                  alt="nahh"
-                />
-                <NavImg
-                  onClick={() => this.openDirections(truck.location.coordinates[0], truck.location.coordinates[1])}
-                  src={truckImg}
-                  alt="nahh"
-                />
+                <PopHead>{truck.title}</PopHead>
                 <Modal username={truck.username} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites} />
               </PopWrapper>
             </PopDiv>
