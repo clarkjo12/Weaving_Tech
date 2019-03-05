@@ -93,27 +93,18 @@ class Landing extends Component {
         this.state.username &&
         this.state.password &&
         (this.state.password === this.state.confirmpassword)) {
-        //check to make sure the username isn't in the database already
-        API.findEaters({ username: this.state.username })
+        API.saveEater({ username: this.state.username, password: this.state.password, location: { coordinates: [this.props.latitude, this.props.longitude] } })
           .then(res => {
-            if (!res.data) {
-              API.saveEater({ username: this.state.username, password: this.state.password, location: { coordinates: [this.props.latitude, this.props.longitude] } })
-                .then(res => {
-                  if (res.status === 200) {
-                    this.handleUser(res.data.username, res.data._id);
-                    this.setState({ redirect: true });
-                  }
-                })
-                .catch(err => {
-                  console.log("login error: ");
-                  console.log(err);
-                  this.setState({ errorMessage: "Username and/or Password incorrect" });
-                });
-            }
-            else {
-              this.setState({ errorMessage: "Username already exists in database" });
+            if (res.status === 200) {
+              this.handleUser(res.data.username, res.data._id);
+              this.setState({ redirect: true });
             }
           })
+          .catch(err => {
+            console.log("login error: ");
+            console.log(err);
+            this.setState({ errorMessage: "Username and/or Password incorrect" });
+          });
       }
       else {
         this.setState({ errorMessage: "Username and/or Password incorrect" });
@@ -121,8 +112,9 @@ class Landing extends Component {
     } else {
       //user already exists in the database, so update
       if (this.state.username && this.state.password) {
-        API.findEaters({username: this.state.username})
+        API.findEaters({ username: this.state.username, password: this.state.password })
           .then(res => {
+            console.log(res.headers);
             if (res.status === 200) {
               this.props.updateUser({
                 loggedIn: true,

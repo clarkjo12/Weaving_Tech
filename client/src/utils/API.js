@@ -1,6 +1,10 @@
 import axios from "axios";
 
 export default {
+  // Logout
+  logout: function () {
+    return axios.post("/logout");
+  },
   //---------------------------Eaters DB-------------------------------------
   // Counts the number of eaters with a particular favorite
   favCount: function (eaterData) {
@@ -8,11 +12,11 @@ export default {
   },
   // Counts the number of eaters with the username
   findEaters: function (eaterData) {
-    return axios.post("/api/eaters/count", eaterData);
+    return axios.post("/api/eaters/login", eaterData);
   },
   // Saves an eater to the database
   saveEater: function (eaterData) {
-    return axios.post("/api/eaters", eaterData);
+    return axios.post("/api/eaters/signup", eaterData);
   },
   // Checks to see which of the eaters favorite trucks are open
   getFavs: function (id) {
