@@ -12,6 +12,7 @@ var createToken = function(auth) {
 module.exports = {
   generateToken: function(req, res, next) {
       req.token = createToken(req.auth);
+      console.log("TOK");
       return next();
   },
   sendToken: function(req, res) {

@@ -13,8 +13,11 @@ import SideBar from "./components/sidebar";
 
 import "./App.css";
 
-import openSocket from "socket.io-client";
-const socket = openSocket(window.location.hostname + ":8000");
+
+import openSocket from 'socket.io-client';
+const socket = openSocket(window.location.hostname + ":80");
+
+
 
 class App extends Component {
   constructor(props) {
@@ -130,18 +133,27 @@ class App extends Component {
       userType: "",
       displayName: ""
     });
-  };
+
+    API.logout()
+      .catch(err => {
+        console.log("logout error: ");
+        console.log(err);
+      });
+  }
 
   receiveSocketIO(username, userType, updateFavorites, updateActiveFavorites) {
-    console.log("HERE");
-    socket.on("favorite updated", function(truck) {
+    console.log("Socket.io received");
+    socket.on("favorite updated", function (truck) {
+
       if (truck === username) {
         if (userType === "trucker") {
           updateActiveFavorites();
         }
       }
     });
-    socket.on("truck status changed", function() {
+
+    socket.on("truck status changed", function () {
+
       if (userType === "eater") {
         //update the eaters active favorites
         updateFavorites();
@@ -159,14 +171,9 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <SideBar
-            username={this.state.displayName}
-            userId={this.state.userId}
-            userType={this.state.userType}
-            logout={this.logout}
-            favorites={this.state.activeFavorites}
-            favoritedNum={this.state.favoritedNum}
-          />
+
+          <SideBar displayName={this.state.displayName} userId={this.state.userId} userType={this.state.userType} logout={this.logout} favorites={this.state.activeFavorites} favoritedNum={this.state.favoritedNum} />
+
           <Switch>
             <Route
               exact

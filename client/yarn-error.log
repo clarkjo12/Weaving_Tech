@@ -1,20 +1,30 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn install
+  C:\Program Files\nodejs\node.exe C:\Users\Hilary Mallar\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add import { createStore } from redux
 
 PATH: 
-  /var/folders/2_/wggvmlvj01vg0ycmmtfsdty80000gn/T/yarn--1550721890915-0.027730624505714285:/Users/Charles/Weaving_Tech/node_modules/.bin:/Users/Charles/.config/yarn/link/node_modules/.bin:/Users/Charles/Weaving_Tech/node_modules/.bin:/Users/Charles/.config/yarn/link/node_modules/.bin:/usr/local/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/bin/node_modules/npm/bin/node-gyp-bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
+  C:\Users\Hilary Mallar\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Hilary Mallar\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client;C:\Program Files\Intel\iCLS Client;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files\Intel\WiFi\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Program Files\MongoDB\Server\4.0\bin;C:\Users\Hilary Mallar\AppData\Local\Microsoft\WindowsApps;C:\Program Files\heroku\bin;C:\Users\Hilary Mallar\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
 
 Yarn version: 
   1.13.0
 
 Node version: 
-  10.15.0
+  8.11.3
 
 Platform: 
-  darwin x64
+  win32 x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/Users/Charles/Weaving_Tech/client/node_modules/babel-preset-react-app/node_modules/@babel/plugin-transform-new-target/node_modules/@babel/core/LICENSE'
+  Error: https://registry.yarnpkg.com/%7B: Not found
+      at Request.params.callback [as _callback] (C:\Users\Hilary Mallar\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66255:18)
+      at Request.self.callback (C:\Users\Hilary Mallar\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:129397:22)
+      at emitTwo (events.js:126:13)
+      at Request.emit (events.js:214:7)
+      at Request.<anonymous> (C:\Users\Hilary Mallar\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:130369:10)
+      at emitOne (events.js:116:13)
+      at Request.emit (events.js:211:7)
+      at IncomingMessage.<anonymous> (C:\Users\Hilary Mallar\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:130291:12)
+      at Object.onceWrapper (events.js:313:30)
+      at emitNone (events.js:111:20)
 
 npm manifest: 
   {
@@ -25,6 +35,7 @@ npm manifest:
     "proxy": "http://localhost:3001/",
     "dependencies": {
       "axios": "^0.18.0",
+      "dotenv": "^6.2.0",
       "google-map-react": "^1.1.2",
       "google-maps-react": "^2.0.2",
       "leaflet": "*",
@@ -3370,6 +3381,11 @@ Lockfile:
     version "6.0.0"
     resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.0.0.tgz#24e37c041741c5f4b25324958ebbc34bca965935"
     integrity sha512-FlWbnhgjtwD+uNLUGHbMykMOYQaTivdHEmYwAKFjn6GKe/CqY0fNae93ZHTd20snh9ZLr8mTzIL9m0APQ1pjQg==
+  
+  dotenv@^6.2.0:
+    version "6.2.0"
+    resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.2.0.tgz#941c0410535d942c8becf28d3f357dbd9d476064"
+    integrity sha512-HygQCKUBSFl8wKQZBSemMywRWcEDNidvNbjGVyZu3nbZ8qq9ubiPoGLMdRDpfSrpkkm9BXYFkpKxxFX38o/76w==
   
   duplexer@^0.1.1:
     version "0.1.1"

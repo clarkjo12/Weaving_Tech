@@ -14,7 +14,7 @@ import heartImg from "../images/heartblue.png";
 import heartImg40 from "../images/heartblue40.png";
 
 import openSocket from 'socket.io-client';
-const socket = openSocket(window.location.hostname + ":8000");
+const socket = openSocket(window.location.hostname + ":80");
 
 const MapDiv = styled.div`
   height: 100%;
@@ -260,7 +260,6 @@ class SimpleExample extends Component {
       let heartSrc = heartImg40;
       let truckSrc = AllTruck;
 
-      console.log(this.checkIfFav(truck.username, this.state.userFavorites) + " checking favorites");
       if (this.checkIfFav(truck.username, this.state.userFavorites)) {
         heartSrc = heartImg;
         truckSrc = FavTruck;
