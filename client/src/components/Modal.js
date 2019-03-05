@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Mega from "../images/mega.png";
 import heartImg from "../images/heartblue.png";
 import API from "../utils/API";
+import navImg from "../images/navimg.png";
+import watch from "../images/watch.png";
 
 const SummaryDiv = styled.div`
   margin-top: 8px;
@@ -17,6 +19,12 @@ const MegaImg = styled.img`
   height: 26px;
   float: right;
   margin-top: -27px;
+  padding-right: 3px;
+`;
+const NavImg = styled.img`
+  height: 30px;
+  padding-left: 13px;
+  padding-bottom: 2px;
 `;
 
 const ProfileImg = styled.img`
@@ -26,8 +34,9 @@ const ProfileImg = styled.img`
 `;
 
 const TruckName = styled.h2`
+  margin-top: 3px;
   color: darkslategray;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 `;
 
 const LoveWrapper = styled.div`
@@ -46,11 +55,29 @@ const LoveCount = styled.h3`
 `;
 
 const TruckTitle = styled.h3`
-  margin-top: 7px;
-  margin-bottom: 2px;
+  margin-top: 2px;
+  margin-bottom: 5px;
   padding-bottom: 4px;
   border-bottom: 1px solid darkslategray;
 `;
+
+const LastCallDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Watch = styled.img`
+  height: 30px;
+  padding-right: 3px;
+  padding-bottom: 5px;
+`;
+
+const Time = styled.div`
+  color: tomato;
+  font-size: 18px;
+`;
+
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
 //Modal.setAppElement('#yourAppElement')
 
@@ -93,6 +120,25 @@ class Modals extends React.Component {
       });
   };
 
+  openDirections(lat, lng) {
+    var uLat = 35.77;
+    var ulong = -78.65;
+    var tLat = 34.88;
+    var tLong = -77.86;
+    var directionLink =
+      "https://www.google.com/maps/dir/'" +
+      uLat +
+      "," +
+      ulong +
+      "'/'" +
+      tLat +
+      "," +
+      tLong +
+      "'";
+
+    window.open(directionLink);
+  }
+
   render() {
     return (
       <div>
@@ -121,11 +167,16 @@ class Modals extends React.Component {
           }}
           contentLabel="Example Modal"
         >
+          <LastCallDiv>
+            <Watch src={watch} />
+            <Time>12:43</Time>
+          </LastCallDiv>
           <TruckName>{this.props.username}</TruckName>
           <ProfileImg src={this.props.picture} />
           <LoveWrapper>
             <Heart src={heartImg} />:{" "}
             <LoveCount>{this.state.favorites}</LoveCount>
+            <NavImg src={navImg} onClick={() => this.openDirections()} />
           </LoveWrapper>
           {/* <h2 ref={subtitle => (this.subtitle = subtitle)}>
             Fresh Tacos BOGO!
