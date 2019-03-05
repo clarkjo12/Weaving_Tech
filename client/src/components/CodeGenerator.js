@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-//import GenerateRandomCode from "GenerateRandomCode";
+//ßimport GenerateRandomCode from "GenerateRandomCode";
 
 // import openSocket from "socket.io-client";
 // const socket = openSocket(window.location.hostname + ":8000");
 
 // const FBButton = styled.div``;
-
 // const GGButton = styled.div``;
 
 const ButtonDiv = styled.div`
@@ -25,11 +24,19 @@ const Code = styled.div`
   padding-left: 7px;
 `;
 
+var textCode = "";
+var numCode = "";
+var result = "";
+var alphabet = "abcdefghijklmnopqrstuvwxyz";
+var num = "0123456789";
+
 class CodeButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
       code: "123j21",
+      textLength: 3,
+      numLength: 3,
       redirectToMap: false,
       redirectToTruckerHome: false
     };
@@ -37,7 +44,22 @@ class CodeButton extends Component {
   }
 
   generateCode = () => {
-    console.log(this.state.code);
+    //extLength, numLength
+
+    for (var i = 0; i < 3; i++) {
+      textCode += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+    }
+
+    for (var i = 0; i < 3; i++) {
+      numCode += num.charAt(Math.floor(Math.random() * num.length));
+    }
+
+    result = textCode + numCode;
+
+    textCode = "";
+    numCode = "";
+    this.state.code = result;
+    console.log(result);
   };
 
   render() {
@@ -47,7 +69,7 @@ class CodeButton extends Component {
     // else if (this.state.redirectToTruckerHome) {
     //   return <Redirect to="/truck" />;
     // }
-
+    //this.state.code = GenerateRandomCode.NumCode(4);
     return (
       <div>
         <ButtonDiv>
