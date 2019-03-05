@@ -20,6 +20,7 @@
     "nodemon": "^1.18.7"
   },
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
     "@turf/distance": "^6.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
@@ -44,10 +45,16 @@
     "react": "^16.7.0",
     "react-burger-menu": "^2.6.4",
     "react-dom": "^16.7.0",
+    "react-edit-inline": "^1.0.8",
+    "react-edit-inline2": "^1.0.2",
+    "react-editext": "^3.0.0",
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.0.2",
+    "react-loader-spinner": "^2.3.0",
     "react-native-open-maps": "^0.3.3",
+    "react-random-code-generator": "^1.0.2",
     "react-switch": "^4.0.1",
+    "react-x-editable": "^0.0.10-beta",
     "socket.io": "^2.2.0"
   }
 }
