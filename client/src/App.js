@@ -5,6 +5,7 @@ import Landing from "./pages/Landing";
 import CustomerMap from "./pages/CustomerMap";
 import TruckHome from "./pages/TruckHome";
 import ErrorPage from "./pages/ErrorPage";
+import Register from "./pages/Register";
 import API from "./utils/API";
 
 // import NavBar from "./components/NavBar";
@@ -12,8 +13,11 @@ import SideBar from "./components/sidebar";
 
 import "./App.css";
 
+
 import openSocket from 'socket.io-client';
 const socket = openSocket(window.location.hostname + ":80");
+
+
 
 class App extends Component {
   constructor(props) {
@@ -33,31 +37,34 @@ class App extends Component {
 
   componentDidMount = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.showPosition, this.showError);
+      navigator.geolocation.getCurrentPosition(
+        this.showPosition,
+        this.showError
+      );
     } else {
       console.log("Geolocation is not supported by this browser.");
     }
-    const loggedIn = (sessionStorage.getItem("userid")) ? true : false;
+    const loggedIn = sessionStorage.getItem("userid") ? true : false;
     if (loggedIn) {
       this.updateUser({
         userId: sessionStorage.getItem("userid"),
         username: sessionStorage.getItem("displayname"),
         loggedIn: loggedIn,
         userType: sessionStorage.getItem("userType")
-      })
+      });
     }
-  }
+  };
 
-  showPosition = (position) => {
+  showPosition = position => {
     console.log("Latitude: " + position.coords.latitude);
     console.log("Longitude: " + position.coords.longitude);
     this.setState({
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
     });
-  }
+  };
 
-  showError = (error) => {
+  showError = error => {
     switch (error.code) {
       case error.PERMISSION_DENIED:
         console.log("User denied the request for Geolocation.");
@@ -71,9 +78,10 @@ class App extends Component {
       case error.UNKNOWN_ERROR:
         console.log("An unknown error occurred.");
         break;
-      default: console.log("An unknown error occurred.");
+      default:
+        console.log("An unknown error occurred.");
     }
-  }
+  };
 
   updateFavorites = () => {
     if (this.state.userId !== "") {
@@ -88,7 +96,7 @@ class App extends Component {
           console.log(err);
         });
     }
-  }
+  };
 
   updateActiveFavorites = () => {
     API.favCount({ favorites: this.state.displayName })
@@ -103,7 +111,7 @@ class App extends Component {
       });
   };
 
-  updateUser = (data) => {
+  updateUser = data => {
     this.setState({
       loggedIn: data.loggedIn,
       userId: data.userId,
@@ -113,7 +121,7 @@ class App extends Component {
     sessionStorage.setItem("userid", data.userId);
     sessionStorage.setItem("displayname", data.username);
     sessionStorage.setItem("userType", data.userType);
-  }
+  };
 
   logout = () => {
     sessionStorage.removeItem("userid");
@@ -125,6 +133,7 @@ class App extends Component {
       userType: "",
       displayName: ""
     });
+
     API.logout()
       .catch(err => {
         console.log("logout error: ");
@@ -135,13 +144,16 @@ class App extends Component {
   receiveSocketIO(username, userType, updateFavorites, updateActiveFavorites) {
     console.log("Socket.io received");
     socket.on("favorite updated", function (truck) {
+
       if (truck === username) {
         if (userType === "trucker") {
           updateActiveFavorites();
         }
       }
     });
+
     socket.on("truck status changed", function () {
+
       if (userType === "eater") {
         //update the eaters active favorites
         updateFavorites();
@@ -150,15 +162,62 @@ class App extends Component {
   }
 
   render() {
-    this.receiveSocketIO(this.state.displayName, this.state.userType, this.updateFavorites, this.updateActiveFavorites);
+    this.receiveSocketIO(
+      this.state.displayName,
+      this.state.userType,
+      this.updateFavorites,
+      this.updateActiveFavorites
+    );
     return (
       <BrowserRouter>
         <div>
+
           <SideBar displayName={this.state.displayName} userId={this.state.userId} userType={this.state.userType} logout={this.logout} favorites={this.state.activeFavorites} favoritedNum={this.state.favoritedNum} />
+
           <Switch>
-            <Route exact path="/" render={(props) => <Landing {...props} updateUser={this.updateUser} username={this.state.displayName} userType={this.state.userType} latitude={this.state.latitude} longitude={this.state.longitude} />} />
-            <Route exact path="/truck" render={(props) => <TruckHome {...props} userId={this.state.userId} userType={this.state.userType} updateUser={this.updateUser} updateActiveFavs={this.updateActiveFavorites} />} />
-            <Route exact path="/map" render={(props) => <CustomerMap {...props} {...props} updateUser={this.updateUser} updateFavs={this.updateFavorites} latitude={this.state.latitude} longitude={this.state.longitude} userId={this.state.userId} />} />
+            <Route
+              exact
+              path="/"
+              render={props => (
+                <Landing
+                  {...props}
+                  updateUser={this.updateUser}
+                  username={this.state.displayName}
+                  userType={this.state.userType}
+                  latitude={this.state.latitude}
+                  longitude={this.state.longitude}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/truck"
+              render={props => (
+                <TruckHome
+                  {...props}
+                  userId={this.state.userId}
+                  userType={this.state.userType}
+                  updateUser={this.updateUser}
+                  updateActiveFavs={this.updateActiveFavorites}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/map"
+              render={props => (
+                <CustomerMap
+                  {...props}
+                  {...props}
+                  updateUser={this.updateUser}
+                  updateFavs={this.updateFavorites}
+                  latitude={this.state.latitude}
+                  longitude={this.state.longitude}
+                  userId={this.state.userId}
+                />
+              )}
+            />
+            <Route exact path="/register" render={props => <Register />} />
             <Route component={ErrorPage} />
           </Switch>
         </div>

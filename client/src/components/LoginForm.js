@@ -14,6 +14,8 @@ const LoginChilds = styled.section`
   background: #ffbd59;
 `;
 
+const SendToReg = styled.a``;
+
 const Logo = styled.img`
   height: 100px;
 `;
@@ -53,43 +55,48 @@ function LoginForm(props) {
         <LogoText img src={LogoTextUser} alt="nah bro" />
 
         <Htwo>
-          {(props.loginType === "eater") ?
-            (<p>Login Below!</p>) :
-            (<p>Trucker Edition!</p>)}
-        </Htwo>
-        {(props.loginType === "eater") ?
-          (
+          {props.loginType === "eater" ? (
+            <p>Login Below!</p>
+          ) : (
             <div>
-              <Input>
-                <input
-                  type="text"
-                  placeholder="Username"
-                  name="username"
-                  onChange={props.handleInput}
-                /> 
-              </Input>
+              <p>Trucker Edition!</p>
+              <SendToReg href="/register"> Need to Register?</SendToReg>
+            </div>
+          )}
+        </Htwo>
+        {props.loginType === "eater" ? (
+          <div>
+            <Input>
+              <input
+                type="text"
+                placeholder="Username"
+                name="username"
+                onChange={props.handleInput}
+              />
+            </Input>
+            <Input>
+              <input
+                type="password"
+                placeholder="Password"
+                name="password"
+                onChange={props.handleInput}
+              />
+            </Input>
+            {props.newUser ? (
               <Input>
                 <input
                   type="password"
-                  placeholder="Password"
-                  name="password"
+                  placeholder="Confirm Password"
+                  name="confirmpassword"
                   onChange={props.handleInput}
-                /> 
+                />
               </Input>
-              {props.newUser ? (
-                <Input>
-                  <input
-                    type="password"
-                    placeholder="Confirm Password"
-                    name="confirmpassword"
-                    onChange={props.handleInput}
-                  /> 
-                </Input>
-              ) : null}
-              <Error>{props.errorMessage}</Error>
-            </div>
-          ) :
-          ("")}
+            ) : null}
+            <Error>{props.errorMessage}</Error>
+          </div>
+        ) : (
+          ""
+        )}
       </form>
     </LoginChilds>
   );
