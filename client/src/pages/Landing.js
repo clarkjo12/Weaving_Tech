@@ -19,6 +19,8 @@ const Mommadiv = styled.div`
   height: 100vh;
 `;
 
+const SendToReg = styled.a``;
+
 class Landing extends Component {
   state = {
     username: "",
@@ -35,12 +37,11 @@ class Landing extends Component {
     if (this.props.username) {
       if (this.props.userType === "eater") {
         window.location.href = "/map";
-      }
-      else {
+      } else {
         window.location.href = "/truck";
       }
     }
-  }
+  };
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -63,15 +64,15 @@ class Landing extends Component {
       userId: userId,
       userType: this.state.loginType
     });
-  }
+  };
 
   handleLoginType = () => {
     let type = this.state.loginType;
-    type = (type === "eater") ? "trucker" : "eater";
+    type = type === "eater" ? "trucker" : "eater";
     this.setState({
       loginType: type
-    })
-  }
+    });
+  };
 
   handleLoginLogo = event => {
     event.preventDefault();
@@ -83,8 +84,8 @@ class Landing extends Component {
     }
     this.setState({
       count: clickCount
-    })
-  }
+    });
+  };
 
   handleFormSubmit = event => {
     event.preventDefault();
@@ -92,36 +93,44 @@ class Landing extends Component {
       if (
         this.state.username &&
         this.state.password &&
-        (this.state.password === this.state.confirmpassword)) {
+        this.state.password === this.state.confirmpassword
+      ) {
         //check to make sure the username isn't in the database already
-        API.findEaters({ username: this.state.username })
-          .then(res => {
-            if (!res.data) {
-              API.saveEater({ username: this.state.username, password: this.state.password, location: { coordinates: [this.props.latitude, this.props.longitude] } })
-                .then(res => {
-                  if (res.status === 200) {
-                    this.handleUser(res.data.username, res.data._id);
-                    this.setState({ redirect: true });
-                  }
-                })
-                .catch(err => {
-                  console.log("login error: ");
-                  console.log(err);
-                  this.setState({ errorMessage: "Username and/or Password incorrect" });
+        API.findEaters({ username: this.state.username }).then(res => {
+          if (!res.data) {
+            API.saveEater({
+              username: this.state.username,
+              password: this.state.password,
+              location: {
+                coordinates: [this.props.latitude, this.props.longitude]
+              }
+            })
+              .then(res => {
+                if (res.status === 200) {
+                  this.handleUser(res.data.username, res.data._id);
+                  this.setState({ redirect: true });
+                }
+              })
+              .catch(err => {
+                console.log("login error: ");
+                console.log(err);
+                this.setState({
+                  errorMessage: "Username and/or Password incorrect"
                 });
-            }
-            else {
-              this.setState({ errorMessage: "Username already exists in database" });
-            }
-          })
-      }
-      else {
+              });
+          } else {
+            this.setState({
+              errorMessage: "Username already exists in database"
+            });
+          }
+        });
+      } else {
         this.setState({ errorMessage: "Username and/or Password incorrect" });
       }
     } else {
       //user already exists in the database, so update
       if (this.state.username && this.state.password) {
-        API.findEaters({username: this.state.username})
+        API.findEaters({ username: this.state.username })
           .then(res => {
             if (res.status === 200) {
               this.props.updateUser({
@@ -132,21 +141,30 @@ class Landing extends Component {
               });
               this.setState({ redirect: true });
             }
-            API.updateEater(res.data._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
+            API.updateEater(res.data._id, {
+              location: {
+                coordinates: [this.props.latitude, this.props.longitude]
+              }
+            })
               .then(res => {
                 console.log("update response: ");
-              }).catch(err => {
+              })
+              .catch(err => {
                 console.log("update error: ");
                 console.log(err);
-                this.setState({ errorMessage: "Username and/or Password incorrect" });
+                this.setState({
+                  errorMessage: "Username and/or Password incorrect"
+                });
               });
-          }).catch(err => {
+          })
+          .catch(err => {
             console.log("login error: ");
             console.log(err);
-            this.setState({ errorMessage: "Username and/or Password incorrect" });
+            this.setState({
+              errorMessage: "Username and/or Password incorrect"
+            });
           });
-      }
-      else {
+      } else {
         this.setState({ errorMessage: "Username and/or Password incorrect" });
       }
     }
@@ -169,20 +187,30 @@ class Landing extends Component {
           handleLoginLogo={this.handleLoginLogo}
           errorMessage={this.state.errorMessage}
         />
-        {(this.state.loginType === "eater") ?
-          (<FirstTimeDiv>
+        {this.state.loginType === "eater" ? (
+          <FirstTimeDiv>
             <Link to="#" onClick={this.handleUserStatus}>
               {" "}
               {this.state.newUser
                 ? "Already Been Here?"
                 : "First Time Here?"}{" "}
             </Link>
-          </FirstTimeDiv>) : ("")}
-        {(this.state.loginType === "eater") ?
-          <LoginSubmitButton handleSubmit={this.handleFormSubmit} /> : ("")}
-        <FancyLogins updateUser={this.handleUser} latitude={this.props.latitude} longitude={this.props.longitude} loginType={this.state.loginType} />
+          </FirstTimeDiv>
+        ) : (
+          ""
+        )}
+        {this.state.loginType === "eater" ? (
+          <LoginSubmitButton handleSubmit={this.handleFormSubmit} />
+        ) : (
+          ""
+        )}
+        <FancyLogins
+          updateUser={this.handleUser}
+          latitude={this.props.latitude}
+          longitude={this.props.longitude}
+          loginType={this.state.loginType}
+        />
       </Mommadiv>
-
     );
   }
 }
