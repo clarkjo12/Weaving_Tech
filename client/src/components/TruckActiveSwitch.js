@@ -4,7 +4,7 @@ import API from "../utils/API";
 import styled from "styled-components";
 
 import openSocket from 'socket.io-client';
-const socket = openSocket(window.location.hostname + ":8000");
+const socket = openSocket(window.location.hostname + ":3080");
 
 const ButtonDiv = styled.div`
   display: flex;

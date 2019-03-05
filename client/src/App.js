@@ -15,7 +15,7 @@ import "./App.css";
 
 
 import openSocket from 'socket.io-client';
-const socket = openSocket(window.location.hostname + ":80");
+const socket = openSocket(window.location.hostname + ":3080");
 
 
 

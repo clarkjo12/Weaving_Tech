@@ -51,4 +51,4 @@ io.on('connection', function(socket){
     io.emit("truck status changed");
   });
 });
-io.listen(80);
+io.listen(3080);
