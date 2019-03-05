@@ -118,6 +118,8 @@ class Landing extends Component {
         API.findEaters({ username: this.state.username, password: this.state.password })
           .then(res => {
             console.log(res.headers);
+            console.log(res.data);
+            console.log(res.status);
             if (res.status === 200) {
               this.props.updateUser({
                 loggedIn: true,

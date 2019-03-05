@@ -172,7 +172,7 @@ class App extends Component {
       <BrowserRouter>
         <div>
 
-          <SideBar displayName={this.state.displayName} userId={this.state.userId} userType={this.state.userType} logout={this.logout} favorites={this.state.activeFavorites} favoritedNum={this.state.favoritedNum} />
+          <SideBar username={this.state.displayName} userId={this.state.userId} userType={this.state.userType} logout={this.logout} favorites={this.state.activeFavorites} favoritedNum={this.state.favoritedNum} />
 
           <Switch>
             <Route
