@@ -54,7 +54,7 @@ class SimpleExample extends Component {
     this.state = {
       lat: this.props.lat,
       lng: this.props.lng,
-      zoom: 14,
+      zoom: 20,
       nearbyTrucks: [],
       userFavorites: [],
       isFavoritesActive: this.props.isFavoritesActive
