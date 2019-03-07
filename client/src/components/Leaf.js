@@ -241,7 +241,7 @@ class SimpleExample extends Component {
               
               <PopWrapper>
                 <PopHead>{truck.title}</PopHead>
-                <Modal username={truck.username} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites} />
+                <Modal username={truck.username} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites} heartSrc={heartSrc} addTruckToUserFavs={this.addTruckToUserFavs}/>
               </PopWrapper>
             </PopDiv>
             <Style>{`

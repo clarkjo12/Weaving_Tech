@@ -174,7 +174,10 @@ class Modals extends React.Component {
           <TruckName>{this.props.username}</TruckName>
           <ProfileImg src={this.props.picture} />
           <LoveWrapper>
-            <Heart src={heartImg} />:{" "}
+            <Heart onClick={e => {
+              this.props.addTruckToUserFavs(this.props.username, e);
+              this.updateActiveFavorites(this.props.username);
+            }} src={this.props.heartSrc} />:{" "}
             <LoveCount>{this.state.favorites}</LoveCount>
             <NavImg src={navImg} onClick={() => this.openDirections()} />
           </LoveWrapper>
