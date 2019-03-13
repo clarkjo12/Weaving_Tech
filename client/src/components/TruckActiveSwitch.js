@@ -28,7 +28,6 @@ class TruckActivateSwitch extends Component {
     this.state = {
       checked: false
     };
-    this.sendSocketIO = this.sendSocketIO.bind(this);
   };
 
   componentDidMount() {

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import styled from "styled-components";
+import API from "../utils/API";
 
 const styles = theme => ({
   container: {
@@ -36,8 +37,30 @@ class TextFields extends React.Component {
     summary: "Show this App, to the cashier for a 10% Discount!"
   };
 
+  componentDidMount = () => {
+    if (this.props.userId) {
+      API.findTrucker(this.props.userId)
+        .then(res => {
+          let name = res.data.username;
+          if (res.data.name) {
+            name = res.data.name;
+          }
+          this.setState({
+            name: name,
+            title: res.data.title,
+            summary: res.data.summary
+          });
+        })
+        .catch(err => {
+          console.log("favorites error: ");
+          console.log(err);
+        });
+    }
+  };
+
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
+    API.updateTrucker(this.props.userId, {[name]: event.target.value});
   };
 
   render() {
@@ -71,7 +94,8 @@ class TextFields extends React.Component {
             label="Summary"
             multiline
             rows="4"
-            defaultValue={this.state.summary}
+            value={this.state.summary}
+            onChange={this.handleChange("summary")}
             className={classes.textField}
             margin="normal"
             variant="filled"

@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 //ßimport GenerateRandomCode from "GenerateRandomCode";
 
-// import openSocket from "socket.io-client";
-// const socket = openSocket(window.location.hostname + ":3080");
-
 // const FBButton = styled.div``;
 // const GGButton = styled.div``;
 
@@ -40,7 +37,6 @@ class CodeButton extends Component {
       redirectToMap: false,
       redirectToTruckerHome: false
     };
-    // this.sendSocketIO = this.sendSocketIO.bind(this);
   }
 
   generateCode = () => {
