@@ -59,8 +59,6 @@ class SimpleExample extends Component {
       userFavorites: [],
       isFavoritesActive: this.props.isFavoritesActive
     };
-    this.sendSocketIO = this.sendSocketIO.bind(this);
-    this.receiveSocketIO = this.receiveSocketIO.bind(this);
   }
 
   componentWillMount = () => {

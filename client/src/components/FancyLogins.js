@@ -27,7 +27,6 @@ class FancyLogins extends Component {
       redirectToMap: false,
       redirectToTruckerHome: false
     }
-    this.sendSocketIO = this.sendSocketIO.bind(this);
   };
 
   googleResponse = response => {

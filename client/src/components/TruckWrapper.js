@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import API from "../utils/API";
 import Inputs from "./EditableInputs";
 import CodeButton from "./CodeGenerator";
 
@@ -58,40 +57,13 @@ const Grey = styled.div`
 // `;
 
 class TruckWrapper extends Component {
-  state = {
-    title: "Come Get It!",
-    summary: "Fresh Ingredients!"
-  };
-
-  componentDidMount = () => {
-    if (this.props.userId) {
-      API.findTrucker(this.props.userId)
-        .then(res => {
-          this.setState({
-            title: res.data.title,
-            summary: res.data.summary
-          });
-        })
-        .catch(err => {
-          console.log("favorites error: ");
-          console.log(err);
-        });
-    }
-  };
-
-  updateTitleSummary = (title, summary) => {
-    this.setState({
-      title: title,
-      summary: summary
-    });
-  };
-
+  
   render() {
     return (
       <TruckMain>
         <CodeButton />
         <Grey>Current Summary:</Grey>
-        <Inputs />
+        <Inputs userId={this.props.userId} />
         {/* <MainSumDiv>
           Title:
           <Title>
