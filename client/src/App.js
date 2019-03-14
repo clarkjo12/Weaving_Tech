@@ -32,7 +32,6 @@ class App extends Component {
       activeFavorites: 10,
       favoritedNum: 342
     };
-    this.receiveSocketIO = this.receiveSocketIO.bind(this);
   }
 
   componentDidMount = () => {

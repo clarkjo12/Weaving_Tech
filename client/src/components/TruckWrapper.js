@@ -60,7 +60,9 @@ class TruckWrapper extends Component {
   render() {
     return (
       <TruckMain>
-        <CodeButton />
+
+        <CodeButton userId={this.props.userId} />
+    
         <Inputs userId={this.props.userId} />
         {/* <MainSumDiv>
           Title:
