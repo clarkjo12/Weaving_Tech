@@ -37,7 +37,7 @@ class TextFields extends React.Component {
     summary: "Show this App, to the cashier for a 10% Discount!"
   };
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     if (this.props.userId) {
       API.findTrucker(this.props.userId)
         .then(res => {

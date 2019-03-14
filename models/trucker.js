@@ -3,7 +3,9 @@ const Schema = mongoose.Schema;
 
 const truckerSchema = new Schema({
   username: { type: String, required: true },
+  name: { type: String },
   password: { type: String },
+  code: { type: String },
   picture: { type: String, default: "https://via.placeholder.com/200" },
   location: {
     type: {
