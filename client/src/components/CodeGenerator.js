@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import API from "../utils/API";
 //ßimport GenerateRandomCode from "GenerateRandomCode";
 
 // const FBButton = styled.div``;
@@ -28,25 +29,41 @@ var alphabet = "abcdefghijklmnopqrstuvwxyz";
 var num = "0123456789";
 
 class CodeButton extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      code: "123j21",
-      textLength: 3,
-      numLength: 3,
-      redirectToMap: false,
-      redirectToTruckerHome: false
-    };
+  state = {
+    code: "",
+    textLength: 3,
+    numLength: 3,
+    redirectToMap: false,
+    redirectToTruckerHome: false
+  }
+
+  componentWillMount = () => {
+    if (this.props.userId) {
+      API.findTrucker(this.props.userId)
+        .then(res => {
+          let code = "123j21";
+          if (res.data.code) {
+            code = res.data.code;
+            this.setState({
+              code: code
+            });
+          }
+          else {
+            this.generateCode();
+          }
+        })
+        .catch(err => {
+          console.log("code error: ");
+          console.log(err);
+        });
+    }
   }
 
   generateCode = () => {
     //extLength, numLength
 
-    for (var i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       textCode += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-    }
-
-    for (var i = 0; i < 3; i++) {
       numCode += num.charAt(Math.floor(Math.random() * num.length));
     }
 
@@ -54,8 +71,8 @@ class CodeButton extends Component {
 
     textCode = "";
     numCode = "";
-    this.state.code = result;
-    console.log(result);
+    this.setState({ code: result });
+    API.updateTrucker(this.props.userId, {code: result});
   };
 
   render() {

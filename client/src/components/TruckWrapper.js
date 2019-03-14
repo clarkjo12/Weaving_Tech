@@ -61,7 +61,7 @@ class TruckWrapper extends Component {
   render() {
     return (
       <TruckMain>
-        <CodeButton />
+        <CodeButton userId={this.props.userId} />
         <Grey>Current Summary:</Grey>
         <Inputs userId={this.props.userId} />
         {/* <MainSumDiv>
