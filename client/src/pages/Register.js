@@ -72,10 +72,9 @@ class TextFields extends React.Component {
     return (
       <MainDiv>
         <Header />
-        <h2>New Truck Registration:</h2>
         <form className={classes.container} noValidate autoComplete="off">
           <MommaDiv>
-            <TextField
+            {/* <TextField
               id="standard-name"
               label="Truck-Name"
               className={classes.textField}
@@ -93,7 +92,13 @@ class TextFields extends React.Component {
               onChange={this.handleChange("email")}
               margin="normal"
               variant="filled"
-            />
+            /> */}
+            <h4 style={{ color: "black" }}>To Register-</h4>
+            <h3>Email the truck name, from your truck email, to:</h3>
+            <h2 style={{ color: "black" }}> apply2wmfa@gmail.com</h2>
+            <h3>
+              A Confrimation Email will be returned, with Access to the App 👍
+            </h3>
           </MommaDiv>
         </form>
         <RegButton onClick={() => this.submitReg()}>

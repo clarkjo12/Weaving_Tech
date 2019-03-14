@@ -13,6 +13,14 @@ const ButtonDiv = styled.div`
   padding: 20px;
 `;
 
+const CurrCode = styled.h3`
+  color: darkslategray;
+  text-align: center;
+  text-decoration-line: underline;
+  margin-bottom: -5px;
+  margin-top: 20px;
+`;
+
 const Button = styled.button`
   background-color: palevioletred;
 `;
@@ -31,7 +39,7 @@ class CodeButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: "123j21",
+      code: "123abc",
       textLength: 3,
       numLength: 3,
       redirectToMap: false,
@@ -68,8 +76,9 @@ class CodeButton extends Component {
     //this.state.code = GenerateRandomCode.NumCode(4);
     return (
       <div>
+        <CurrCode>Current Code</CurrCode>
         <ButtonDiv>
-          <Button onClick={() => this.generateCode()}>Generate Code</Button>
+          <Button onClick={() => this.generateCode()}>New Code</Button>
           <Code> - {this.state.code}</Code>
         </ButtonDiv>
       </div>

@@ -57,12 +57,10 @@ const Grey = styled.div`
 // `;
 
 class TruckWrapper extends Component {
-  
   render() {
     return (
       <TruckMain>
         <CodeButton />
-        <Grey>Current Summary:</Grey>
         <Inputs userId={this.props.userId} />
         {/* <MainSumDiv>
           Title:
