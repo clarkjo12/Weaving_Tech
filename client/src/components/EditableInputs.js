@@ -6,18 +6,19 @@ import styled from "styled-components";
 import API from "../utils/API";
 
 const styles = theme => ({
-  container: {
-    display: "flex",
-    flexWrap: "wrap"
-  },
+  // container: {
+  //   display: "flex",
+
+  //   flexWrap: "wrap"
+  // },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 200
   },
-  dense: {
-    marginTop: 19
-  },
+  // dense: {
+  //   marginTop: 19
+  // },
   menu: {
     width: 200
   }
@@ -25,9 +26,22 @@ const styles = theme => ({
 
 const MommaDiv = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: "column";
   margin: auto;
   background-color: #38b6ff;
+`;
+
+const BabyDiv = styled.div`
+  display: flex;
+  flex-direction: "column";
+`;
+
+const Summary = styled.h3`
+  color: darkslategray;
+  text-align: center;
+  text-decoration-line: underline;
+  margin-bottom: -5px;
+  margin-top: 20px;
 `;
 
 class TextFields extends React.Component {
@@ -60,18 +74,19 @@ class TextFields extends React.Component {
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
-    API.updateTrucker(this.props.userId, {[name]: event.target.value});
+    API.updateTrucker(this.props.userId, { [name]: event.target.value });
   };
 
   render() {
     const { classes } = this.props;
 
     return (
-      <form className={classes.container} noValidate autoComplete="off">
-        <MommaDiv>
+      <MommaDiv>
+        <form className={classes.container} noValidate autoComplete="off">
+          <Summary>Current Summary</Summary>
           <TextField
             id="standard-name"
-            label="Name"
+            label="Truck Name"
             className={classes.textField}
             value={this.state.name}
             onChange={this.handleChange("name")}
@@ -79,29 +94,30 @@ class TextFields extends React.Component {
             variant="filled"
           />
 
-          <TextField
-            id="standard-name"
-            label="Title"
-            className={classes.textField}
-            value={this.state.title}
-            onChange={this.handleChange("title")}
-            margin="normal"
-            variant="filled"
-          />
-
-          <TextField
-            id="standard-multiline-static"
-            label="Summary"
-            multiline
-            rows="4"
-            value={this.state.summary}
-            onChange={this.handleChange("summary")}
-            className={classes.textField}
-            margin="normal"
-            variant="filled"
-          />
-        </MommaDiv>
-      </form>
+          <BabyDiv>
+            <TextField
+              id="standard-name"
+              label="Title"
+              className={classes.textField}
+              value={this.state.title}
+              onChange={this.handleChange("title")}
+              margin="normal"
+              variant="filled"
+            />
+            <TextField
+              id="standard-multiline-static"
+              label="Summary"
+              multiline
+              rows="4"
+              value={this.state.summary}
+              onChange={this.handleChange("summary")}
+              className={classes.textField}
+              margin="normal"
+              variant="filled"
+            />
+          </BabyDiv>
+        </form>{" "}
+      </MommaDiv>
     );
   }
 }

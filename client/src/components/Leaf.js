@@ -271,32 +271,21 @@ class SimpleExample extends Component {
               popupAnchor: [0, -30]
             })}
           >
-            <Popup className="mypopup">
-              <PopDiv>
+           <Popup className="mypopup">
+            <PopDiv>
+              
+              <PopWrapper>
                 <PopHead>{truck.title}</PopHead>
-                <PopWrapper>
-                  <HeartImg
-                    onClick={e =>
-                      this.addTruckToUserFavs(truck.username, e)
-                    }
-                    src={heartSrc}
-                    alt="nahh"
-                  />
-                  <NavImg
-                    onClick={() => this.openDirections(truck.location.coordinates[0], truck.location.coordinates[1])}
-                    src={truckImg}
-                    alt="nahh"
-                  />
-                  <Modal username={truck.username} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites} />
-                </PopWrapper>
-              </PopDiv>
-              <Style>{`
+                <Modal username={truck.username} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites} heartSrc={heartSrc} addTruckToUserFavs={this.addTruckToUserFavs}/>
+              </PopWrapper>
+            </PopDiv>
+            <Style>{`
                 .mypopup .leaflet-popup-tip,
                 .mypopup .leaflet-popup-content-wrapper {
                     background: #ffde59;
                 }
               `}</Style>
-            </Popup>
+          </Popup>
           </Marker>
         );
       };
