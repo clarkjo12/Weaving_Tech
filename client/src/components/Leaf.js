@@ -108,7 +108,14 @@ class SimpleExample extends Component {
         if (res === 0) {
           console.log("No trucks in database!");
         } else {
-          let truckDBArray = res.data;
+
+          //let truckDBArray = res.data;
+          //filter out only the open trucks
+          let truckDBArray = res.data.filter(function (truck) {
+            return truck.status === "open";
+          });
+
+
 
           await this.setState({
             nearbyTrucks: truckDBArray
@@ -120,7 +127,11 @@ class SimpleExample extends Component {
         if (res === 0) {
           console.log("No favorites found!");
         } else {
-          let truckDBArray = res.data;
+          //let truckDBArray = res.data;
+          //filter out only the open trucks
+          let truckDBArray = res.data.filter(function (truck) {
+            return truck.status === "open";
+          });
 
           await this.setState({
             nearbyTrucks: truckDBArray
@@ -239,7 +250,7 @@ class SimpleExample extends Component {
               
               <PopWrapper>
                 <PopHead>{truck.title}</PopHead>
-                <Modal username={truck.username} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites} heartSrc={heartSrc} addTruckToUserFavs={this.addTruckToUserFavs}/>
+                <Modal username={(truck.username)} name={(truck.name) ? (truck.name) : (truck.username)} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites} heartSrc={heartSrc} addTruckToUserFavs={this.addTruckToUserFavs}/>
               </PopWrapper>
             </PopDiv>
             <Style>{`
