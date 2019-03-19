@@ -171,7 +171,7 @@ class Modals extends React.Component {
             <Watch src={watch} />
             <Time>12:43</Time>
           </LastCallDiv>
-          <TruckName>{this.props.username}</TruckName>
+          <TruckName>{(this.props.name)}</TruckName>
           <ProfileImg src={this.props.picture} />
           <LoveWrapper>
             <Heart onClick={e => {
