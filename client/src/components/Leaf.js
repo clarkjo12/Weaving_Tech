@@ -13,7 +13,7 @@ import truckImg from "../images/navimg.png";
 import heartImg from "../images/heartblue.png";
 import heartImg40 from "../images/heartblue40.png";
 
-import openSocket from 'socket.io-client';
+import openSocket from "socket.io-client";
 const socket = openSocket(window.location.hostname + ":3080");
 
 const MapDiv = styled.div`
@@ -64,12 +64,10 @@ class SimpleExample extends Component {
   componentWillMount = () => {
     // if (!this.state.isFavoritesActive) {
     //   API.findTrucks().then(async res => {
-
     //     if (res === 0) {
     //       console.log("No trucks in database!");
     //     } else {
     //       let truckDBArray = res.data;
-
     //       await this.setState({
     //         nearbyTrucks: truckDBArray
     //       });
@@ -81,7 +79,6 @@ class SimpleExample extends Component {
     //       console.log("No favorites found!");
     //     } else {
     //       let truckDBArray = res.data;
-
     //       await this.setState({
     //         nearbyTrucks: truckDBArray
     //       });
@@ -92,7 +89,7 @@ class SimpleExample extends Component {
 
   componentDidMount = () => {
     this.updateTrucksArray();
-  }
+  };
 
   updateTrucksArray = () => {
     if (this.props.userId) {
@@ -104,18 +101,14 @@ class SimpleExample extends Component {
 
     if (!this.state.isFavoritesActive) {
       API.findTrucks().then(async res => {
-
         if (res === 0) {
           console.log("No trucks in database!");
         } else {
-
           //let truckDBArray = res.data;
           //filter out only the open trucks
-          let truckDBArray = res.data.filter(function (truck) {
+          let truckDBArray = res.data.filter(function(truck) {
             return truck.status === "open";
           });
-
-
 
           await this.setState({
             nearbyTrucks: truckDBArray
@@ -129,7 +122,7 @@ class SimpleExample extends Component {
         } else {
           //let truckDBArray = res.data;
           //filter out only the open trucks
-          let truckDBArray = res.data.filter(function (truck) {
+          let truckDBArray = res.data.filter(function(truck) {
             return truck.status === "open";
           });
 
@@ -139,10 +132,10 @@ class SimpleExample extends Component {
         }
       });
     }
-  }
+  };
 
   receiveSocketIO(updateTrucksArray) {
-    socket.on("truck status changed", function () {
+    socket.on("truck status changed", function() {
       //update the trucks array
       updateTrucksArray();
     });
@@ -160,35 +153,38 @@ class SimpleExample extends Component {
   };
 
   sendSocketIO(truckname) {
-    socket.emit('user updated favorties', truckname);
+    socket.emit("user updated favorties", truckname);
   }
 
   addTruckToUserFavs = (username, e) => {
     e.preventDefault();
     this.sendSocketIO(username);
     if (!this.checkIfFav(username, this.state.userFavorites)) {
-      API.updateEaterFav(this.props.userId, { username: username }).then(res => {
-        console.log("Added favorite" + username);
-        let favoritesArr = this.state.userFavorites;
-        favoritesArr.push(username);
-        this.setState({ userFavorites: favoritesArr });
-        this.props.updateFavs();
-      }).catch(err => {
-        console.log("eater favorites error: ");
-        console.log(err);
-      })
-    }
-    else {
-      API.removeEaterFav(this.props.userId, { username: username }).then(res => {
-        console.log("Removed favorite");
-        let favoritesArr = this.state.userFavorites;
-        favoritesArr.splice(favoritesArr.indexOf(username), 1);
-        this.setState({ userFavorites: favoritesArr });
-        this.props.updateFavs();
-      }).catch(err => {
-        console.log("eater favorites error: ");
-        console.log(err);
-      })
+      API.updateEaterFav(this.props.userId, { username: username })
+        .then(res => {
+          console.log("Added favorite" + username);
+          let favoritesArr = this.state.userFavorites;
+          favoritesArr.push(username);
+          this.setState({ userFavorites: favoritesArr });
+          this.props.updateFavs();
+        })
+        .catch(err => {
+          console.log("eater favorites error: ");
+          console.log(err);
+        });
+    } else {
+      API.removeEaterFav(this.props.userId, { username: username })
+        .then(res => {
+          console.log("Removed favorite");
+          let favoritesArr = this.state.userFavorites;
+          favoritesArr.splice(favoritesArr.indexOf(username), 1);
+          this.setState({ userFavorites: favoritesArr });
+          this.props.updateFavs();
+        })
+        .catch(err => {
+          console.log("eater favorites error: ");
+          console.log(err);
+        });
     }
   };
 
@@ -220,7 +216,6 @@ class SimpleExample extends Component {
   // };
 
   render() {
-
     this.receiveSocketIO(this.updateTrucksArray);
 
     const position = [this.state.lat, this.state.lng];
@@ -237,20 +232,30 @@ class SimpleExample extends Component {
         <Marker
           key={key}
           position={truck.location.coordinates}
-          icon={
-            L.icon({
-              iconUrl: truckSrc,
-              iconAnchor: [25, 45],
-              popupAnchor: [0, -30]
-            })
-          }
+          icon={L.icon({
+            iconUrl: truckSrc,
+            iconAnchor: [25, 45],
+            popupAnchor: [0, -30]
+          })}
         >
           <Popup className="mypopup">
             <PopDiv>
-              
               <PopWrapper>
                 <PopHead>{truck.title}</PopHead>
-                <Modal username={(truck.username)} name={(truck.name) ? (truck.name) : (truck.username)} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites} heartSrc={heartSrc} addTruckToUserFavs={this.addTruckToUserFavs}/>
+                <Modal
+                  lat={this.state.lat}
+                  long={this.state.lng}
+                  tlat={truck.location.coordinates[0]}
+                  tlong={truck.location.coordinates[1]}
+                  username={truck.username}
+                  name={truck.name ? truck.name : truck.username}
+                  title={truck.title}
+                  summary={truck.summary}
+                  picture={truck.picture}
+                  favoritedNum={this.state.favorites}
+                  heartSrc={heartSrc}
+                  addTruckToUserFavs={this.addTruckToUserFavs}
+                />
               </PopWrapper>
             </PopDiv>
             <Style>{`
@@ -260,12 +265,11 @@ class SimpleExample extends Component {
                 }
               `}</Style>
           </Popup>
-        </Marker >
+        </Marker>
       );
     });
 
     let favMarkers = this.state.nearbyTrucks.map((truck, key) => {
-
       let heartSrc = heartImg40;
       let truckSrc = AllTruck;
 
@@ -282,24 +286,35 @@ class SimpleExample extends Component {
               popupAnchor: [0, -30]
             })}
           >
-           <Popup className="mypopup">
-            <PopDiv>
-              
-              <PopWrapper>
-                <PopHead>{truck.title}</PopHead>
-                <Modal username={truck.username} title={truck.title} summary={truck.summary} picture={truck.picture} favoritedNum={this.state.favorites} heartSrc={heartSrc} addTruckToUserFavs={this.addTruckToUserFavs}/>
-              </PopWrapper>
-            </PopDiv>
-            <Style>{`
+            <Popup className="mypopup">
+              <PopDiv>
+                <PopWrapper>
+                  <PopHead>{truck.title}</PopHead>
+                  <Modal
+                    lat={this.state.lat}
+                    long={this.state.lng}
+                    tlat={truck.location.coordinates[0]}
+                    tlong={truck.location.coordinates[1]}
+                    username={truck.username}
+                    title={truck.title}
+                    summary={truck.summary}
+                    picture={truck.picture}
+                    favoritedNum={this.state.favorites}
+                    heartSrc={heartSrc}
+                    addTruckToUserFavs={this.addTruckToUserFavs}
+                  />
+                </PopWrapper>
+              </PopDiv>
+              <Style>{`
                 .mypopup .leaflet-popup-tip,
                 .mypopup .leaflet-popup-content-wrapper {
                     background: #ffde59;
                 }
               `}</Style>
-          </Popup>
+            </Popup>
           </Marker>
         );
-      };
+      }
     });
 
     let marker;
@@ -308,7 +323,7 @@ class SimpleExample extends Component {
       marker = favMarkers;
     } else {
       marker = allMarkers;
-    };
+    }
 
     return (
       <MapDiv>
@@ -323,9 +338,8 @@ class SimpleExample extends Component {
           />
 
           {marker}
-
         </Map>
-      </MapDiv >
+      </MapDiv>
     );
   }
 }
