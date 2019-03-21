@@ -120,11 +120,11 @@ class Modals extends React.Component {
       });
   };
 
-  openDirections(lat, lng) {
-    var uLat = 35.77;
-    var ulong = -78.65;
-    var tLat = 34.88;
-    var tLong = -77.86;
+  openDirections() {
+    var uLat = this.props.lat;
+    var ulong = this.props.long;
+    var tLat = this.props.tlat;
+    var tLong = this.props.tlong;
     var directionLink =
       "https://www.google.com/maps/dir/'" +
       uLat +
@@ -171,14 +171,17 @@ class Modals extends React.Component {
             <Watch src={watch} />
             <Time>12:43</Time>
           </LastCallDiv>
-          <TruckName>{(this.props.name)}</TruckName>
+          <TruckName>{this.props.name}</TruckName>
           <ProfileImg src={this.props.picture} />
           <LoveWrapper>
-            <Heart onClick={e => {
-              this.props.addTruckToUserFavs(this.props.username, e);
-              this.updateActiveFavorites(this.props.username);
-            }} src={this.props.heartSrc} />:{" "}
-            <LoveCount>{this.state.favorites}</LoveCount>
+            <Heart
+              onClick={e => {
+                this.props.addTruckToUserFavs(this.props.username, e);
+                this.updateActiveFavorites(this.props.username);
+              }}
+              src={this.props.heartSrc}
+            />
+            : <LoveCount>{this.state.favorites}</LoveCount>
             <NavImg src={navImg} onClick={() => this.openDirections()} />
           </LoveWrapper>
           {/* <h2 ref={subtitle => (this.subtitle = subtitle)}>

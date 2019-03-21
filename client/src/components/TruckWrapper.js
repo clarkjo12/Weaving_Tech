@@ -13,12 +13,7 @@ const TruckMain = styled.div`
   padding-top: 10px;
 `;
 
-const Grey = styled.div`
-  color: darkslategray;
-  text-decoration: underline;
-  margin-bottom: 0;
-  margin-top: 20px;
-`;
+
 
 // const Title = styled.div`
 //   width: 300px;

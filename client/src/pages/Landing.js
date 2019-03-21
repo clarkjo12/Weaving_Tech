@@ -19,8 +19,6 @@ const Mommadiv = styled.div`
   height: 100vh;
 `;
 
-const SendToReg = styled.a``;
-
 class Landing extends Component {
   state = {
     username: "",
@@ -93,8 +91,13 @@ class Landing extends Component {
       if (
         this.state.username &&
         this.state.password &&
-        (this.state.password === this.state.confirmpassword)) {
-        API.saveEater({ username: this.state.username, password: this.state.password, location: { coordinates: [this.props.latitude, this.props.longitude] } })
+        this.state.password === this.state.confirmpassword
+      ) {
+        API.saveEater({
+          username: this.state.username,
+          password: this.state.password,
+          location: { coordinates: [this.props.latitude, this.props.longitude] }
+        })
           .then(res => {
             if (res.status === 200) {
               this.handleUser(res.data.username, res.data._id);
@@ -104,18 +107,20 @@ class Landing extends Component {
           .catch(err => {
             console.log("login error: ");
             console.log(err);
-            this.setState({ errorMessage: "Username and/or Password incorrect" });
+            this.setState({
+              errorMessage: "Username and/or Password incorrect"
+            });
           });
-      }
-      else {
-
+      } else {
         this.setState({ errorMessage: "Username and/or Password incorrect" });
       }
     } else {
       //user already exists in the database, so update
       if (this.state.username && this.state.password) {
-
-        API.findEaters({ username: this.state.username, password: this.state.password })
+        API.findEaters({
+          username: this.state.username,
+          password: this.state.password
+        })
           .then(res => {
             console.log(res.headers);
             console.log(res.data);
