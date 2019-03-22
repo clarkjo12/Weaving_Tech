@@ -3,9 +3,6 @@ import FlipSwitch from "react-switch";
 import API from "../utils/API";
 import styled from "styled-components";
 
-import openSocket from 'socket.io-client';
-const socket = openSocket(window.location.hostname + ":3080");
-
 const ButtonDiv = styled.div`
   display: flex;
   justify-content: center;
@@ -49,18 +46,13 @@ class TruckActivateSwitch extends Component {
       status: status
     })
       .then(res => {
-        this.sendSocketIO();
+        this.props.sendSocketIOTruckStatus();
       })
       .catch(err => {
         console.log("update truck status error");
         console.log(err);
       });
   };
-
-  sendSocketIO() {
-    socket.emit('truck status change');
-    console.log("updated truck status");
-  }
 
   render() {
     return (

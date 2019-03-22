@@ -39,8 +39,8 @@ class TruckHome extends Component {
         <TruckMapHeader>
           <MapHeader />
         </TruckMapHeader>
-        <Toggle userId={this.props.userId} /> 
-        <TruckWrapper userId={this.props.userId} />
+        <Toggle userId={this.props.userId} sendSocketIOTruckStatus={this.props.sendSocketIOTruckStatus}/> 
+        <TruckWrapper userId={this.props.userId} sendSocketIOUpdatedTruck={this.props.sendSocketIOUpdatedTruck}/>
       </TruckHomeDiv>
     );
   }

@@ -14,27 +14,37 @@ import SideBar from "./components/sidebar";
 import "./App.css";
 
 
-import openSocket from 'socket.io-client';
-const socket = openSocket(window.location.hostname + ":3080");
-
-
+const io = require('socket.io-client');
+const socket = io();
 
 class App extends Component {
   constructor(props) {
     super(props);
+    this.updateFavorites = this.updateFavorites.bind(this);
+    this.updateActiveFavorites = this.updateActiveFavorites.bind(this);
+    this.updateTrucksArray = this.updateTrucksArray.bind(this);
     this.state = {
       loggedIn: false,
-      userId: sessionStorage.getItem("userId") || "",
-      displayName: sessionStorage.getItem("displayName") || "",
+      userId: sessionStorage.getItem("userid") || "",
+      displayName: sessionStorage.getItem("displayname") || "",
       userType: sessionStorage.getItem("userType") || "",
       longitude: -49.089977,
       latitude: -21.805149,
       activeFavorites: 10,
-      favoritedNum: 342
-    };
+      favoritedNum: 342,
+      userFavorites: [],
+      nearbyTrucks: []
+    };   
   }
 
   componentDidMount = () => {
+    this.updateTrucksArray();
+    if (this.state.userId) {
+      API.findEater(this.state.userId).then(res => {
+        const favorites = res.data.favorites;
+        this.setState({ userFavorites: favorites });
+      });
+    }
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         this.showPosition,
@@ -51,7 +61,28 @@ class App extends Component {
         loggedIn: loggedIn,
         userType: sessionStorage.getItem("userType")
       });
-    }
+    };
+    socket.on("favorite updated", (truck) => {
+      console.log("received updated favorite");
+      if (truck === this.state.displayName) {
+        if (this.state.userType === "trucker") {
+          this.updateActiveFavorites();
+        }
+      }
+    });
+    socket.on('truck status changed', () => {
+      console.log("received updated truck status");
+      if (this.state.userType === "eater") {
+        this.updateFavorites();
+        this.updateTrucksArray();
+      }  
+    });
+    socket.on("truck info changed", () => {
+      console.log("received updated truck info");
+      if (this.state.userType === "eater") {
+        this.updateTrucksArray();
+      }
+    });
   };
 
   showPosition = position => {
@@ -87,7 +118,8 @@ class App extends Component {
       API.getFavs(this.state.userId)
         .then(res => {
           this.setState({
-            activeFavorites: res.data.length
+            activeFavorites: res.data.count.length,
+            userFavorites: res.data.favorites
           });
         })
         .catch(err => {
@@ -140,33 +172,41 @@ class App extends Component {
       });
   }
 
-  receiveSocketIO(username, userType, updateFavorites, updateActiveFavorites) {
-    console.log("Socket.io received");
-    socket.on("favorite updated", function (truck) {
-
-      if (truck === username) {
-        if (userType === "trucker") {
-          updateActiveFavorites();
-        }
-      }
-    });
-
-    socket.on("truck status changed", function () {
-
-      if (userType === "eater") {
-        //update the eaters active favorites
-        updateFavorites();
-      }
-    });
+  sendSocketIOTruckStatus() {
+    socket.emit('truck status change');
+    console.log("sent updated truck status");
   }
 
+  sendSocketIOUpdatedFavs(truckname) {
+    socket.emit("user updated favorties", truckname);
+    console.log("sent updated user favs");
+  }
+
+  sendSocketIOUpdatedTruck(truckname) {
+    socket.emit("trucker updated info", truckname);
+    console.log("sent updated truck info");
+  }
+
+  updateTrucksArray = () => {
+    API.findTrucks().then(async res => {
+      if (res === 0) {
+        console.log("No trucks in database!");
+      } else {
+        //let truckDBArray = res.data;
+        //filter out only the open trucks
+        let truckDBArray = res.data.filter(function(truck) {
+          return truck.status === "open";
+        });
+
+        await this.setState({
+          nearbyTrucks: truckDBArray
+        });
+      }
+    });
+  };
+
   render() {
-    this.receiveSocketIO(
-      this.state.displayName,
-      this.state.userType,
-      this.updateFavorites,
-      this.updateActiveFavorites
-    );
+    
     return (
       <BrowserRouter>
         <div>
@@ -185,6 +225,8 @@ class App extends Component {
                   userType={this.state.userType}
                   latitude={this.state.latitude}
                   longitude={this.state.longitude}
+                  sendSocketIOTruckStatus={this.sendSocketIOTruckStatus}
+                  updateTrucksArray={this.updateTrucksArray}
                 />
               )}
             />
@@ -198,6 +240,8 @@ class App extends Component {
                   userType={this.state.userType}
                   updateUser={this.updateUser}
                   updateActiveFavs={this.updateActiveFavorites}
+                  sendSocketIOTruckStatus={this.sendSocketIOTruckStatus}
+                  sendSocketIOUpdatedTruck={this.sendSocketIOUpdatedTruck}
                 />
               )}
             />
@@ -213,6 +257,9 @@ class App extends Component {
                   latitude={this.state.latitude}
                   longitude={this.state.longitude}
                   userId={this.state.userId}
+                  sendSocketIOUpdatedFavs={this.sendSocketIOUpdatedFavs}
+                  userFavorites={this.state.userFavorites}
+                  nearbyTrucks={this.state.nearbyTrucks}
                 />
               )}
             />

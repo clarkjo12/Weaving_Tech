@@ -48,7 +48,8 @@ class TextFields extends React.Component {
   state = {
     name: "Cat in the Hat",
     title: "Tacos BOGO!",
-    summary: "Show this App, to the cashier for a 10% Discount!"
+    summary: "Show this App, to the cashier for a 10% Discount!",
+    username: ""
   };
 
   componentWillMount = () => {
@@ -62,7 +63,8 @@ class TextFields extends React.Component {
           this.setState({
             name: name,
             title: res.data.title,
-            summary: res.data.summary
+            summary: res.data.summary,
+            username: res.data.username
           });
         })
         .catch(err => {
@@ -75,6 +77,7 @@ class TextFields extends React.Component {
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
     API.updateTrucker(this.props.userId, { [name]: event.target.value });
+    this.props.sendSocketIOUpdatedTruck(this.state.username);
   };
 
   render() {

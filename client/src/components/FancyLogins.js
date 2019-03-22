@@ -5,9 +5,6 @@ import FaceButton from "./FBButton";
 import GoogButton from "./GGButton";
 import API from "../utils/API";
 
-import openSocket from 'socket.io-client';
-const socket = openSocket(window.location.hostname + ":3080");
-
 // const FBButton = styled.div``;
 
 // const GGButton = styled.div``;
@@ -59,9 +56,10 @@ class FancyLogins extends Component {
             })) :
           (API.updateTrucker(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
             .then(res => {
+              this.props.updateTrucksArray();                  
               console.log("update response: ");
               console.log(res);
-              this.sendSocketIO();
+              this.props.sendSocketIOTruckStatus();
               this.setState({
                 redirectToTruckerHome: true
               })
@@ -105,9 +103,10 @@ class FancyLogins extends Component {
               })) :
             (API.updateTrucker(user._id, { location: { coordinates: [this.props.latitude, this.props.longitude] } })
               .then(res => {
+                this.props.updateTrucksArray();                  
                 console.log("update response: ");
                 console.log(res);
-                this.sendSocketIO();
+                this.props.sendSocketIOTruckStatus();
                 this.setState({
                   redirectToTruckerHome: true
                 })
@@ -119,11 +118,6 @@ class FancyLogins extends Component {
       });
     });
   };
-
-  sendSocketIO() {
-    socket.emit('truck status change');
-    console.log("updated truck coordinates");
-  }
 
   render() {
     
