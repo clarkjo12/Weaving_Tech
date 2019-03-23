@@ -34,13 +34,13 @@ app.use(routes);
 // Connect to the Mongo DB
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/wmfa");
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
 });
 
 // Socket.io
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const io = require('socket.io')(server);
+
 io.on('connection', function(socket){
   socket.on('user updated favorties', function(truckname){
     console.log("user updated favorties");
@@ -50,5 +50,8 @@ io.on('connection', function(socket){
     console.log("truck status changed");
     io.emit("truck status changed");
   });
+  socket.on('trucker updated info', function(){
+    console.log("trucker info changed");
+    io.emit("truck info changed");
+  });
 });
-io.listen(3080);

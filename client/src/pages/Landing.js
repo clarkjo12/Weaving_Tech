@@ -202,6 +202,8 @@ class Landing extends Component {
           latitude={this.props.latitude}
           longitude={this.props.longitude}
           loginType={this.state.loginType}
+          sendSocketIOTruckStatus={this.props.sendSocketIOTruckStatus}
+          updateTrucksArray={this.props.updateTrucksArray}
         />
       </Mommadiv>
     );

@@ -46,7 +46,6 @@ class MapDisplay extends Component {
         lat: this.props.latitude,
         lng: this.props.longitude
       },
-      nearbyTrucks: [],
       activeMarker: {},
       modalIsOpen: false,
       isFavoritesActive: null
@@ -94,6 +93,9 @@ class MapDisplay extends Component {
               userId={this.props.userId}
               updateFavs={this.props.updateFavs}
               isFavoritesActive={this.state.isFavoritesActive}
+              sendSocketIOUpdatedFavs={this.props.sendSocketIOUpdatedFavs}
+              userFavorites={this.props.userFavorites}
+              nearbyTrucks={this.props.nearbyTrucks}
             />
           </div>
         </MapDiv>

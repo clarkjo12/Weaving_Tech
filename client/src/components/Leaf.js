@@ -13,8 +13,8 @@ import truckImg from "../images/navimg.png";
 import heartImg from "../images/heartblue.png";
 import heartImg40 from "../images/heartblue40.png";
 
-import openSocket from "socket.io-client";
-const socket = openSocket(window.location.hostname + ":3080");
+//const io = require('socket.io-client');
+//const socket = io();
 
 const MapDiv = styled.div`
   height: 100%;
@@ -55,90 +55,27 @@ class SimpleExample extends Component {
       lat: this.props.lat,
       lng: this.props.lng,
       zoom: 11,
-      nearbyTrucks: [],
-      userFavorites: [],
-      isFavoritesActive: this.props.isFavoritesActive
+      isFavoritesActive: this.props.isFavoritesActive, 
+      favorites: 0
     };
   }
 
-  componentWillMount = () => {
-    // if (!this.state.isFavoritesActive) {
-    //   API.findTrucks().then(async res => {
-    //     if (res === 0) {
-    //       console.log("No trucks in database!");
-    //     } else {
-    //       let truckDBArray = res.data;
-    //       await this.setState({
-    //         nearbyTrucks: truckDBArray
-    //       });
-    //     }
-    //   });
-    // } else {
-    //   API.findFavs().then(async res => {
-    //     if (res === 0) {
-    //       console.log("No favorites found!");
-    //     } else {
-    //       let truckDBArray = res.data;
-    //       await this.setState({
-    //         nearbyTrucks: truckDBArray
-    //       });
-    //     }
-    //   });
-    // }
-  };
-
-  componentDidMount = () => {
-    this.updateTrucksArray();
-  };
-
-  updateTrucksArray = () => {
-    if (this.props.userId) {
-      API.findEater(this.props.userId).then(res => {
-        const favorites = res.data.favorites;
-        this.setState({ userFavorites: favorites });
+  updateActiveFavorites = truckname => {
+    API.favCount({ favorites: truckname })
+      .then(res => {
+        this.setState({ favorites: res.data });
+      })
+      .catch(err => {
+        console.log("favorites error: ");
+        console.log(err);
       });
-    }
-
-    if (!this.state.isFavoritesActive) {
-      API.findTrucks().then(async res => {
-        if (res === 0) {
-          console.log("No trucks in database!");
-        } else {
-          //let truckDBArray = res.data;
-          //filter out only the open trucks
-          let truckDBArray = res.data.filter(function(truck) {
-            return truck.status === "open";
-          });
-
-          await this.setState({
-            nearbyTrucks: truckDBArray
-          });
-        }
-      });
-    } else {
-      API.findFavs().then(async res => {
-        if (res === 0) {
-          console.log("No favorites found!");
-        } else {
-          //let truckDBArray = res.data;
-          //filter out only the open trucks
-          let truckDBArray = res.data.filter(function(truck) {
-            return truck.status === "open";
-          });
-
-          await this.setState({
-            nearbyTrucks: truckDBArray
-          });
-        }
-      });
-    }
   };
 
   receiveSocketIO(updateTrucksArray) {
-    socket.on("truck status changed", function() {
+    //socket.on("truck status changed", function() {
       //update the trucks array
-      updateTrucksArray();
-    });
+    //  updateTrucksArray();
+    //});
   }
 
   checkIfFav = (username, favorites) => {
@@ -152,20 +89,14 @@ class SimpleExample extends Component {
     }
   };
 
-  sendSocketIO(truckname) {
-    socket.emit("user updated favorties", truckname);
-  }
-
   addTruckToUserFavs = (username, e) => {
     e.preventDefault();
-    this.sendSocketIO(username);
-    if (!this.checkIfFav(username, this.state.userFavorites)) {
+    this.props.sendSocketIOUpdatedFavs(username);
+    if (!this.checkIfFav(username, this.props.userFavorites)) {
       API.updateEaterFav(this.props.userId, { username: username })
         .then(res => {
           console.log("Added favorite" + username);
-          let favoritesArr = this.state.userFavorites;
-          favoritesArr.push(username);
-          this.setState({ userFavorites: favoritesArr });
+          this.updateActiveFavorites(username);
           this.props.updateFavs();
         })
         .catch(err => {
@@ -176,9 +107,7 @@ class SimpleExample extends Component {
       API.removeEaterFav(this.props.userId, { username: username })
         .then(res => {
           console.log("Removed favorite");
-          let favoritesArr = this.state.userFavorites;
-          favoritesArr.splice(favoritesArr.indexOf(username), 1);
-          this.setState({ userFavorites: favoritesArr });
+          this.updateActiveFavorites(username);
           this.props.updateFavs();
         })
         .catch(err => {
@@ -207,24 +136,16 @@ class SimpleExample extends Component {
     window.open(directionLink);
   }
 
-  // markerRender = (props) => {
-  //   if (!this.state.isFavoritesActive) {
-  //     return {allMarkers}
-  //   } else {
-  //     return {favMarkers}
-  //   }
-  // };
+
 
   render() {
-    this.receiveSocketIO(this.updateTrucksArray);
-
     const position = [this.state.lat, this.state.lng];
 
-    let allMarkers = this.state.nearbyTrucks.map((truck, key) => {
+    let allMarkers = this.props.nearbyTrucks.map((truck, key) => {
       let heartSrc = heartImg40;
       let truckSrc = AllTruck;
 
-      if (this.checkIfFav(truck.username, this.state.userFavorites)) {
+      if (this.checkIfFav(truck.username, this.props.userFavorites)) {
         heartSrc = heartImg;
         truckSrc = FavTruck;
       }
@@ -255,6 +176,8 @@ class SimpleExample extends Component {
                   favoritedNum={this.state.favorites}
                   heartSrc={heartSrc}
                   addTruckToUserFavs={this.addTruckToUserFavs}
+                  favorites={this.state.favorites}
+                  updateActiveFavorites={this.updateActiveFavorites}
                 />
               </PopWrapper>
             </PopDiv>
@@ -269,11 +192,11 @@ class SimpleExample extends Component {
       );
     });
 
-    let favMarkers = this.state.nearbyTrucks.map((truck, key) => {
+    let favMarkers = this.props.nearbyTrucks.map((truck, key) => {
       let heartSrc = heartImg40;
       let truckSrc = AllTruck;
 
-      if (this.checkIfFav(truck.username, this.state.userFavorites)) {
+      if (this.checkIfFav(truck.username, this.props.userFavorites)) {
         heartSrc = heartImg;
         truckSrc = FavTruck;
         return (
@@ -302,6 +225,8 @@ class SimpleExample extends Component {
                     favoritedNum={this.state.favorites}
                     heartSrc={heartSrc}
                     addTruckToUserFavs={this.addTruckToUserFavs}
+                    favorites={this.state.favorites}
+                    updateActiveFavorites={this.updateActiveFavorites}
                   />
                 </PopWrapper>
               </PopDiv>

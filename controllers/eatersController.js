@@ -26,7 +26,7 @@ module.exports = {
       .then(dbModel => {
         db.Trucker.find({username: dbModel.favorites, status: "open"}, function (error, count) {
           console.log(count);
-          res.json(count);
+          res.json({count: count, favorites: dbModel.favorites});
         });
       })
       .catch(err => res.status(422).json(err));

@@ -86,8 +86,7 @@ class Modals extends React.Component {
     super(props);
 
     this.state = {
-      modalIsOpen: props.modalIsOpen,
-      favorites: 0
+      modalIsOpen: props.modalIsOpen
     };
 
     this.openModal = this.openModal.bind(this);
@@ -95,9 +94,9 @@ class Modals extends React.Component {
     this.closeModal = this.closeModal.bind(this);
   }
 
-  openModal() {
+  openModal = () => {
     this.setState({ modalIsOpen: true });
-    this.updateActiveFavorites(this.props.username);
+    this.props.updateActiveFavorites(this.props.username);
   }
 
   afterOpenModal() {
@@ -108,17 +107,6 @@ class Modals extends React.Component {
   closeModal() {
     this.setState({ modalIsOpen: false });
   }
-
-  updateActiveFavorites = truckname => {
-    API.favCount({ favorites: truckname })
-      .then(res => {
-        this.setState({ favorites: res.data });
-      })
-      .catch(err => {
-        console.log("favorites error: ");
-        console.log(err);
-      });
-  };
 
   openDirections() {
     var uLat = this.props.lat;
@@ -176,12 +164,11 @@ class Modals extends React.Component {
           <LoveWrapper>
             <Heart
               onClick={e => {
-                this.props.addTruckToUserFavs(this.props.username, e);
-                this.updateActiveFavorites(this.props.username);
+                this.props.addTruckToUserFavs(this.props.username, e);                
               }}
               src={this.props.heartSrc}
             />
-            : <LoveCount>{this.state.favorites}</LoveCount>
+            : <LoveCount>{this.props.favorites}</LoveCount>
             <NavImg src={navImg} onClick={() => this.openDirections()} />
           </LoveWrapper>
           {/* <h2 ref={subtitle => (this.subtitle = subtitle)}>

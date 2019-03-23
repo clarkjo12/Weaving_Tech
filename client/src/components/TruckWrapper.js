@@ -58,7 +58,7 @@ class TruckWrapper extends Component {
 
         <CodeButton userId={this.props.userId} />
     
-        <Inputs userId={this.props.userId} />
+        <Inputs userId={this.props.userId} sendSocketIOUpdatedTruck={this.props.sendSocketIOUpdatedTruck}/>
         {/* <MainSumDiv>
           Title:
           <Title>
