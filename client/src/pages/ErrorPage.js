@@ -11,9 +11,6 @@ class ErrorPage extends Component {
       <div>
         <h1>Errrorr!</h1>
         <img src={Jack} alt="error?" />
-        <Spinner />
-        <EdInp />
-        <Demo />
       </div>
     );
   }
