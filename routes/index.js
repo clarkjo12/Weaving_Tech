@@ -61,7 +61,7 @@ router.post('/api/eaters/signup', function (req, res) {
       } else {
         var record = new User()
         record.username = username;
-        record.password = record.hashPassword(password)
+        record.password = password;
         record.location = location
         record.save(function (err, user) {
           if (err) {
