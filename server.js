@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
-
+var logger = require('morgan'),
+    cors = require('cors')
 require('dotenv').config();
 
 const routes = require("./routes");
@@ -12,6 +13,8 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 // Define middleware here
+app.use(cors())
+app.use(logger('dev'));
 app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({

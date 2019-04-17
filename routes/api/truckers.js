@@ -11,4 +11,7 @@ router.route("/:id")
   .get(truckersController.findTruck)
   .put(truckersController.update);
 
+router.route("/login")
+.post(truckersController.login);
+
 module.exports = router;
