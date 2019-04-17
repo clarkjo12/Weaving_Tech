@@ -31,5 +31,11 @@ module.exports = {
         res.json(dbModel)
       })
       .catch(err => res.status(422).json(err));
+  },
+  login: function(req,res) {
+    db.Trucker
+      .findOne({code: req.body.code})
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err))
   }
 };
