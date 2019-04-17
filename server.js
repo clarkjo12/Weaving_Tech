@@ -35,7 +35,7 @@ if (process.env.NODE_ENV === "production") {
 app.use(routes);
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://heroku_4265ml05:5qem9g1jfppdg6qc98cq2dq1ih@ds145704.mlab.com:45704/heroku_4265ml05");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/wmfa");
 
 const server = app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
